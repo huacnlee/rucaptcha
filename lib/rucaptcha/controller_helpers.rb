@@ -13,7 +13,7 @@ module RuCaptcha
 
     def random_rucaptcha_chars
       chars = SecureRandom.hex(RuCaptcha.config.len / 2).downcase
-      chars.gsub!(/[0ol1]/i, (rand(9) + 1).to_s)
+      chars.gsub!(/[0ol1]/i, (rand(8) + 2).to_s)
       chars
     end
 

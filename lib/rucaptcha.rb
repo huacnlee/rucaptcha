@@ -1,4 +1,6 @@
-require 'active_support/core_ext'
+require 'rails'
+require 'action_controller'
+require 'active_support/all'
 require_relative 'rucaptcha/version'
 require_relative 'rucaptcha/configuration'
 require_relative 'rucaptcha/controller_helpers'
