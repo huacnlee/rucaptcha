@@ -66,3 +66,15 @@ View `app/views/account/new.html.erb`
 </form>
 ```
 
+## Test skip captcha validation
+
+```rb
+describe 'sign up and login', type: :feature do
+  before do
+    allow_any_instance_of(ActionController::Base).to receive(:verify_rucaptcha?).and_return(true)
+  end
+
+  it { ... }
+end
+```
+
