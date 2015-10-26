@@ -1,7 +1,7 @@
 # RuCaptcha
 
 
-This is a Captcha gem for Rails Application. It base on [mini_magick](https://github.com/minimagick/minimagick) to run ImageMagick command to draw Captcha image.
+This is a Captcha gem for Rails Application. It run ImageMagick command to draw Captcha image.
 
 So it's NO performance issue, and memory leak issue.
 
@@ -10,7 +10,6 @@ Idea by: https://ruby-china.org/topics/20558#reply4
 ### Requirements
 
 - ImageMagick
-- [mini_magick](https://github.com/minimagick/minimagick)
 
 ### Usage
 
@@ -30,8 +29,6 @@ RuCaptcha.configure do
   self.width = 180
   # Image height, default: 48
   self.height = 48
-  # Font size, default: 38
-  self.font_size = 38
 end
 ```
 

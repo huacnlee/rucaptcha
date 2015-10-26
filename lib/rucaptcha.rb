@@ -3,6 +3,7 @@ require_relative 'rucaptcha/version'
 require_relative 'rucaptcha/configuration'
 require_relative 'rucaptcha/controller_helpers'
 require_relative 'rucaptcha/view_helpers'
+require_relative 'rucaptcha/captcha'
 require_relative 'rucaptcha/engine'
 
 module RuCaptcha
@@ -11,9 +12,9 @@ module RuCaptcha
       return @config if defined?(@config)
       @config = Configuration.new
       @config.len = 4
-      @config.width = 180
+      @config.width = 150
       @config.height = 48
-      @config.font_size = 38
+      @config.implode = 0.4
       @config
     end
 
