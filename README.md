@@ -8,6 +8,8 @@ This is a Captcha gem for Rails Applications. It runs an ImageMagick command to 
 
 Idea by: https://ruby-china.org/topics/20558#reply4
 
+[中文介绍和使用说明](https://ruby-china.org/topics/27832)
+
 ### Requirements
 
 - ImageMagick
