@@ -3,7 +3,7 @@
 
 This is a Captcha gem for Rails Applications. It runs an ImageMagick command to draw Captcha image - so it has NO performance issues or memory leak issues.
 
-There is NO: RMagick
+**There is NO: RMagick**
 
 Idea by: https://ruby-china.org/topics/20558#reply4
 
