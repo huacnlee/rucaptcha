@@ -1,9 +1,7 @@
 # RuCaptcha
 
 
-This is a Captcha gem for Rails Application. It run ImageMagick command to draw Captcha image.
-
-So it's NO performance issue, and memory leak issue.
+This is a Captcha gem for Rails Applications. It runs an ImageMagick command to draw Captcha image - so it has NO performance issues or memory leak issues.
 
 Idea by: https://ruby-china.org/topics/20558#reply4
 
