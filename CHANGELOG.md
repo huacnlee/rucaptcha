@@ -1,3 +1,8 @@
+0.1.3
+-----
+
+- `zh-TW` translate file fixed.
+
 0.1.2
 -----
 
