@@ -7,7 +7,7 @@ module RuCaptcha
 
     def rucaptcha_image_tag(opts = {})
       opts[:class] = opts[:class] || 'rucaptcha-image'
-      image_tag(ru_captcha.root_path, opts)
+      image_tag(ru_captcha.root_url, opts)
     end
   end
 end

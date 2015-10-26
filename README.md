@@ -78,3 +78,7 @@ describe 'sign up and login', type: :feature do
 end
 ```
 
+## TODO
+
+- Use [rtesseract](https://github.com/dannnylo/rtesseract) to test OCR.
+

@@ -2,6 +2,7 @@
 -----
 
 - `zh-TW` translate file fixed.
+- Use xxx_url to fix bad captcha URL for `config.action_controller.asset_host` enabled case.
 
 0.1.2
 -----
