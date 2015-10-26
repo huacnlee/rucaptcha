@@ -11,6 +11,11 @@ Idea by: https://ruby-china.org/topics/20558#reply4
 
 - ImageMagick
 
+### Example
+
+![simple4](https://cloud.githubusercontent.com/assets/5518/10726106/9442b1fe-7c0b-11e5-8c06-f88fce5e7a58.png)  ![simple3](https://cloud.githubusercontent.com/assets/5518/10726119/a844dfce-7c0b-11e5-99c3-a818f3ef3dd2.png)
+
+
 ### Usage
 
 Put rucaptcha in your `Gemfile`:
