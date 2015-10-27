@@ -41,7 +41,7 @@ RuCaptcha.configure do
 end
 ```
 
-Edit `config/routes.rb`, add follow line:
+Edit `config/routes.rb`, add the following code:
 
 ```rb
 Rails.application.routes.draw do
