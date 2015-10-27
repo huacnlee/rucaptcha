@@ -41,6 +41,16 @@ RuCaptcha.configure do
 end
 ```
 
+Edit `config/routes.rb`, add follow line:
+
+```rb
+Rails.application.routes.draw do
+  ...
+  mount RuCaptcha::Engine => "/rucaptcha"
+  ...
+end
+```
+
 Controller `app/controller/account_controller.rb`
 
 ```rb
