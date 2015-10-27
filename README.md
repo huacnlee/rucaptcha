@@ -28,7 +28,7 @@ Put rucaptcha in your `Gemfile`:
 gem 'rucaptcha'
 ```
 
-Create `config/initializes/rucaptcha.rb`
+Create `config/initializers/rucaptcha.rb`
 
 ```rb
 RuCaptcha.configure do
