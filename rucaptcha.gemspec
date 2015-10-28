@@ -16,5 +16,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'posix-spawn', '>= 0.3.0'
 
   s.add_development_dependency 'rake'
+  s.add_development_dependency 'rails'
   s.add_development_dependency 'rspec', '>= 3.3.0'
 end
