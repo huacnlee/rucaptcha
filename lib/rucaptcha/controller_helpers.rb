@@ -18,7 +18,7 @@ module RuCaptcha
     end
 
     def verify_rucaptcha?(resource = nil)
-      right = params[:_rucaptcha].present? and session[:_rucaptcha].present? and
+      right = params[:_rucaptcha].present? && session[:_rucaptcha].present? &&
               params[:_rucaptcha].downcase.strip == session[:_rucaptcha]
       if resource && resource.respond_to?(:errors)
         resource.errors.add(:base, t('rucaptcha.invalid')) unless right
