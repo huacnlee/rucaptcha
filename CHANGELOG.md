@@ -1,3 +1,9 @@
+0.1.4
+-----
+
+- Fix `verify_rucaptcha?` logic in somecase.
+- Locales fixed.
+
 0.1.3
 -----
 
