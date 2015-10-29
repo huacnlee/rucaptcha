@@ -7,7 +7,7 @@
 /spec/reports/
 /test/tmp/
 /test/version_tmp/
-/tmp/
+!/tmp/
 .DS_Store
 
 ## Specific to RubyMotion:

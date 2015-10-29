@@ -6,6 +6,11 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'rucaptcha'
 require 'rtesseract'
 
+tmp_path = File.join(File.dirname(__FILE__), '../tmp')
+if !File.exists?(tmp_path)
+  Dir.mkdir(tmp_path)
+end
+
 RuCaptcha.configure do
   self.len = 2
   self.width = 123

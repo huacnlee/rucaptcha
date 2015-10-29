@@ -29,6 +29,6 @@ describe 'OCR' do
       expect(chars).not_to eq(str)
     end
 
-    puts %(------------------------\nOCR all results: \n#{results.join("\n")})
+    puts %(\n------------------------\nOCR all results: \n#{results.join("\n")})
   end
 end
