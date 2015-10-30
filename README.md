@@ -11,17 +11,37 @@ Idea by: https://ruby-china.org/topics/20558#reply4
 
 [中文介绍和使用说明](https://ruby-china.org/topics/27832)
 
-### Requirements
+
+## Feature
+
+- Only need `ImageMagick`, No `RMagick`, No `mini_magick`;
+- For Rails Application;
+- Simple, Easy to use;
+- File Caching for performance.
+
+## Requirements
 
 - ImageMagick
 
-### Example
+#### Ubuntu
+
+```
+sudo apt-get install imagemagick
+```
+
+#### Mac OS X
+
+```bash
+brew install imagemagick ghostscript
+```
+
+## Example
 
 ![rucaptcha1](https://cloud.githubusercontent.com/assets/5518/10726119/a844dfce-7c0b-11e5-99c3-a818f3ef3dd2.png) ![rucaptcha2](https://cloud.githubusercontent.com/assets/5518/10747608/2f2f5f10-7c92-11e5-860b-914db5695a57.png) ![rucaptcha3](https://cloud.githubusercontent.com/assets/5518/10747609/2f5bbac4-7c92-11e5-8192-4aa5dfb025b7.png) ![rucaptcha4](https://cloud.githubusercontent.com/assets/5518/10747611/2f7c6a12-7c92-11e5-8730-de7295b36dd6.png) ![rucaptcha5](https://cloud.githubusercontent.com/assets/5518/10747610/2f7a9d86-7c92-11e5-911a-44596c9aeef5.png)
 
 
 
-### Usage
+## Usage
 
 Put rucaptcha in your `Gemfile`:
 
@@ -39,6 +59,9 @@ RuCaptcha.configure do
   self.width = 180
   # Image height, default: 48
   self.height = 48
+  # Cache generated images in file store, this is config files limit, default: 100
+  # set 0 to disable file cache.
+  self.cache_limit = 100
 end
 ```
 
@@ -80,7 +103,7 @@ View `app/views/account/new.html.erb`
 </form>
 ```
 
-## Test skip captcha validation
+### Write your test skip captcha validation
 
 ```rb
 describe 'sign up and login', type: :feature do
@@ -92,7 +115,5 @@ describe 'sign up and login', type: :feature do
 end
 ```
 
-## TODO
 
-- Use [rtesseract](https://github.com/dannnylo/rtesseract) to test OCR.
 

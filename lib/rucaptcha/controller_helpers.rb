@@ -7,14 +7,8 @@ module RuCaptcha
     end
 
     def generate_rucaptcha
-      session[:_rucaptcha] = random_rucaptcha_chars
-      return RuCaptcha::Captcha.create(session[:_rucaptcha])
-    end
-
-    def random_rucaptcha_chars
-      chars = SecureRandom.hex(RuCaptcha.config.len / 2).downcase
-      chars.gsub!(/[0ol1]/i, (rand(8) + 2).to_s)
-      chars
+      session[:_rucaptcha] = RuCaptcha::Captcha.random_chars
+      RuCaptcha::Captcha.create(session[:_rucaptcha])
     end
 
     def verify_rucaptcha?(resource = nil)

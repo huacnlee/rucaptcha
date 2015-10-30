@@ -1,3 +1,10 @@
+0.2.0
+-----
+
+- Added file cache, can setup how many images you want generate by `config.cache_limit`,
+  RuCaptcha will use cache for next requests.
+  When you restart Rails processes it will generate new again and clean the old caches.
+
 0.1.4
 -----
 

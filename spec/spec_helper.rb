@@ -11,6 +11,14 @@ if !File.exists?(tmp_path)
   Dir.mkdir(tmp_path)
 end
 
+module Rails
+  class << self
+    def root
+      Pathname.new(File.join(File.dirname(__FILE__), '..'))
+    end
+  end
+end
+
 RuCaptcha.configure do
   self.len = 2
   self.width = 123

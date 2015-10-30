@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'fileutils'
 
 describe 'OCR' do
   before do
@@ -18,7 +19,8 @@ describe 'OCR' do
   end
 
   after do
-    `rm #{File.join(File.dirname(__FILE__), '../tmp/*.png')}`
+    path = File.expand_path File.join(File.dirname(__FILE__), '..', 'tmp/*.png')
+    FileUtils.rm_f(path)
   end
 
   it 'should not read by OCR lib' do

@@ -15,25 +15,9 @@ describe RuCaptcha do
 
   describe '.generate_rucaptcha' do
     it 'should work' do
-      expect(simple).to receive(:random_rucaptcha_chars).and_return('abcd')
+      expect(RuCaptcha::Captcha).to receive(:random_chars).and_return('abcd')
       expect(simple.generate_rucaptcha).not_to be_nil
       expect(simple.session[:_rucaptcha]).to eq('abcd')
-    end
-  end
-
-  describe '.random_rucaptcha_chars' do
-    it 'should len equal config.len' do
-      expect(simple.random_rucaptcha_chars.length).to eq(RuCaptcha.config.len)
-    end
-
-    it 'should return 0-9 and lower str' do
-      expect(simple.random_rucaptcha_chars).to match(/[a-z0-9]/)
-    end
-
-    it 'should not include [0ol1]' do
-      10000.times do
-        expect(simple.random_rucaptcha_chars).not_to match(/[0ol1]/i)
-      end
     end
   end
 
