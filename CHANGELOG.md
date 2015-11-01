@@ -1,3 +1,8 @@
+0.2.1
+-----
+
+- Fix issue when cache dir not exist.
+
 0.2.0
 -----
 

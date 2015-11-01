@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module RuCaptcha
   # File Cache
   module Cache
@@ -31,6 +33,9 @@ module RuCaptcha
         return @cache if defined?(@cache)
 
         cache_path = Rails.root.join('tmp', 'cache', 'rucaptcha')
+        if !File.exists? cache_path
+          FileUtils.mkdir_p(cache_path)
+        end
         @cache = ActiveSupport::Cache::FileStore.new(cache_path)
         @cache.clear
         @cache
