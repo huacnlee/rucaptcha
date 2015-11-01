@@ -1,3 +1,8 @@
+0.2.2
+-----
+
+- Added locale for pt-BR language; @ramirovjr
+
 0.2.1
 -----
 
