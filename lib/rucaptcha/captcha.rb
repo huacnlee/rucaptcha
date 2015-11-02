@@ -44,9 +44,10 @@ module RuCaptcha
         CODE
 
         command.strip!
-        # puts command
         pid, stdin, stdout, stderr = POSIX::Spawn.popen4(command)
         Process.waitpid(pid)
+        err = stderr.read
+        raise "RuCaptcha: #{err.strip}" if err != nil && err.length > 0
         stdout.read
       end
     end

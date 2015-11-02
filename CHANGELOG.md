@@ -1,3 +1,8 @@
+0.2.3
+-----
+
+- It will raise error when call ImageMagick failed.
+
 0.2.2
 -----
 
