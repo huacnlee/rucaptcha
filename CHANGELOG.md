@@ -1,7 +1,8 @@
-0.2.2
+0.2.5
 -----
 
 - Add `session[:_rucaptcha]` expire time, for protect Rails CookieSession Replay Attack.
+- Captcha input field disable autocomplete, and set field type as `email` for shown correct keyboard on mobile view.
 
 0.2.3
 -----

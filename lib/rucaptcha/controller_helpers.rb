@@ -8,7 +8,7 @@ module RuCaptcha
 
     def generate_rucaptcha
       session[:_rucaptcha]   = RuCaptcha::Captcha.random_chars
-      session[:rucaptcha_at] = Time.now.to_i
+      session[:_rucaptcha_at] = Time.now.to_i
 
       RuCaptcha::Captcha.create(session[:_rucaptcha])
     end
