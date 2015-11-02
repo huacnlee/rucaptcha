@@ -1,3 +1,8 @@
+0.2.2
+-----
+
+- Add `session[:_rucaptcha]` expire time, for protect Rails CookieSession Replay Attack.
+
 0.2.3
 -----
 

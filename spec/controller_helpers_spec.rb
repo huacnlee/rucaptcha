@@ -24,6 +24,7 @@ describe RuCaptcha do
   describe '.verify_rucaptcha?' do
     context 'Correct chars in params' do
       it 'should work' do
+        simple.session[:_rucaptcha_at] = Time.now.to_i
         simple.session[:_rucaptcha] = 'abcd'
         simple.params[:_rucaptcha] = 'Abcd'
         expect(simple.verify_rucaptcha?).to eq(true)
@@ -34,8 +35,18 @@ describe RuCaptcha do
 
     describe 'Incorrect chars' do
       it "should work" do
+        simple.session[:_rucaptcha_at] = Time.now.to_i - 60
         simple.session[:_rucaptcha] = 'abcd'
         simple.params[:_rucaptcha] = 'd123'
+        expect(simple.verify_rucaptcha?).to eq(false)
+      end
+    end
+
+    describe 'Expires Session key' do
+      it "should work" do
+        simple.session[:_rucaptcha_at] = Time.now.to_i - 121
+        simple.session[:_rucaptcha] = 'abcd'
+        simple.params[:_rucaptcha] = 'abcd'
         expect(simple.verify_rucaptcha?).to eq(false)
       end
     end
