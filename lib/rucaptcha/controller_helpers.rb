@@ -25,6 +25,7 @@ module RuCaptcha
       if resource && resource.respond_to?(:errors)
         resource.errors.add(:base, t('rucaptcha.invalid')) unless right
       end
+      session.delete(:_rucaptcha)
       right
     end
   end
