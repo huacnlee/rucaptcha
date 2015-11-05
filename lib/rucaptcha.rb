@@ -15,8 +15,7 @@ module RuCaptcha
       return @config if defined?(@config)
       @config = Configuration.new
       @config.len         = 4
-      @config.width       = 150
-      @config.height      = 48
+      @config.font_size   = 48
       @config.implode     = 0.4
       @config.cache_limit = 100
       @config
@@ -24,6 +23,14 @@ module RuCaptcha
 
     def configure(&block)
       config.instance_exec(&block)
+
+      if config.width != nil
+        ActiveSupport::Deprecation.warn("RuCaptcha config.width will remove in 0.4.0")
+      end
+
+      if config.height != nil
+        ActiveSupport::Deprecation.warn("RuCaptcha config.height will remove in 0.4.0")
+      end
 
       # enable cache if cache_limit less than 1
       if config.cache_limit >= 1

@@ -4,9 +4,7 @@ module RuCaptcha
   class Captcha
     class << self
       def rand_color
-        rgb = [rand(100).to_s(8), rand(100).to_s(8), rand(100).to_s(8)]
-
-        "rgba(#{rgb.join(',')},1)"
+        [rand(100).to_s(8), rand(100).to_s(8), rand(100).to_s(8)]
       end
 
       def random_chars
@@ -15,31 +13,51 @@ module RuCaptcha
         chars
       end
 
+      def rand_line_top(text_top, font_size)
+        text_top + rand(font_size - text_top * 2)
+      end
+
       # Create Captcha image by code
       def create(code)
-        size         = "#{RuCaptcha.config.width}x#{RuCaptcha.config.height}"
-        font_size    = (RuCaptcha.config.height * 0.9).to_i
-        half_width   = RuCaptcha.config.width / 2
-        half_height  = RuCaptcha.config.height / 2
-        line_color   = rand_color
         chars        = code.split('')
-        text_opts    = []
-        text_top     = (RuCaptcha.config.height - font_size) / 2
-        text_padding = 5
-        text_width   = (RuCaptcha.config.width / chars.size) - text_padding * 2
-        text_left    = 5
+        all_left     = 20
+        font_size    = RuCaptcha.config.font_size
+        full_height  = font_size
+        full_width   = (font_size * chars.size)
+        size         = "#{full_width}x#{full_height}"
+        half_width   = full_width / 2
+        full_height  = full_height
+        half_height  = full_height / 2
+        text_top     = 10
+        text_left    = 0 - (font_size * 0.28).to_i
+        stroke_width  = (font_size * 0.08).to_i + 1
+        text_width   = (full_width / chars.size) + text_left
+        label = "=#{' ' * (chars.size - 1)}="
 
+
+
+        text_opts = []
+        line_opts = []
         chars.each_with_index do |char, i|
-          text_opts << %(-fill '#{rand_color}' -draw 'text #{(text_left + text_width) * i + text_left},#{text_top} "#{char}"')
+          rgb = rand_color
+          text_color = "rgba(#{rgb.join(',')}, 1)"
+          line_color = "rgba(#{rgb.join(',')}, 0.6)"
+          text_opts << %(-fill '#{text_color}' -draw 'text #{(text_left + text_width) * i + all_left},#{text_top} "#{char}"')
+          left_y = rand_line_top(text_top, font_size)
+          right_y = rand_line_top(text_top, font_size)
+          line_opts << %(-draw 'stroke #{line_color} line #{rand(10)},#{left_y} #{half_width + rand(half_width / 2)},#{right_y}')
         end
 
         command = <<-CODE
-          convert -size #{size} #{text_opts.join(' ')}  \
-          -draw 'stroke #{line_color} line #{rand(10)},#{rand(20)} #{half_width + rand(half_width)},#{rand(half_height)}' \
-          -draw 'stroke #{line_color} line #{rand(10)},#{rand(25)} #{half_width + rand(half_width)},#{half_height + rand(half_height)}' \
-          -draw 'stroke #{line_color} line #{rand(10)},#{rand(30)} #{half_width + rand(half_width)},#{half_height + rand(half_height)}' \
-          -wave #{rand(2) + 2}x#{rand(2) + 1} \
-          -gravity NorthWest -sketch 1x10+#{rand(1)} -pointsize #{font_size} -weight 700 \
+          convert -size #{size} \
+          -strokewidth #{stroke_width} \
+          #{line_opts.join(' ')} \
+          -pointsize #{font_size} -weight 700 \
+          #{text_opts.join(' ')}  \
+          -wave #{rand(2) + 3}x#{rand(2) + 1} \
+          -rotate #{rand(10) - 5} \
+          -gravity NorthWest -sketch 1x10+#{rand(2)} \
+          -fill white \
           -implode #{RuCaptcha.config.implode} label:- png:-
         CODE
 

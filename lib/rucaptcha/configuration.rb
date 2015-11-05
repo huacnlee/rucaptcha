@@ -1,9 +1,9 @@
 module RuCaptcha
   class Configuration
-    # Image width, default 150
-    attr_accessor :width
-    # Image height, default 48
-    attr_accessor :height
+    # TODO: remove height, width in 0.3.0
+    attr_accessor :height, :width
+    # Image font size, default 48
+    attr_accessor :font_size
     # Number of chars, default 4
     attr_accessor :len
     # implode, default 0.4

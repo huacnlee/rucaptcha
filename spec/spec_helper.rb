@@ -21,7 +21,7 @@ end
 
 RuCaptcha.configure do
   self.len = 2
-  self.width = 123
   self.height = 33
+  self.font_size = 48
   self.implode = 0.111
 end

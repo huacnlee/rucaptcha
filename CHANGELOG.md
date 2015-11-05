@@ -1,3 +1,11 @@
+0.3.0
+-----
+
+- More complex Image render: compact text, strong lines, +/-5 rotate...
+- [DEPRECATION] config.width, config.height removed, use config.font_size.
+- Fix the render position in difference font sizes.
+- Fix input field type, and disable autocorrect, autocapitalize, and limit maxlength with char length;
+
 0.2.5
 -----
 
