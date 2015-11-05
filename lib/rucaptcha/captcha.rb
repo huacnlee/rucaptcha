@@ -18,7 +18,7 @@ module RuCaptcha
       # Create Captcha image by code
       def create(code)
         size         = "#{RuCaptcha.config.width}x#{RuCaptcha.config.height}"
-        font_size    = (RuCaptcha.config.height * 0.8).to_i
+        font_size    = (RuCaptcha.config.height * 0.9).to_i
         half_width   = RuCaptcha.config.width / 2
         half_height  = RuCaptcha.config.height / 2
         line_color   = rand_color
