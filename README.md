@@ -37,9 +37,14 @@ brew install imagemagick ghostscript
 
 ## Example
 
-![rucaptcha1](https://cloud.githubusercontent.com/assets/5518/10726119/a844dfce-7c0b-11e5-99c3-a818f3ef3dd2.png) ![rucaptcha2](https://cloud.githubusercontent.com/assets/5518/10747608/2f2f5f10-7c92-11e5-860b-914db5695a57.png) ![rucaptcha3](https://cloud.githubusercontent.com/assets/5518/10747609/2f5bbac4-7c92-11e5-8192-4aa5dfb025b7.png) ![rucaptcha4](https://cloud.githubusercontent.com/assets/5518/10747611/2f7c6a12-7c92-11e5-8730-de7295b36dd6.png) ![rucaptcha5](https://cloud.githubusercontent.com/assets/5518/10747610/2f7a9d86-7c92-11e5-911a-44596c9aeef5.png)
-
-
+![captcha8](https://cloud.githubusercontent.com/assets/5518/10965901/f8e17118-83ea-11e5-935d-a17fd6ab8307.png)
+![captcha7](https://cloud.githubusercontent.com/assets/5518/10965903/f8e34b5a-83ea-11e5-9f8e-e43fc78347a7.png)
+![captcha6](https://cloud.githubusercontent.com/assets/5518/10965902/f8e2f132-83ea-11e5-89f5-b75aedbcfb2f.png)
+![captcha5](https://cloud.githubusercontent.com/assets/5518/10965904/f920ec44-83ea-11e5-89d2-3312da0f2bc4.png)
+![captcha4](https://cloud.githubusercontent.com/assets/5518/10965905/f92264ac-83ea-11e5-96b0-2e81ee78d073.png)
+![captcha3](https://cloud.githubusercontent.com/assets/5518/10965906/f9279652-83ea-11e5-94fa-a9cd2df9beec.png)
+![captcha2](https://cloud.githubusercontent.com/assets/5518/10965909/f9623e24-83ea-11e5-8ad3-d4bf94edfe1b.png)
+![captcha1](https://cloud.githubusercontent.com/assets/5518/10965908/f95fedfe-83ea-11e5-990b-fdcd2d1a97aa.png)
 
 ## Usage
 
