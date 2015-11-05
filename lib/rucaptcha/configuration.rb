@@ -2,7 +2,7 @@ module RuCaptcha
   class Configuration
     # TODO: remove height, width in 0.3.0
     attr_accessor :height, :width
-    # Image font size, default 48
+    # Image font size, default 45
     attr_accessor :font_size
     # Number of chars, default 4
     attr_accessor :len

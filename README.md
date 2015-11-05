@@ -21,7 +21,7 @@ Idea by: https://ruby-china.org/topics/20558#reply4
 
 ## Requirements
 
-- ImageMagick 6.9+
+- ImageMagick
 
 #### Ubuntu
 
@@ -55,8 +55,8 @@ Create `config/initializers/rucaptcha.rb`
 RuCaptcha.configure do
   # Number of chars, default: 4
   self.len = 4
-  # Image font size, default: 48
-  self.font_size = 48
+  # Image font size, default: 45
+  self.font_size = 45
   # Cache generated images in file store, this is config files limit, default: 100
   # set 0 to disable file cache.
   self.cache_limit = 100
