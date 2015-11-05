@@ -15,7 +15,7 @@ module RuCaptcha
       return @config if defined?(@config)
       @config = Configuration.new
       @config.len         = 4
-      @config.font_size   = 48
+      @config.font_size   = 45
       @config.implode     = 0.4
       @config.cache_limit = 100
       @config

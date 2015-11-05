@@ -52,7 +52,7 @@ module RuCaptcha
           convert -size #{size} \
           -strokewidth #{stroke_width} \
           #{line_opts.join(' ')} \
-          -pointsize #{font_size} -weight 700 \
+          -pointsize #{font_size} -weight 500 \
           #{text_opts.join(' ')}  \
           -wave #{rand(2) + 3}x#{rand(2) + 1} \
           -rotate #{rand(10) - 5} \

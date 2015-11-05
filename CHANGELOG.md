@@ -1,4 +1,4 @@
-0.3.0
+0.3.1
 -----
 
 - More complex Image render: compact text, strong lines, +/-5 rotate...
