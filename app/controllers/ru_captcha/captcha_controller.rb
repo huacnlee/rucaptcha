@@ -7,5 +7,4 @@ module RuCaptcha
       send_data generate_rucaptcha, disposition: 'inline', type: 'image/png'
     end
   end
-
 end
