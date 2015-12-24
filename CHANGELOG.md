@@ -1,3 +1,9 @@
+0.3.2
+-----
+
+- Make better render positions;
+- Trim blank space.
+
 0.3.1
 -----
 

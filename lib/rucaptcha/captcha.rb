@@ -14,7 +14,7 @@ module RuCaptcha
       end
 
       def rand_line_top(text_top, font_size)
-        text_top + rand(font_size - text_top * 2)
+        text_top + rand(font_size * 0.7).to_i
       end
 
       # Create Captcha image by code
@@ -23,18 +23,16 @@ module RuCaptcha
         all_left     = 20
         font_size    = RuCaptcha.config.font_size
         full_height  = font_size
-        full_width   = (font_size * chars.size)
+        full_width   = font_size * chars.size
         size         = "#{full_width}x#{full_height}"
         half_width   = full_width / 2
         full_height  = full_height
         half_height  = full_height / 2
-        text_top     = 10
+        text_top     = 0
         text_left    = 0 - (font_size * 0.28).to_i
         stroke_width  = (font_size * 0.08).to_i + 1
-        text_width   = (full_width / chars.size) + text_left
+        text_width   = font_size + text_left
         label = "=#{' ' * (chars.size - 1)}="
-
-
 
         text_opts = []
         line_opts = []
@@ -44,8 +42,9 @@ module RuCaptcha
           line_color = "rgba(#{rgb.join(',')}, 0.6)"
           text_opts << %(-fill '#{text_color}' -draw 'text #{(text_left + text_width) * i + all_left},#{text_top} "#{char}"')
           left_y = rand_line_top(text_top, font_size)
+          right_x = half_width + (half_width * 0.3).to_i
           right_y = rand_line_top(text_top, font_size)
-          line_opts << %(-draw 'stroke #{line_color} line #{rand(10)},#{left_y} #{half_width + rand(half_width / 2)},#{right_y}')
+          line_opts << %(-draw 'stroke #{line_color} line #{rand(10)},#{left_y} #{right_x},#{right_y}')
         end
 
         command = <<-CODE
@@ -57,8 +56,8 @@ module RuCaptcha
           -wave #{rand(2) + 3}x#{rand(2) + 1} \
           -rotate #{rand(10) - 5} \
           -gravity NorthWest -sketch 1x10+#{rand(2)} \
-          -fill white \
-          -implode #{RuCaptcha.config.implode} label:- png:-
+          -fill none \
+          -implode #{RuCaptcha.config.implode} -trim label:- png:-
         CODE
 
         command.strip!
