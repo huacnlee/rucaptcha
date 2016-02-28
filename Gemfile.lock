@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rucaptcha (0.2.4)
+    rucaptcha (0.3.2)
       posix-spawn (>= 0.3.0)
 
 GEM
@@ -127,4 +127,4 @@ DEPENDENCIES
   rucaptcha!
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
