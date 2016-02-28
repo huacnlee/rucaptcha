@@ -1,3 +1,8 @@
+0.3.2.1
+-------
+
+- Add Windows development env support.
+
 0.3.2
 -----
 
