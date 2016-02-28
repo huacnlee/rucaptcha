@@ -60,12 +60,21 @@ module RuCaptcha
           -implode #{RuCaptcha.config.implode} -trim label:- png:-
         CODE
 
-        command.strip!
-        pid, stdin, stdout, stderr = POSIX::Spawn.popen4(command)
-        Process.waitpid(pid)
-        err = stderr.read
-        raise "RuCaptcha: #{err.strip}" if err != nil && err.length > 0
-        stdout.read
+        if Gem.win_platform?
+          png_file_path = Rails.root.join('tmp', 'cache', "#{code}.png")
+          command = "convert -size #{size} xc:White -gravity Center -weight 12 -pointsize 20 -annotate 0 \"#{code}\" -trim #{png_file_path}"
+          require 'open3'
+          _stdout_str, stderr_str = Open3.capture3(command)
+          raise "RuCaptcha: #{stderr_str.strip}" if stderr_str != nil && stderr_str.length > 0
+          png_file_path
+        else
+          command.strip!
+          pid, stdin, stdout, stderr = POSIX::Spawn.popen4(command)
+          Process.waitpid(pid)
+          err = stderr.read
+          raise "RuCaptcha: #{err.strip}" if err != nil && err.length > 0
+          stdout.read
+        end
       end
     end
   end
