@@ -16,7 +16,7 @@ module RuCaptcha
     def verify_rucaptcha?(resource = nil)
       rucaptcha_at = session[:_rucaptcha_at].to_i
       # Captcha chars in Session expire in 2 minutes
-      if (Time.now.to_i - rucaptcha_at) > 120
+      if (Time.now.to_i - rucaptcha_at) > RuCaptcha.config.expires_in
         return false
       end
 

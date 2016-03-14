@@ -18,6 +18,7 @@ module RuCaptcha
       @config.font_size   = 45
       @config.implode     = 0.4
       @config.cache_limit = 100
+      @config.expires_in  = 2.minutes
       @config
     end
 
