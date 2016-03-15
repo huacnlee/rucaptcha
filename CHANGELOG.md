@@ -1,3 +1,8 @@
+0.3.3
+-----
+
+- Add `config.expires_in` to allow change captcha code expire time.
+
 0.3.2.1
 -------
 

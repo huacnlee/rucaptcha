@@ -65,6 +65,8 @@ RuCaptcha.configure do
   # Cache generated images in file store, this is config files limit, default: 100
   # set 0 to disable file cache.
   self.cache_limit = 100
+  # Custom captcha code expire time if you need, default: 2 minutes
+  # self.expires_in = 120
 end
 ```
 
