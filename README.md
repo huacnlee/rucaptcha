@@ -67,6 +67,8 @@ RuCaptcha.configure do
   self.cache_limit = 100
   # Custom captcha code expire time if you need, default: 2 minutes
   # self.expires_in = 120
+  # Color style, default: :colorful, allows: [:colorful, :black_white]
+  # self.style = :colorful
 end
 ```
 
