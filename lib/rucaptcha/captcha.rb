@@ -4,7 +4,7 @@ module RuCaptcha
   class Captcha
     class << self
       def random_color
-        if RuCaptcha.config.colorize
+        if RuCaptcha.config.style == :colorful
           [rand(100).to_s(8), rand(100).to_s(8), rand(100).to_s(8)]
         else
           color_seed = rand(50).to_s(8)

@@ -19,7 +19,7 @@ module RuCaptcha
       @config.implode     = 0.4
       @config.cache_limit = 100
       @config.expires_in  = 2.minutes
-      @config.colorize    = true
+      @config.style       = :colorful
       @config
     end
 
