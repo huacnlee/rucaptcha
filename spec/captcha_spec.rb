@@ -16,4 +16,22 @@ describe RuCaptcha::Captcha do
       end
     end
   end
+
+  describe '.random_color' do
+    it 'should return colorize array' do
+      allow(RuCaptcha.config).to receive(:colorize).and_return(true)
+      colors = RuCaptcha::Captcha.random_color
+      expect(colors.uniq.size >= 2).to eq true
+      colors1 = RuCaptcha::Captcha.random_color
+      expect(colors).not_to eq colors1
+    end
+
+    it 'should return black color array' do
+      allow(RuCaptcha.config).to receive(:colorize).and_return(false)
+      colors = RuCaptcha::Captcha.random_color
+      expect(colors.uniq.size).to eq 1
+      colors1 = RuCaptcha::Captcha.random_color
+      expect(colors).not_to eq colors1
+    end
+  end
 end

@@ -1,3 +1,8 @@
+0.4.0
+-----
+
+- Add `config.colorize` option, to allow use black text theme.
+
 0.3.3
 -----
 

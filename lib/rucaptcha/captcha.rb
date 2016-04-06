@@ -3,8 +3,13 @@ require 'posix-spawn'
 module RuCaptcha
   class Captcha
     class << self
-      def rand_color
-        [rand(100).to_s(8), rand(100).to_s(8), rand(100).to_s(8)]
+      def random_color
+        if RuCaptcha.config.colorize
+          [rand(100).to_s(8), rand(100).to_s(8), rand(100).to_s(8)]
+        else
+          color_seed = rand(50).to_s(8)
+          [color_seed, color_seed, color_seed]
+        end
       end
 
       def random_chars
@@ -37,7 +42,7 @@ module RuCaptcha
         text_opts = []
         line_opts = []
         chars.each_with_index do |char, i|
-          rgb = rand_color
+          rgb = random_color
           text_color = "rgba(#{rgb.join(',')}, 1)"
           line_color = "rgba(#{rgb.join(',')}, 0.6)"
           text_opts << %(-fill '#{text_color}' -draw 'text #{(text_left + text_width) * i + all_left},#{text_top} "#{char}"')
