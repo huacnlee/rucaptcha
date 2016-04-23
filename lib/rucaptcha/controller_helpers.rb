@@ -14,8 +14,11 @@ module RuCaptcha
     end
 
     def verify_rucaptcha?(resource = nil)
-      right = params[:_rucaptcha].present? && session[:_rucaptcha].present? &&
-              (Time.now.to_i - session[:_rucaptcha_at].to_i) < RuCaptcha.config.expires_in &&
+      # Captcha chars in Session default expire in 2 minutes
+      not_expired = (Time.now.to_i - session[:_rucaptcha_at].to_i) < RuCaptcha.config.expires_in
+
+      right = params[:_rucaptcha].present? &&
+              session[:_rucaptcha].present? && not_expired &&
               params[:_rucaptcha].downcase.strip == session[:_rucaptcha]
 
       if resource && resource.respond_to?(:errors)
