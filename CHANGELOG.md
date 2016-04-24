@@ -1,3 +1,8 @@
+0.4.1
+-----
+
+- Add error message to resource when captcha code expired.
+
 0.4.0
 -----
 
