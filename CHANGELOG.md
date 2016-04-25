@@ -1,3 +1,8 @@
+0.4.2
+-----
+
+- Fix NoMethodError bug when params[:_rucaptha] is nil.
+
 0.4.1
 -----
 

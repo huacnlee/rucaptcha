@@ -15,7 +15,7 @@ module RuCaptcha
 
     def verify_rucaptcha?(resource = nil)
       rucaptcha_at = session[:_rucaptcha_at].to_i
-      captcha = params[:_rucaptcha].downcase.strip
+      captcha = (params[:_rucaptcha] || '').downcase.strip
 
       # Captcha chars in Session expire in 2 minutes
       valid = false

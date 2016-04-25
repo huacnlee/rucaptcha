@@ -22,6 +22,19 @@ describe RuCaptcha do
   end
 
   describe '.verify_rucaptcha?' do
+    context 'Nil of param' do
+      it 'should work when params[:_rucaptcha] is nil' do
+        simple.params[:_rucaptcha] = nil
+        expect(simple.verify_rucaptcha?).to eq(false)
+      end
+
+      it 'should work when session[:_rucaptcha] is nil' do
+        simple.session[:_rucaptcha] = nil
+        simple.params[:_rucaptcha] = 'Abcd'
+        expect(simple.verify_rucaptcha?).to eq(false)
+      end
+    end
+
     context 'Correct chars in params' do
       it 'should work' do
         simple.session[:_rucaptcha_at] = Time.now.to_i
