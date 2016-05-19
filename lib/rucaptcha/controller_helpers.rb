@@ -20,7 +20,7 @@ module RuCaptcha
       # Captcha chars in Session expire in 2 minutes
       valid = false
       if (Time.now.to_i - rucaptcha_at) <= RuCaptcha.config.expires_in
-        valid = captcha.present? && captcha == session[:_rucaptcha]
+        valid = captcha.present? && captcha == session.delete(:_rucaptcha)
       end
 
       if resource && resource.respond_to?(:errors)
