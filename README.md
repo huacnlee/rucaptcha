@@ -44,7 +44,6 @@ brew install imagemagick ghostscript
 ![5](https://cloud.githubusercontent.com/assets/5518/15423977/b18e7c62-1eb2-11e6-96f7-5bd6981d4185.png)
 ![6](https://cloud.githubusercontent.com/assets/5518/15423979/b19175d4-1eb2-11e6-9417-7d496fb996b4.png)
 ![7](https://cloud.githubusercontent.com/assets/5518/15423980/b1caf944-1eb2-11e6-862e-78c0a9360b43.png)
-![8](https://cloud.githubusercontent.com/assets/5518/15423981/b1d26f12-1eb2-11e6-9201-56b8d3f14063.png)
 
 ## Usage
 
