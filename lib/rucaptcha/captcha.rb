@@ -5,7 +5,10 @@ module RuCaptcha
     class << self
       def random_color
         if RuCaptcha.config.style == :colorful
-          [rand(100).to_s(8), rand(100).to_s(8), rand(100).to_s(8)]
+          color_seed = (rand(150) + 40).to_s(8)
+          color = [0.to_s(8), 0.to_s(8), 0.to_s(8)]
+          color[rand(3)] = color_seed
+          color
         else
           color_seed = rand(50).to_s(8)
           [color_seed, color_seed, color_seed]
@@ -35,7 +38,7 @@ module RuCaptcha
         half_height  = full_height / 2
         text_top     = 0
         text_left    = 0 - (font_size * 0.28).to_i
-        stroke_width  = (font_size * 0.08).to_i + 1
+        stroke_width  = (font_size * 0.05).to_i + 1
         text_width   = font_size + text_left
         label = "=#{' ' * (chars.size - 1)}="
 
@@ -58,7 +61,7 @@ module RuCaptcha
           #{line_opts.join(' ')} \
           -pointsize #{font_size} -weight 500 \
           #{text_opts.join(' ')}  \
-          -wave #{rand(2) + 3}x#{rand(2) + 1} \
+          -wave #{rand(2) + 1}x#{rand(2) + 1} \
           -rotate #{rand(10) - 5} \
           -gravity NorthWest -sketch 1x10+#{rand(2)} \
           -fill none \

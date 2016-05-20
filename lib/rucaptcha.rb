@@ -26,14 +26,6 @@ module RuCaptcha
     def configure(&block)
       config.instance_exec(&block)
 
-      if config.width != nil
-        ActiveSupport::Deprecation.warn("RuCaptcha config.width will remove in 0.4.0")
-      end
-
-      if config.height != nil
-        ActiveSupport::Deprecation.warn("RuCaptcha config.height will remove in 0.4.0")
-      end
-
       # enable cache if cache_limit less than 1
       if config.cache_limit >= 1
         RuCaptcha::Captcha.send(:include, RuCaptcha::Cache)

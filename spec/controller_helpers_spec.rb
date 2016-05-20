@@ -41,6 +41,7 @@ describe RuCaptcha do
         simple.session[:_rucaptcha] = 'abcd'
         simple.params[:_rucaptcha] = 'Abcd'
         expect(simple.verify_rucaptcha?).to eq(true)
+        simple.session[:_rucaptcha] = 'abcd'
         simple.params[:_rucaptcha] = 'AbcD'
         expect(simple.verify_rucaptcha?).to eq(true)
       end
