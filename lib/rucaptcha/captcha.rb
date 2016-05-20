@@ -61,7 +61,7 @@ module RuCaptcha
           #{line_opts.join(' ')} \
           -pointsize #{font_size} -weight 500 \
           #{text_opts.join(' ')}  \
-          -wave #{rand(2) + 1}x#{rand(2) + 1} \
+          -wave #{rand(2) + 3}x#{rand(2) + 1} \
           -rotate #{rand(10) - 5} \
           -gravity NorthWest -sketch 1x10+#{rand(2)} \
           -fill none \

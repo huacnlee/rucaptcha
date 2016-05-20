@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rucaptcha (0.4.2)
+    rucaptcha (0.4.3)
       posix-spawn (>= 0.3.0)
 
 GEM

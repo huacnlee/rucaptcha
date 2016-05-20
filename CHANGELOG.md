@@ -2,6 +2,7 @@
 
 - Remove deprecated `width`, `height` config.
 - Delete session key after verify (#23).
+- Lighter text color, improve style.
 
 0.4.2
 -----
