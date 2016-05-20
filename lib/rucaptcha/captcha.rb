@@ -5,14 +5,17 @@ module RuCaptcha
     class << self
       def random_color
         if RuCaptcha.config.style == :colorful
-          color_seed = (rand(150) + 40).to_s(8)
-          color = [0.to_s(8), 0.to_s(8), 0.to_s(8)]
-          color[rand(3)] = color_seed
+          color = [random_color_seed, random_color_seed, random_color_seed]
+          color[rand(3)] = 0.to_s(8)
           color
         else
           color_seed = rand(50).to_s(8)
           [color_seed, color_seed, color_seed]
         end
+      end
+
+      def random_color_seed
+        (rand(150) + 10).to_s(8)
       end
 
       def random_chars

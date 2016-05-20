@@ -1,4 +1,4 @@
-0.4.3
+0.4.4
 
 - Remove deprecated `width`, `height` config.
 - Delete session key after verify (#23).
