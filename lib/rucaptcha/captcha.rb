@@ -37,16 +37,13 @@ module RuCaptcha
         full_width   = font_size * chars.size
         size         = "#{full_width}x#{full_height}"
         half_width   = full_width / 2
-        full_height  = full_height
-        half_height  = full_height / 2
         text_top     = 0
         text_left    = 0 - (font_size * 0.28).to_i
-        stroke_width  = (font_size * 0.05).to_i + 1
+        stroke_width = (font_size * 0.05).to_i + 1
         text_width   = font_size + text_left
-        label = "=#{' ' * (chars.size - 1)}="
+        text_opts    = []
+        line_opts    = []
 
-        text_opts = []
-        line_opts = []
         chars.each_with_index do |char, i|
           rgb = random_color
           text_color = "rgba(#{rgb.join(',')}, 1)"
@@ -76,14 +73,14 @@ module RuCaptcha
           command = "convert -size #{size} xc:White -gravity Center -weight 12 -pointsize 20 -annotate 0 \"#{code}\" -trim #{png_file_path}"
           require 'open3'
           _stdout_str, stderr_str = Open3.capture3(command)
-          raise "RuCaptcha: #{stderr_str.strip}" if stderr_str != nil && stderr_str.length > 0
+          raise "RuCaptcha: #{stderr_str.strip}" if stderr_str.present?
           png_file_path
         else
           command.strip!
-          pid, stdin, stdout, stderr = POSIX::Spawn.popen4(command)
+          pid, _, stdout, stderr = POSIX::Spawn.popen4(command)
           Process.waitpid(pid)
           err = stderr.read
-          raise "RuCaptcha: #{err.strip}" if err != nil && err.length > 0
+          raise "RuCaptcha: #{err.strip}" if err.present?
           stdout.read
         end
       end
