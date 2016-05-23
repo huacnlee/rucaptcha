@@ -11,7 +11,7 @@ describe RuCaptcha::Captcha do
     end
 
     it 'should not include [0ol1]' do
-      10000.times do
+      10_000.times do
         expect(RuCaptcha::Captcha.random_chars_without_cache).not_to match(/[0ol1]/i)
       end
     end

@@ -6,9 +6,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'rucaptcha'
 
 tmp_path = File.join(File.dirname(__FILE__), '../tmp')
-if !File.exists?(tmp_path)
-  Dir.mkdir(tmp_path)
-end
+Dir.mkdir(tmp_path) unless File.exist?(tmp_path)
 
 module Rails
   class << self
@@ -19,7 +17,7 @@ module Rails
 end
 
 RuCaptcha.configure do
-  self.len = 2
+  self.len       = 2
   self.font_size = 48
-  self.implode = 0.111
+  self.implode   = 0.111
 end

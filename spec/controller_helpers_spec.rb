@@ -48,7 +48,7 @@ describe RuCaptcha do
     end
 
     describe 'Incorrect chars' do
-      it "should work" do
+      it 'should work' do
         simple.session[:_rucaptcha_at] = Time.now.to_i - 60
         simple.session[:_rucaptcha] = 'abcd'
         simple.params[:_rucaptcha] = 'd123'
@@ -57,7 +57,7 @@ describe RuCaptcha do
     end
 
     describe 'Expires Session key' do
-      it "should work" do
+      it 'should work' do
         simple.session[:_rucaptcha_at] = Time.now.to_i - 121
         simple.session[:_rucaptcha] = 'abcd'
         simple.params[:_rucaptcha] = 'abcd'
