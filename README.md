@@ -3,14 +3,21 @@
 [![Gem Version](https://badge.fury.io/rb/rucaptcha.svg)](https://badge.fury.io/rb/rucaptcha)
 [![Build Status](https://travis-ci.org/huacnlee/rucaptcha.svg)](https://travis-ci.org/huacnlee/rucaptcha)
 
-This is a Captcha gem for Rails Applications. It runs an ImageMagick command to draw Captcha image - so it has NO performance issues or memory leak issues.
+This is a Captcha gem for Rails Applications. It runs an ImageMagick command to draw Captcha image - so it has NO performance issues or memory leak issues. **There is NO: RMagick**
 
-**There is NO: RMagick**
+## Example
+
+![1](https://cloud.githubusercontent.com/assets/5518/15423974/b186b0d6-1eb2-11e6-9c0e-4cc3a66f32c8.png)
+![2](https://cloud.githubusercontent.com/assets/5518/15423975/b1887b6e-1eb2-11e6-895f-5629f82697d3.png)
+![3](https://cloud.githubusercontent.com/assets/5518/15423978/b18f08ee-1eb2-11e6-9670-c21dba290e04.png)
+![4](https://cloud.githubusercontent.com/assets/5518/15423976/b18b6946-1eb2-11e6-8413-700ded157262.png)
+![5](https://cloud.githubusercontent.com/assets/5518/15423977/b18e7c62-1eb2-11e6-96f7-5bd6981d4185.png)
+![6](https://cloud.githubusercontent.com/assets/5518/15423979/b19175d4-1eb2-11e6-9417-7d496fb996b4.png)
+![7](https://cloud.githubusercontent.com/assets/5518/15423980/b1caf944-1eb2-11e6-862e-78c0a9360b43.png)
 
 Idea by: https://ruby-china.org/topics/20558#reply4
 
 [中文介绍和使用说明](https://ruby-china.org/topics/27832)
-
 
 ## Feature
 
@@ -34,10 +41,6 @@ sudo apt-get install imagemagick
 ```bash
 brew install imagemagick ghostscript
 ```
-
-## Example
-
-![1](https://cloud.githubusercontent.com/assets/5518/15423974/b186b0d6-1eb2-11e6-9c0e-4cc3a66f32c8.png) ![2](https://cloud.githubusercontent.com/assets/5518/15423975/b1887b6e-1eb2-11e6-895f-5629f82697d3.png) ![3](https://cloud.githubusercontent.com/assets/5518/15423978/b18f08ee-1eb2-11e6-9670-c21dba290e04.png) ![4](https://cloud.githubusercontent.com/assets/5518/15423976/b18b6946-1eb2-11e6-8413-700ded157262.png) ![5](https://cloud.githubusercontent.com/assets/5518/15423977/b18e7c62-1eb2-11e6-96f7-5bd6981d4185.png) ![6](https://cloud.githubusercontent.com/assets/5518/15423979/b19175d4-1eb2-11e6-9417-7d496fb996b4.png) ![7](https://cloud.githubusercontent.com/assets/5518/15423980/b1caf944-1eb2-11e6-862e-78c0a9360b43.png) ![8](https://cloud.githubusercontent.com/assets/5518/15423981/b1d26f12-1eb2-11e6-9201-56b8d3f14063.png)
 
 ## Usage
 
