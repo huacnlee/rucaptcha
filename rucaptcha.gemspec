@@ -13,7 +13,6 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.summary = 'This is a Captcha gem for Rails Application. It run ImageMagick command to draw Captcha image.'
 
-  s.add_dependency 'posix-spawn', '>= 0.3.0'
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rails'

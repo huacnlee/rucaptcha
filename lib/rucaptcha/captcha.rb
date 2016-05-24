@@ -1,4 +1,4 @@
-require 'posix-spawn'
+require 'open3'
 
 module RuCaptcha
   class Captcha
@@ -77,11 +77,9 @@ module RuCaptcha
           png_file_path
         else
           command.strip!
-          pid, _, stdout, stderr = POSIX::Spawn.popen4(command)
-          Process.waitpid(pid)
-          err = stderr.read
+          out, err, st = Open3.capture3(command)
           raise "RuCaptcha: #{err.strip}" if err.present?
-          stdout.read
+          out
         end
       end
     end
