@@ -10,6 +10,9 @@
 /tmp/
 .DS_Store
 
+## RubyMine Ide files
+.idea/
+
 ## Specific to RubyMotion:
 .dat*
 .repl_history
