@@ -29,7 +29,7 @@ Idea by: https://ruby-china.org/topics/20558#reply4
 
 ## Requirements
 
-- ImageMagick
+- ImageMagick 6.9+
 
 #### Ubuntu
 
