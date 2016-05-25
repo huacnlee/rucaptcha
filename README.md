@@ -107,6 +107,8 @@ View `app/views/account/new.html.erb`
 </form>
 ```
 
+And if you are use Devise, you can read this to add validation: [RuCaptcha with Devise](https://github.com/huacnlee/rucaptcha/wiki/Working-with-Devise).
+
 ### Write your test skip captcha validation
 
 ```rb
@@ -118,6 +120,3 @@ describe 'sign up and login', type: :feature do
   it { ... }
 end
 ```
-
-
-
