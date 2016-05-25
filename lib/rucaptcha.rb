@@ -25,11 +25,6 @@ module RuCaptcha
 
     def configure(&block)
       config.instance_exec(&block)
-
-      # enable cache if cache_limit less than 1
-      if config.cache_limit >= 1
-        RuCaptcha::Captcha.send(:include, RuCaptcha::Cache)
-      end
     end
   end
 end

@@ -77,7 +77,7 @@ module RuCaptcha
           png_file_path
         else
           command.strip!
-          out, err, st = Open3.capture3(command)
+          out, err, _st = Open3.capture3(command)
           raise "RuCaptcha: #{err.strip}" if err.present?
           out
         end

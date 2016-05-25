@@ -1,3 +1,7 @@
+0.5.0
+
+- Fix cache with Rails 5.
+
 0.4.5
 -----
 

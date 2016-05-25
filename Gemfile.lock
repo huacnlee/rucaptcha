@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rucaptcha (0.4.5)
+    rucaptcha (0.5.0)
 
 GEM
   remote: https://rubygems.org/
@@ -127,7 +127,7 @@ DEPENDENCIES
   mini_magick
   rails
   rake
-  rspec (>= 3.3.0)
+  rspec
   rucaptcha!
 
 BUNDLED WITH

@@ -3,30 +3,27 @@ require 'fileutils'
 module RuCaptcha
   # File Cache
   module Cache
-    extend ActiveSupport::Concern
-
-    included do
-      class << self
-        alias_method_chain :create, :cache
-        alias_method_chain :random_chars, :cache
+    def self.prepended(base)
+      class << base
+        prepend ClassMethods
       end
     end
 
     module ClassMethods
-      def create_with_cache(code)
-        cache.fetch(code) do
-          create_without_cache(code)
+      def create(code)
+        cache.fetch(code, expires_in: 1.days) do
+          super(code)
         end
       end
 
-      def random_chars_with_cache
+      def random_chars
         if cached_codes.length >= RuCaptcha.config.cache_limit
           return cached_codes.sample
-        else
-          code = random_chars_without_cache
-          cached_codes << code
-          return code
         end
+
+        code = super
+        cached_codes << code
+        code
       end
 
       def cache
@@ -35,7 +32,8 @@ module RuCaptcha
         cache_path = Rails.root.join('tmp', 'cache', 'rucaptcha')
         FileUtils.mkdir_p(cache_path) unless File.exist? cache_path
         @cache = ActiveSupport::Cache::FileStore.new(cache_path)
-        @cache.clear
+        # clear expired captcha cache files on Process restart
+        @cache.cleanup
         @cache
       end
 
