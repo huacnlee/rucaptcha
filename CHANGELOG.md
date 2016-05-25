@@ -1,3 +1,7 @@
+0.4.5
+
+- Removed `posix-spawn` dependency, used open3 instead (core funciontality), JRuby compatible (#24)
+
 0.4.4
 
 - Remove deprecated `width`, `height` config.
