@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe RuCaptcha::Cache do
+  before(:all) do
+    RuCaptcha::Captcha.send(:prepend, RuCaptcha::Cache)
+  end
+
   describe '.random_chars_with_cache' do
     it 'should generate max chars by config.cache_limit' do
       allow(RuCaptcha.config).to receive(:cache_limit).and_return(5)
