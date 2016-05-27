@@ -111,6 +111,8 @@ And if you are use Devise, you can read this to add validation: [RuCaptcha with 
 
 ### Write your test skip captcha validation
 
+for RSpec
+
 ```rb
 describe 'sign up and login', type: :feature do
   before do
@@ -118,5 +120,18 @@ describe 'sign up and login', type: :feature do
   end
 
   it { ... }
+end
+```
+
+for MiniTest
+
+```rb
+class ActionDispatch::IntegrationTest
+  def sign_in(user)
+    ActionController::Base.any_instance.stubs(:verify_rucaptcha?).returns(true)
+    post user_session_path \
+         'user[email]'    => user.email,
+         'user[password]' => user.password
+  end
 end
 ```
