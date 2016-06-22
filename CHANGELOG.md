@@ -1,4 +1,10 @@
+0.5.1
+-----
+
+- Make sure it will render image when ImageMagick stderr have warning messages. (#26)
+
 0.5.0
+-----
 
 - Fix cache with Rails 5.
 

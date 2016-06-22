@@ -12,4 +12,6 @@ Gem::Specification.new do |s|
   s.homepage      = 'https://github.com/huacnlee/rucaptcha'
   s.require_paths = ['lib']
   s.summary       = 'This is a Captcha gem for Rails Application. It run ImageMagick command to draw Captcha image.'
+
+  s.add_dependency 'railties', '>= 3.2'
 end

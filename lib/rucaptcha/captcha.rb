@@ -71,16 +71,20 @@ module RuCaptcha
         if Gem.win_platform?
           png_file_path = Rails.root.join('tmp', 'cache', "#{code}.png")
           command = "convert -size #{size} xc:White -gravity Center -weight 12 -pointsize 20 -annotate 0 \"#{code}\" -trim #{png_file_path}"
-          require 'open3'
-          _stdout_str, stderr_str = Open3.capture3(command)
-          raise "RuCaptcha: #{stderr_str.strip}" if stderr_str.present?
+          out, err, _st = Open3.capture3(command)
+          warn "  RuCaptcha #{err.strip}" if err.present?
           png_file_path
         else
           command.strip!
           out, err, _st = Open3.capture3(command)
-          raise "RuCaptcha: #{err.strip}" if err.present?
+          warn "  RuCaptcha #{err.strip}" if err.present?
           out
         end
+      end
+
+      def warn(msg)
+        msg = "  RuCaptcha #{msg}"
+        Rails.logger.error(msg)
       end
     end
   end
