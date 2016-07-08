@@ -19,6 +19,20 @@ describe RuCaptcha do
       expect(simple.generate_rucaptcha).not_to be_nil
       expect(simple.session[:_rucaptcha]).to eq('abcd')
     end
+
+    context 'graphics_magick' do
+      around :each do |example|
+        RuCaptcha.config.image_processor = :graphics_magick
+        example.run
+        RuCaptcha.config.image_processor = :image_magick
+      end
+
+      it 'should work with graphics_magick' do
+        expect(RuCaptcha::Captcha).to receive(:random_chars).and_return('abcd')
+        expect(simple.generate_rucaptcha).not_to be_nil
+        expect(simple.session[:_rucaptcha]).to eq('abcd')
+      end
+    end
   end
 
   describe '.verify_rucaptcha?' do

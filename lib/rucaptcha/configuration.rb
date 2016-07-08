@@ -1,5 +1,8 @@
 module RuCaptcha
   class Configuration
+    # Image processor, default image_magick,
+    # allows: [:image_magick, :graphics_magick]
+    attr_accessor :image_processor
     # Image font size, default 45
     attr_accessor :font_size
     # Number of chars, default 4

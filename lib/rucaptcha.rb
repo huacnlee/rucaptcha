@@ -14,12 +14,13 @@ module RuCaptcha
     def config
       return @config if defined?(@config)
       @config = Configuration.new
-      @config.len         = 4
-      @config.font_size   = 45
-      @config.implode     = 0.3
-      @config.cache_limit = 100
-      @config.expires_in  = 2.minutes
-      @config.style       = :colorful
+      @config.image_processor = :image_magick
+      @config.len             = 4
+      @config.font_size       = 45
+      @config.implode         = 0.3
+      @config.cache_limit     = 100
+      @config.expires_in      = 2.minutes
+      @config.style           = :colorful
       @config
     end
 
