@@ -95,6 +95,8 @@ module RuCaptcha
           png_file_path = Rails.root.join('tmp', 'cache', "#{code}.png")
           if RuCaptcha.config.image_processor == :image_magick
             command = "convert -size #{size} xc:White -gravity Center -weight 12 -pointsize 20 -annotate 0 \"#{code}\" -trim #{png_file_path}"
+          else
+            command.squish!
           end
           out, err, _st = Open3.capture3(command)
           warn "  RuCaptcha #{err.strip}" if err.present?
