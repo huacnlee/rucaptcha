@@ -33,14 +33,18 @@ Idea by: https://ruby-china.org/topics/20558#reply4
 
 #### Ubuntu
 
-```
+```bash
 sudo apt-get install imagemagick
+# or
+sudo apt-get install GraphicsMagick
 ```
 
 #### Mac OS X
 
 ```bash
 brew install imagemagick ghostscript
+# or
+brew install GraphicsMagick ghostscript
 ```
 
 ## Usage
@@ -55,6 +59,9 @@ Create `config/initializers/rucaptcha.rb`
 
 ```rb
 RuCaptcha.configure do
+  # Image processor, default image_magick,
+  # allows: [:image_magick, :graphics_magick]
+  self.image_processor = :image_magick
   # Number of chars, default: 4
   self.len = 4
   # Image font size, default: 45
