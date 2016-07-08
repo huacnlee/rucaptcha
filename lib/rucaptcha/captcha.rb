@@ -48,34 +48,59 @@ module RuCaptcha
           rgb = random_color
           text_color = "rgba(#{rgb.join(',')}, 1)"
           line_color = "rgba(#{rgb.join(',')}, 0.6)"
-          text_opts << %(-fill '#{text_color}' -draw 'text #{(text_left + text_width) * i + all_left},#{text_top} "#{char}"')
+          if RuCaptcha.config.image_processor == :image_magick
+            text_opts << %(-fill '#{text_color}' -draw 'text #{(text_left + text_width) * i + all_left},#{text_top} "#{char}"')
+          else
+            text_opts << %(-fill '#{text_color}' -draw 'text #{(text_left + text_width) * i + all_left},#{text_top + full_height} "#{char}"')
+          end
           left_y = rand_line_top(text_top, font_size)
           right_x = half_width + (half_width * 0.3).to_i
           right_y = rand_line_top(text_top, font_size)
           line_opts << %(-draw 'stroke #{line_color} line #{rand(10)},#{left_y} #{right_x},#{right_y}')
         end
 
-        command = <<-CODE
-          convert -size #{size} \
-          -strokewidth #{stroke_width} \
-          #{line_opts.join(' ')} \
-          -pointsize #{font_size} -weight 500 \
-          #{text_opts.join(' ')}  \
-          -wave #{rand(2) + 3}x#{rand(2) + 1} \
-          -rotate #{rand(10) - 5} \
-          -gravity NorthWest -sketch 1x10+#{rand(2)} \
-          -fill none \
-          -implode #{RuCaptcha.config.implode} -trim label:- png:-
-        CODE
+        command = if RuCaptcha.config.image_processor == :image_magick
+                    <<-CODE
+                      convert -size #{size}
+                      -strokewidth #{stroke_width}
+                      #{line_opts.join(' ')}
+                      -pointsize #{font_size} -weight 500
+                      #{text_opts.join(' ')}
+                      -wave #{rand(2) + 3}x#{rand(2) + 1}
+                      -rotate #{rand(10) - 5}
+                      -gravity NorthWest -sketch 1x10+#{rand(2)}
+                      -fill none
+                      -implode #{RuCaptcha.config.implode} -trim label:- png:-
+                    CODE
+                  else
+                    <<-CODE
+                      gm convert -size #{size}
+                      -gravity NorthWest
+                      -strokewidth #{stroke_width}
+                      #{line_opts.join(' ')}
+                      -pointsize #{font_size}
+                      -gravity NorthWest
+                      #{text_opts.join(' ')}
+                      -wave #{rand(2) + 3}x#{rand(2) + 1}
+                      -rotate #{rand(10) - 5}
+                      -spread #{1}
+                      -paint #{rand(10)/10.0}
+                      -fill none
+                      -implode #{RuCaptcha.config.implode} -trim label:- png:-
+                    CODE
+                  end
+
 
         if Gem.win_platform?
           png_file_path = Rails.root.join('tmp', 'cache', "#{code}.png")
-          command = "convert -size #{size} xc:White -gravity Center -weight 12 -pointsize 20 -annotate 0 \"#{code}\" -trim #{png_file_path}"
+          if RuCaptcha.config.image_processor == :image_magick
+            command = "convert -size #{size} xc:White -gravity Center -weight 12 -pointsize 20 -annotate 0 \"#{code}\" -trim #{png_file_path}"
+          end
           out, err, _st = Open3.capture3(command)
           warn "  RuCaptcha #{err.strip}" if err.present?
           png_file_path
         else
-          command.strip!
+          command.squish!
           out, err, _st = Open3.capture3(command)
           warn "  RuCaptcha #{err.strip}" if err.present?
           out

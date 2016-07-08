@@ -22,5 +22,18 @@ describe RuCaptcha::Cache do
       expect(RuCaptcha::Captcha).to receive(:create).and_return('aabb')
       expect(RuCaptcha::Captcha.create('abcd')).to eq('aabb')
     end
+
+    context 'graphics_magick' do
+      around :each do |example|
+        RuCaptcha.config.image_processor = :graphics_magick
+        example.run
+        RuCaptcha.config.image_processor = :image_magick
+      end
+
+      it 'should work' do
+        expect(RuCaptcha::Captcha).to receive(:create).and_return('aabb')
+        expect(RuCaptcha::Captcha.create('abcd')).to eq('aabb')
+      end
+    end
   end
 end
