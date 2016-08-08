@@ -107,6 +107,16 @@ View `app/views/account/new.html.erb`
 </form>
 ```
 
+#### Reload option
+
+`reload:true` get button to reload the image via ajax
+
+```erb
+  <%= rucaptcha_input_tag(class: 'form-control', placeholder: 'Input Captcha', reload:true) %>
+  <%= rucaptcha_image_tag(alt: 'Captcha') %>
+```
+
+
 And if you are use Devise, you can read this to add validation: [RuCaptcha with Devise](https://github.com/huacnlee/rucaptcha/wiki/Working-with-Devise).
 
 ### Write your test skip captcha validation
