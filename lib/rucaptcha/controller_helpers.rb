@@ -24,7 +24,7 @@ module RuCaptcha
       end
 
       if resource && resource.respond_to?(:errors)
-        resource.errors.add(:base, t('rucaptcha.invalid')) unless valid
+        resource.errors.add(:rucaptcha, t('rucaptcha.invalid')) unless valid
       end
 
       valid
