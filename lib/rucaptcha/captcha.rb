@@ -5,17 +5,15 @@ module RuCaptcha
     class << self
       def random_color
         if RuCaptcha.config.style == :colorful
-          color = [random_color_seed, random_color_seed, random_color_seed]
-          color[rand(3)] = 0.to_s(8)
+          color1 = rand(56) + 15
+          color2 = rand(10) + 140
+          color = [color1, color2, rand(15)]
+          color.shuffle!
           color
         else
-          color_seed = rand(50).to_s(8)
+          color_seed = rand(40) + 10
           [color_seed, color_seed, color_seed]
         end
-      end
-
-      def random_color_seed
-        (rand(150) + 10).to_s(8)
       end
 
       def random_chars
@@ -44,8 +42,23 @@ module RuCaptcha
         text_opts    = []
         line_opts    = []
 
+        rgbs = []
+        chars.count.times do |i|
+          color = random_color
+          if i > 0
+            preview_color = rgbs[i - 1]
+            # Avoid color same as preview color
+            if color.index(color.min) == preview_color.index(preview_color.min) &&
+               color.index(color.max) == preview_color.index(preview_color.max)
+              # adjust RGB order
+              color = [color[1], color[2], color[0]]
+            end
+          end
+          rgbs << color
+        end
+
         chars.each_with_index do |char, i|
-          rgb = random_color
+          rgb = RuCaptcha.config.style == :colorful ? rgbs[i] : rgbs[0]
           text_color = "rgba(#{rgb.join(',')}, 1)"
           line_color = "rgba(#{rgb.join(',')}, 0.6)"
           text_opts << %(-fill '#{text_color}' -draw 'text #{(text_left + text_width) * i + all_left},#{text_top} "#{char}"')

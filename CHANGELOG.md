@@ -1,3 +1,10 @@
+1.0.0
+-----
+
+- Adjust to avoid lighter colors.
+- Avoid continuous chars have same color.
+- Use same color for each chars in :black_white mode.
+
 0.5.1
 -----
 
