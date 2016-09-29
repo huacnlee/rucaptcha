@@ -34,7 +34,7 @@ Idea by: https://ruby-china.org/topics/20558#reply4
 #### Ubuntu
 
 ```
-sudo apt-get install imagemagick
+sudo apt-get install imagemagick ghostscript
 ```
 
 #### Mac OS X
