@@ -47,7 +47,8 @@ brew install imagemagick ghostscript
 
 **Security Notice!**
 
-You need change your application Session store from `CookieStore` (Rails default) to backend store location.
+You need change your application Session store from `CookieStore` (Rails default) to backend store location
+for avoid [Session Replay Attacks](http://guides.rubyonrails.org/security.html#replay-attacks-for-cookiestore-sessions) security issue.
 
 - [:active_session_store](https://github.com/rails/activerecord-session_store)
 - [:memcached_store](http://api.rubyonrails.org/classes/ActionDispatch/Session/MemCacheStore.html)
