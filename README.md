@@ -45,6 +45,20 @@ brew install imagemagick ghostscript
 
 ## Usage
 
+**Security Notice!**
+
+You need change your application Session store from `CookieStore` (Rails default) to backend store location.
+
+- [:active_session_store](https://github.com/rails/activerecord-session_store)
+- [:memcached_store](http://api.rubyonrails.org/classes/ActionDispatch/Session/MemCacheStore.html)
+- [:redis_session_store](https://github.com/roidrage/redis-session-store)
+
+config/initializers/session_store.rb
+
+```rb
+Rails.application.config.session_store :redis_session_store, { ... }
+```
+
 Put rucaptcha in your `Gemfile`:
 
 ```

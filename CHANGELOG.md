@@ -1,3 +1,17 @@
+1.0.2
+
+- Revert 1.0.1 changes, still store code in Session, `Rails.cache` not a not place in difference environments.
+  for exampe: Not enable cache, File cache will have bug.
+- Give a warning when user use CookieStore.
+
+1.0.1
+-----
+
+## Security Notes
+
+- Fix Session replay secure issue that when Rails application use CookieStore.
+
+
 1.0.0
 -----
 
