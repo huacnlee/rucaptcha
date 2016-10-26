@@ -1,10 +1,3 @@
-1.0.1
------
-
-## Security Notes
-
-- Fix Session replay secure issue that when Rails application use CookieStore.
-
 1.0.0
 -----
 

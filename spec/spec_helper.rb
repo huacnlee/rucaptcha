@@ -13,10 +13,6 @@ module Rails
     def root
       Pathname.new(File.join(File.dirname(__FILE__), '..'))
     end
-
-    def cache
-      @cache ||= ActiveSupport::Cache::MemoryStore.new
-    end
   end
 end
 

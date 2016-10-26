@@ -11,7 +11,7 @@ module RuCaptcha
     attr_accessor :cache_limit
     # Color style, default: :colorful, allows: [:colorful, :black_white]
     attr_accessor :style
-    # rucaptcha expire time, default 2 minutes
+    # session[:_rucaptcha] expire time, default 2 minutes
     attr_accessor :expires_in
   end
 end
