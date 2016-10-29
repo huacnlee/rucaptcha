@@ -46,6 +46,7 @@ GEM
     builder (3.2.2)
     concurrent-ruby (1.0.2)
     concurrent-ruby (1.0.2-java)
+    dalli (2.7.6)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     globalid (0.3.6)
@@ -125,6 +126,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  dalli
   mini_magick
   rails
   rake

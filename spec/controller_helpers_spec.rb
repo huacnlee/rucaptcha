@@ -19,11 +19,11 @@ describe RuCaptcha do
     end
 
     def custom_session
-      Rails.cache.read(self.rucaptcha_sesion_key_key)
+      RuCaptcha.cache.read(self.rucaptcha_sesion_key_key)
     end
 
     def clean_custom_session
-      Rails.cache.delete(self.rucaptcha_sesion_key_key)
+      RuCaptcha.cache.delete(self.rucaptcha_sesion_key_key)
     end
   end
 
@@ -59,7 +59,7 @@ describe RuCaptcha do
 
     context 'Correct chars in params' do
       it 'should work' do
-        Rails.cache.write(simple.rucaptcha_sesion_key_key, {
+        RuCaptcha.cache.write(simple.rucaptcha_sesion_key_key, {
           time: Time.now.to_i,
           code: 'abcd'
         })
@@ -67,7 +67,7 @@ describe RuCaptcha do
         expect(simple.verify_rucaptcha?).to eq(true)
         expect(simple.custom_session).to eq nil
 
-        Rails.cache.write(simple.rucaptcha_sesion_key_key, {
+        RuCaptcha.cache.write(simple.rucaptcha_sesion_key_key, {
           time: Time.now.to_i,
           code: 'abcd'
         })
@@ -78,7 +78,7 @@ describe RuCaptcha do
 
     describe 'Incorrect chars' do
       it 'should work' do
-        Rails.cache.write(simple.rucaptcha_sesion_key_key, {
+        RuCaptcha.cache.write(simple.rucaptcha_sesion_key_key, {
           time: Time.now.to_i - 60,
           code: 'abcd'
         })
@@ -90,7 +90,7 @@ describe RuCaptcha do
 
     describe 'Expires Session key' do
       it 'should work' do
-        Rails.cache.write(simple.rucaptcha_sesion_key_key, {
+        RuCaptcha.cache.write(simple.rucaptcha_sesion_key_key, {
           time: Time.now.to_i - 121,
           code: 'abcd'
         })

@@ -20,7 +20,11 @@ module RuCaptcha
       @config.cache_limit = 100
       @config.expires_in  = 2.minutes
       @config.style       = :colorful
-      @config.cache_store = Rails.application.config.cache_store
+      if Rails.application
+        @config.cache_store = Rails.application.config.cache_store
+      else
+        @config.cache_store = :null_store
+      end
       @config
     end
 

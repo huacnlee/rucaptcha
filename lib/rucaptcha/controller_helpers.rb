@@ -31,7 +31,6 @@ module RuCaptcha
       end
 
       # Make sure not expire
-      puts "-------------- #{store_info.inspect}"
       if (Time.now.to_i - store_info[:time]) > RuCaptcha.config.expires_in
         return add_rucaptcha_validation_error
       end
