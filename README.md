@@ -45,21 +45,6 @@ brew install imagemagick ghostscript
 
 ## Usage
 
-**Security Notice!**
-
-You need change your application Session store from `CookieStore` (Rails default) to backend store location
-for avoid [Session Replay Attacks](http://guides.rubyonrails.org/security.html#replay-attacks-for-cookiestore-sessions) security issue.
-
-- [:active_session_store](https://github.com/rails/activerecord-session_store)
-- [:memcached_store](http://api.rubyonrails.org/classes/ActionDispatch/Session/MemCacheStore.html)
-- [:redis_session_store](https://github.com/roidrage/redis-session-store)
-
-config/initializers/session_store.rb
-
-```rb
-Rails.application.config.session_store :redis_session_store, { ... }
-```
-
 Put rucaptcha in your `Gemfile`:
 
 ```
@@ -81,6 +66,11 @@ RuCaptcha.configure do
   # self.expires_in = 120
   # Color style, default: :colorful, allows: [:colorful, :black_white]
   # self.style = :colorful
+  # [Requirement]
+  # Store Captcha code where, this config more like Rails config.cache_store
+  # default: Rails application config.cache_store
+  # But RuCaptcha requirements cache_store not in [:null_store, :memory_store, :file_store]
+  self.cache_store = :mem_cache_store
 end
 ```
 

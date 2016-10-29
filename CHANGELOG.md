@@ -1,16 +1,12 @@
-1.0.2
-
-- Revert 1.0.1 changes, still store code in Session, `Rails.cache` not a not place in difference environments.
-  for exampe: Not enable cache, File cache will have bug.
-- Give a warning when user use CookieStore.
-
-1.0.1
+1.1.0
 -----
+
+- Add `cache_store` config key to setup a cache store location for RuCaptcha.
+- Store captcha in custom cache store.
 
 ## Security Notes
 
 - Fix Session replay secure issue that when Rails application use CookieStore.
-
 
 1.0.0
 -----

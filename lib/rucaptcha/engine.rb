@@ -8,13 +8,19 @@ module RuCaptcha
         RuCaptcha::Captcha.send(:prepend, RuCaptcha::Cache)
       end
 
-      if Rails.application.config.session_store.name.match(/CookieStore/)
-        puts %(
-[RuCaptcha] Your application session has use #{Rails.application.config.session_store}
-this may have Session [Replay Attacks] secure issue in RuCaptcha case.
-We suggest you change it to backend [:active_record_store, :redis_session_store]
-http://guides.rubyonrails.org/security.html#replay-attacks-for-cookiestore-sessions)
-        puts ""
+      cache_store = RuCaptcha.config.cache_store
+      store_name = cache_store.is_a?(Array) ? cache_store.first : cache_store
+      if [:memory_store, :null_store, :file_store].include?(store_name)
+        raise "
+
+  RuCaptcha's cache_store requirements are stored across processes and machines,
+  such as :mem_cache_store, :redis_store, or other distributed storage.
+  But your current set is :#{store_name}.
+
+  Please make config file `config/initializes/rucaptcha.rb` to setup `cache_store`.
+  More infomation please read GitHub rucaptcha README file.
+
+"
       end
     end
   end
