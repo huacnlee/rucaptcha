@@ -1,3 +1,8 @@
+1.1.1
+-----
+
+- Remove inspect log on verify_rucaptcha
+
 1.1.0
 -----
 
