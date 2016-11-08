@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.require_paths         = ['lib']
   s.summary               = 'This is a Captcha gem for Rails Application. It run ImageMagick command to draw Captcha image.'
   s.license               = "MIT"
-  s.required_ruby_version = ">= 1.9.0"
+  s.required_ruby_version = ">= 2.0.0"
 
   s.add_dependency 'railties', '>= 3.2'
 end
