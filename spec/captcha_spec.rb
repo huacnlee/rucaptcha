@@ -34,4 +34,31 @@ describe RuCaptcha::Captcha do
       expect(colors).not_to eq colors1
     end
   end
+
+  describe '.rand_line_top' do
+    it 'should work' do
+      expect(RuCaptcha::Captcha.send(:rand_line_top, 1, 24)).to be_a(Integer)
+    end
+  end
+
+  describe '.uniq_rgbs_for_each_chars' do
+    let(:chars) { %w(a b c d e) }
+    let(:colors) { RuCaptcha::Captcha.send(:uniq_rgbs_for_each_chars, chars) }
+
+    it 'should work' do
+      expect(colors.length).to eq chars.length
+      expect(colors[0].length).to eq 3
+    end
+
+    it 'Be sure the color not same as preview color' do
+      pre_rgb = nil
+      colors.each do |rgb|
+        if pre_rgb
+          same = rgb.index(rgb.min) == pre_rgb.index(rgb.min) && rgb.index(rgb.max) == pre_rgb.index(pre_rgb.max)
+          expect(same).not_to eq true
+        end
+        pre_rgb = rgb
+      end
+    end
+  end
 end
