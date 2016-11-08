@@ -1,3 +1,9 @@
+1.1.2
+-----
+
+- Fix #34 rucaptcha.root_url -> root_path, to avoid generate a http url in a https application.
+- Fix spec to require Ruby 2.0.0, because there have a `Module#prepend` method called.
+
 1.1.1
 -----
 
