@@ -24,7 +24,7 @@ module RuCaptcha
         if store_name == :null_store
           raise msg
         else
-          Rails.logger.warn msg
+          puts msg
         end
       end
     end
