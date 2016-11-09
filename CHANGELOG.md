@@ -1,3 +1,8 @@
+1.1.3
+-----
+
+- Fix #35 just give a warning message if not setup a right cache_store, only raise on :null_store.
+
 1.1.2
 -----
 
