@@ -74,6 +74,18 @@ describe RuCaptcha do
         simple.params[:_rucaptcha] = 'AbcD'
         expect(simple.verify_rucaptcha?).to eq(true)
       end
+
+      it 'should keep session when given :keep_session' do
+        RuCaptcha.cache.write(simple.rucaptcha_sesion_key_key, {
+          time: Time.now.to_i,
+          code: 'abcd'
+        })
+        simple.params[:_rucaptcha] = 'abcd'
+        expect(simple.verify_rucaptcha?(nil, keep_session: true)).to eq(true)
+        expect(simple.custom_session).not_to eq nil
+        expect(simple.verify_rucaptcha?).to eq(true)
+        expect(simple.verify_rucaptcha?).to eq(false)
+      end
     end
 
     describe 'Incorrect chars' do

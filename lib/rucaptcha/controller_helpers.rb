@@ -6,10 +6,12 @@ module RuCaptcha
       helper_method :verify_rucaptcha?
     end
 
+    # session key of rucaptcha
     def rucaptcha_sesion_key_key
       ['rucaptcha-session', session.id].join(':')
     end
 
+    # Generate a new Captcha
     def generate_rucaptcha
       code = RuCaptcha::Captcha.random_chars
       session_val = {
@@ -20,10 +22,24 @@ module RuCaptcha
       RuCaptcha::Captcha.create(code)
     end
 
-    def verify_rucaptcha?(resource = nil)
+    # Verify captcha code
+    #
+    # params:
+    # resource - [optional] a ActiveModel object, if given will add validation error message to object.
+    # :keep_session - if true, RuCaptcha will not delete the captcha code session.
+    #
+    # exmaples:
+    #
+    #   verify_rucaptcha?
+    #   verify_rucaptcha?(user, keep_session: true)
+    #   verify_rucaptcha?(nil, keep_session: true)
+    #
+    def verify_rucaptcha?(resource = nil, opts = {})
+      opts ||= {}
+
       store_info = RuCaptcha.cache.read(rucaptcha_sesion_key_key)
       # make sure move used key
-      RuCaptcha.cache.delete(rucaptcha_sesion_key_key)
+      RuCaptcha.cache.delete(rucaptcha_sesion_key_key) unless opts[:keep_session]
 
       # Make sure session exist
       if store_info.blank?

@@ -1,3 +1,8 @@
+1.2.0
+-----
+
+- Add an `:keep_session` option for `verify_rucaptcha?` method to giva a way for let you keep session on verify, if true, RuCaptcha will not delete the captcha code session after validation.
+
 1.1.4
 -----
 
