@@ -9,7 +9,7 @@ module RuCaptcha
     # session key of rucaptcha
     def rucaptcha_sesion_key_key
       session_id = session.respond_to?(:id) ? session.id : session[:session_id]
-      ['rucaptcha-session', session.id].join(':')
+      ['rucaptcha-session', session_id].join(':')
     end
 
     # Generate a new Captcha
