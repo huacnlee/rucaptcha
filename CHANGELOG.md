@@ -1,3 +1,14 @@
+2.0.0
+-----
+
+*Break Changes!*
+
+WARNING!: This version have so many break changes!
+
+- Use C ext instead of ImageMagick, now it's no dependencies!
+- New captcha style, because C code is complex, just generate black chars.
+- Remove `len`, `style`, `font_size`, `cache_limit` config key, no support now.
+
 1.2.0
 -----
 

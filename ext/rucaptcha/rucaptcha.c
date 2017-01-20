@@ -8,6 +8,7 @@ void makegif(unsigned char im[70*200], unsigned char gif[gifsize]);
 #include <fcntl.h>
 #include <string.h>
 #include <ruby.h>
+#include "font.h"
 
 static int8_t *lt[];
 const int gifsize=17646;
@@ -129,10 +130,10 @@ static void blur(unsigned char im[70*200]) {
 	unsigned char *i=im;
 	int x,y;
 	for(y=0;y<68;y++) {
-               for(x=0;x<198;x++) {
+  	for(x=0;x<198;x++) {
 			unsigned int c11=*i,c12=i[1],c21=i[200],c22=i[201];
 			*i++=((c11+c12+c21+c22)/4);
-               }
+  	}
 	}
 }
 
@@ -169,7 +170,7 @@ void captcha(unsigned char im[70*200], unsigned char l[6]) {
 
 	memset(im,0xff,200*70); s1=s1&0x7f; s2=s2&0x3f; l[0]%=25; l[1]%=25; l[2]%=25; l[3]%=25; l[4]%=25; l[5]=0;
 	int p=30; p=letter(l[0],p,im,swr,s1,s2); p=letter(l[1],p,im,swr,s1,s2); p=letter(l[2],p,im,swr,s1,s2); p=letter(l[3],p,im,swr,s1,s2); letter(l[4],p,im,swr,s1,s2);
-	dots(im); blur(im); filter(im); line(im,swr,s1);
+	line(im,swr,s1); dots(im); // blur(im); // filter(im);
 	l[0]=letters[l[0]]; l[1]=letters[l[1]]; l[2]=letters[l[2]]; l[3]=letters[l[3]]; l[4]=letters[l[4]];
 }
 
@@ -190,8 +191,6 @@ void captcha(unsigned char im[70*200], unsigned char l[6]) {
 // }
 //
 // #endif
-
-#include "f.h"
 
 VALUE RuCaptcha = Qnil;
 
