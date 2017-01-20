@@ -14,6 +14,7 @@ module RuCaptcha
 
     # Generate a new Captcha
     def generate_rucaptcha
+      return generate_rucaptcha1
       code = RuCaptcha::Captcha.random_chars
       session_val = {
         code: code,
@@ -21,6 +22,16 @@ module RuCaptcha
       }
       RuCaptcha.cache.write(rucaptcha_sesion_key_key, session_val, expires_in: RuCaptcha.config.expires_in)
       RuCaptcha::Captcha.create(code)
+    end
+
+    def generate_rucaptcha1
+      res = RuCaptcha.create()
+      session_val = {
+        code: res[0],
+        time: Time.now.to_i
+      }
+      RuCaptcha.cache.write(rucaptcha_sesion_key_key, session_val, expires_in: RuCaptcha.config.expires_in)
+      res[1]
     end
 
     # Verify captcha code
