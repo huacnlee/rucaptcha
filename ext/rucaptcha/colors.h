@@ -1,6 +1,25 @@
 // Colors from
 // https://material.io/guidelines/style/color.html#color-ui-color-palette
 static char *colors[] = {
+  // Black 500 #000000
+  "GIF89a" "\xc8\0\x46\0" "\x83" "\0\0"
+  "\x00\x00\x00"
+	"\x00\x00\x00"
+	"\x00\x00\x00"
+  "\x00\x00\x00"
+	"\x00\x00\x00"
+	"\x00\x00\x00"
+	"\x00\x00\x00"
+	"\x00\x00\x00"
+	"\x00\x00\x00"
+	"\x00\x00\x00"
+	"\x00\x00\x00"
+  "\x00\x00\x00"
+  "\x00\x00\x00"
+  "\x00\x00\x00"
+  "\x00\x00\x00"
+	"\xff\xff\xff" "," "\0\0\0\0" "\xc8\0\x46\0" "\0" "\x04",
+
   // Red 500 #F44336
   "GIF89a" "\xc8\0\x46\0" "\x83" "\0\0"
   "\xF4\x43\x36"
