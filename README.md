@@ -4,44 +4,20 @@
 [![Build Status](https://travis-ci.org/huacnlee/rucaptcha.svg)](https://travis-ci.org/huacnlee/rucaptcha)
 [![Code Climate](https://codeclimate.com/github/huacnlee/rucaptcha/badges/gpa.svg)](https://codeclimate.com/github/huacnlee/rucaptcha)
 
-This is a Captcha gem for Rails Applications. It runs an ImageMagick command to draw Captcha image - so it has NO performance issues or memory leak issues. **There is NO: RMagick**
+This is a Captcha gem for Rails Applications. It drawing captcha image with C extension.
 
 ## Example
 
-![1](https://cloud.githubusercontent.com/assets/5518/15423974/b186b0d6-1eb2-11e6-9c0e-4cc3a66f32c8.png)
-![2](https://cloud.githubusercontent.com/assets/5518/15423975/b1887b6e-1eb2-11e6-895f-5629f82697d3.png)
-![3](https://cloud.githubusercontent.com/assets/5518/15423978/b18f08ee-1eb2-11e6-9670-c21dba290e04.png)
-![4](https://cloud.githubusercontent.com/assets/5518/15423976/b18b6946-1eb2-11e6-8413-700ded157262.png)
-![5](https://cloud.githubusercontent.com/assets/5518/15423977/b18e7c62-1eb2-11e6-96f7-5bd6981d4185.png)
-![6](https://cloud.githubusercontent.com/assets/5518/15423979/b19175d4-1eb2-11e6-9417-7d496fb996b4.png)
-![7](https://cloud.githubusercontent.com/assets/5518/15423980/b1caf944-1eb2-11e6-862e-78c0a9360b43.png)
-
-Idea by: https://ruby-china.org/topics/20558#reply4
+![rucaptcha0](https://cloud.githubusercontent.com/assets/5518/22144000/22993ea2-df37-11e6-8f67-c32b4394e7a2.gif) ![rucaptcha1](https://cloud.githubusercontent.com/assets/5518/22144499/e831f004-df38-11e6-8cd0-2b47bfab3935.gif) ![rucaptcha2](https://cloud.githubusercontent.com/assets/5518/22144500/e83442aa-df38-11e6-8b98-35c90cd8bad3.gif)
 
 [中文介绍和使用说明](https://ruby-china.org/topics/27832)
 
 ## Feature
 
-- Only need `ImageMagick`, No `RMagick`, No `mini_magick`;
+- No dependencies. No ImageMagick, No RMagick.
 - For Rails Application;
 - Simple, Easy to use;
-- File Caching for performance.
-
-## Requirements
-
-- ImageMagick 6.9+
-
-#### Ubuntu
-
-```
-sudo apt-get install imagemagick ghostscript
-```
-
-#### Mac OS X
-
-```bash
-brew install imagemagick ghostscript
-```
+- High performance.
 
 ## Usage
 
