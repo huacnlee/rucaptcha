@@ -66,7 +66,7 @@ class AccountController < ApplicationController
 end
 ```
 
-> TIP: Sometime you may need keep last verified captcha code in session on `verify_rucaptcha?` method call, you can use `keep_session: true`. For example: ` Verify_rucaptcha? (@user, keep_session: true) `.
+> TIP: Sometime you may need keep last verified captcha code in session on `verify_rucaptcha?` method call, you can use `keep_session: true`. For example: `verify_rucaptcha? @user, keep_session: true`.
 
 View `app/views/account/new.html.erb`
 
