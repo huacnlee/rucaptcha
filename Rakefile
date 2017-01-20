@@ -8,3 +8,11 @@ end
 
 RSpec::Core::RakeTask.new(:spec)
 task default: :spec
+
+
+task :preview do
+  require 'rucaptcha'
+
+  res = RuCaptcha.create()
+  puts res[1]
+end

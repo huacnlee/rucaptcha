@@ -5,10 +5,13 @@ void makegif(unsigned char im[70*200], unsigned char gif[gifsize]);
 
 #include <unistd.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <fcntl.h>
 #include <string.h>
+#include <time.h>
 #include <ruby.h>
 #include "font.h"
+#include "colors.h"
 
 static int8_t *lt[];
 const int gifsize=17646;
@@ -17,24 +20,10 @@ void makegif(unsigned char im[70*200], unsigned char gif[gifsize]) {
  	// tag ; widthxheight ; GCT:0:0:7 ; bgcolor + aspect // GCT
  	// Image Separator // left x top // widthxheight // Flags
 	// LZW code size
-	memcpy(gif,"GIF89a" "\xc8\0\x46\0" "\x83" "\0\0"
-		"\x00\x00\x00"
-		"\x10\x10\x10"
-		"\x20\x20\x20"
-		"\x30\x30\x30"
-		"\x40\x40\x40"
-		"\x50\x50\x50"
-		"\x60\x60\x60"
-		"\x70\x70\x70"
-		"\x80\x80\x80"
-		"\x90\x90\x90"
-		"\xa0\xa0\xa0"
-		"\xb0\xb0\xb0"
-		"\xc0\xc0\xc0"
-		"\xd0\xd0\xd0"
-		"\xe0\xe0\xe0"
-		"\xff\xff\xff"
-		"," "\0\0\0\0" "\xc8\0\x46\0" "\0" "\x04",13+48+10+1);
+  srand(time(NULL));
+  int color_len = (int) sizeof(colors) / sizeof(colors[0]);
+  int color_idx = rand() % color_len;
+	memcpy(gif,colors[color_idx],13+48+10+1);
 
 	int x,y;
 	unsigned char *i=im;
