@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rucaptcha (2.0.0.beta2)
+    rucaptcha (2.0.0.beta3)
       railties (>= 3.2)
 
 GEM
