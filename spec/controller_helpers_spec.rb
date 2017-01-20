@@ -37,9 +37,9 @@ describe RuCaptcha do
 
   describe '.generate_rucaptcha' do
     it 'should work' do
-      expect(RuCaptcha::Captcha).to receive(:random_chars).and_return('abcd')
-      expect(simple.generate_rucaptcha).not_to be_nil
-      expect(simple.custom_session[:code]).to eq('abcd')
+      allow(RuCaptcha).to receive(:create).and_return(['abcde', 'fake image data'])
+      expect(simple.generate_rucaptcha).to eq 'fake image data'
+      expect(simple.custom_session[:code]).to eq('abcde')
     end
   end
 

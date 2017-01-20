@@ -14,7 +14,6 @@ module RuCaptcha
     def config
       return @config if defined?(@config)
       @config = Configuration.new
-      @config.cache_limit = 100
       @config.expires_in  = 2.minutes
       if Rails.application
         @config.cache_store = Rails.application.config.cache_store

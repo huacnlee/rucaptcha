@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.version               = RuCaptcha::VERSION
   s.authors               = 'Jason Lee'
   s.email                 = 'huacnlee@gmail.com'
-  s.files                 = Dir.glob('lib/**/*') +
-                            Dir.glob('ext/**/*') +
+  s.files                 = Dir.glob('lib/**/*.{rb}') +
+                            Dir.glob("ext/**/*.{h,c,rb}") +
                             Dir.glob('app/**/*') +
                             Dir.glob('config/**/*') +
                             %w[README.md CHANGELOG.md]
@@ -21,5 +21,5 @@ Gem::Specification.new do |s|
   s.required_ruby_version = ">= 2.0.0"
 
   s.add_dependency 'railties', '>= 3.2'
-  s.add_development_dependency 'rake-compiler', '~> 0'
+  s.add_development_dependency 'rake-compiler', '~> 1'
 end
