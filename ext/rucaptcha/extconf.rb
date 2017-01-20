@@ -1,5 +1,4 @@
 require 'mkmf'
 
-extension_name = 'rucaptcha'
-dir_config(extension_name)
-create_makefile(extension_name)
+# dir_config(extension_name)
+create_makefile('rucaptcha/rucaptcha')

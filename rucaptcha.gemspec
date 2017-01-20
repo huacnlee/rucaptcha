@@ -8,14 +8,18 @@ Gem::Specification.new do |s|
   s.version               = RuCaptcha::VERSION
   s.authors               = 'Jason Lee'
   s.email                 = 'huacnlee@gmail.com'
-  s.files                 = Dir.glob('lib/**/*') + Dir.glob('app/**/*') + Dir.glob('config/**/*') + %w(README.md CHANGELOG.md)
+  s.files                 = Dir.glob('lib/**/*') +
+                            Dir.glob('ext/**/*') +
+                            Dir.glob('app/**/*') +
+                            Dir.glob('config/**/*') +
+                            %w[README.md CHANGELOG.md]
   s.homepage              = 'https://github.com/huacnlee/rucaptcha'
   s.require_paths         = ['lib']
-  s.extensions            = "ext/rucaptcha/extconf.rb"
+  s.extensions            = %w[ext/rucaptcha/extconf.rb]
   s.summary               = 'This is a Captcha gem for Rails Application. It run ImageMagick command to draw Captcha image.'
   s.license               = "MIT"
   s.required_ruby_version = ">= 2.0.0"
 
   s.add_dependency 'railties', '>= 3.2'
-  s.add_development_dependency "rake-compiler"
+  s.add_development_dependency 'rake-compiler', '~> 0'
 end

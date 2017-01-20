@@ -7,7 +7,6 @@ require_relative 'rucaptcha/configuration'
 require_relative 'rucaptcha/controller_helpers'
 require_relative 'rucaptcha/view_helpers'
 require_relative 'rucaptcha/cache'
-require_relative 'rucaptcha/captcha'
 require_relative 'rucaptcha/engine'
 
 module RuCaptcha
