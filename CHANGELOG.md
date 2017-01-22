@@ -1,3 +1,15 @@
+2.0.0
+-----
+
+*Break Changes!*
+
+WARNING!: This version have so many break changes!
+
+- Use C ext instead of ImageMagick, now it's no dependencies!
+- New captcha style.
+- Remove `len`, `font_size`, `cache_limit` config key, no support now.
+- Output `GIF` format.
+
 1.2.0
 -----
 

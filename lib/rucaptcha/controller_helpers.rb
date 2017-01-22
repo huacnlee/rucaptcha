@@ -14,13 +14,13 @@ module RuCaptcha
 
     # Generate a new Captcha
     def generate_rucaptcha
-      code = RuCaptcha::Captcha.random_chars
+      res = RuCaptcha.generate()
       session_val = {
-        code: code,
+        code: res[0],
         time: Time.now.to_i
       }
       RuCaptcha.cache.write(rucaptcha_sesion_key_key, session_val, expires_in: RuCaptcha.config.expires_in)
-      RuCaptcha::Captcha.create(code)
+      res[1]
     end
 
     # Verify captcha code

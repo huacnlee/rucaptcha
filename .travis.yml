@@ -3,8 +3,5 @@ rvm:
   - 2.2.3
 services:
   - memcached
-addons:
-  apt:
-    packages:
-      - imagemagick
-      - tesseract-ocr
+script:
+  - bundle exec rake compile && bundle exec rake

@@ -4,44 +4,20 @@
 [![Build Status](https://travis-ci.org/huacnlee/rucaptcha.svg)](https://travis-ci.org/huacnlee/rucaptcha)
 [![Code Climate](https://codeclimate.com/github/huacnlee/rucaptcha/badges/gpa.svg)](https://codeclimate.com/github/huacnlee/rucaptcha)
 
-This is a Captcha gem for Rails Applications. It runs an ImageMagick command to draw Captcha image - so it has NO performance issues or memory leak issues. **There is NO: RMagick**
+This is a Captcha gem for Rails Applications. It drawing captcha image with C code.
 
 ## Example
 
-![1](https://cloud.githubusercontent.com/assets/5518/15423974/b186b0d6-1eb2-11e6-9c0e-4cc3a66f32c8.png)
-![2](https://cloud.githubusercontent.com/assets/5518/15423975/b1887b6e-1eb2-11e6-895f-5629f82697d3.png)
-![3](https://cloud.githubusercontent.com/assets/5518/15423978/b18f08ee-1eb2-11e6-9670-c21dba290e04.png)
-![4](https://cloud.githubusercontent.com/assets/5518/15423976/b18b6946-1eb2-11e6-8413-700ded157262.png)
-![5](https://cloud.githubusercontent.com/assets/5518/15423977/b18e7c62-1eb2-11e6-96f7-5bd6981d4185.png)
-![6](https://cloud.githubusercontent.com/assets/5518/15423979/b19175d4-1eb2-11e6-9417-7d496fb996b4.png)
-![7](https://cloud.githubusercontent.com/assets/5518/15423980/b1caf944-1eb2-11e6-862e-78c0a9360b43.png)
-
-Idea by: https://ruby-china.org/topics/20558#reply4
+<img src="https://cloud.githubusercontent.com/assets/5518/22151425/e02390c8-df58-11e6-974d-5eb9b1a4e577.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151427/e4939d92-df58-11e6-9754-4a46a86acea8.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151431/e494576e-df58-11e6-9845-a5590904c175.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151432/e495066e-df58-11e6-92b8-38b40b73aba0.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151428/e49404ee-df58-11e6-8e2d-8b17b33a3710.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151430/e4942406-df58-11e6-9ff8-6e2325304b41.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151429/e4941ae2-df58-11e6-8107-757296573b2f.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151433/e4c7c89c-df58-11e6-9853-1ffbb4986962.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151435/e4c97ea8-df58-11e6-8959-b4c78716271d.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151436/e4cc09f2-df58-11e6-965c-673333b33c0d.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151434/e4c87788-df58-11e6-9490-c255aaafce71.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151445/ee35ff66-df58-11e6-8660-a3673ef3f5ee.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151446/ee67b074-df58-11e6-9b95-7d53eec21c33.gif" width="150px" />
 
 [中文介绍和使用说明](https://ruby-china.org/topics/27832)
 
 ## Feature
 
-- Only need `ImageMagick`, No `RMagick`, No `mini_magick`;
+- No dependencies. No ImageMagick, No RMagick.
 - For Rails Application;
 - Simple, Easy to use;
-- File Caching for performance.
-
-## Requirements
-
-- ImageMagick 6.9+
-
-#### Ubuntu
-
-```
-sudo apt-get install imagemagick ghostscript
-```
-
-#### Mac OS X
-
-```bash
-brew install imagemagick ghostscript
-```
+- High performance.
 
 ## Usage
 
@@ -55,17 +31,10 @@ Create `config/initializers/rucaptcha.rb`
 
 ```rb
 RuCaptcha.configure do
-  # Number of chars, default: 4
-  self.len = 4
-  # Image font size, default: 45
-  self.font_size = 45
-  # Cache generated images in file store, this is config files limit, default: 100
-  # set 0 to disable file cache.
-  self.cache_limit = 100
-  # Custom captcha code expire time if you need, default: 2 minutes
-  # self.expires_in = 120
   # Color style, default: :colorful, allows: [:colorful, :black_white]
   # self.style = :colorful
+  # Custom captcha code expire time if you need, default: 2 minutes
+  # self.expires_in = 120
   # [Requirement]
   # Store Captcha code where, this config more like Rails config.cache_store
   # default: Rails application config.cache_store
@@ -99,7 +68,7 @@ class AccountController < ApplicationController
 end
 ```
 
-> TIP: Sometime you may need keep last verified captcha code in session on `verify_rucaptcha?` method call, you can use `keep_session: true`. For example: ` Verify_rucaptcha? (@user, keep_session: true) `.
+> TIP: Sometime you may need keep last verified captcha code in session on `verify_rucaptcha?` method call, you can use `keep_session: true`. For example: `verify_rucaptcha? @user, keep_session: true`.
 
 View `app/views/account/new.html.erb`
 
