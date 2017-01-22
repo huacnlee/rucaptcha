@@ -14,7 +14,7 @@ module RuCaptcha
 
     # Generate a new Captcha
     def generate_rucaptcha
-      res = RuCaptcha.create()
+      res = RuCaptcha.generate()
       session_val = {
         code: res[0],
         time: Time.now.to_i

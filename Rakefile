@@ -13,6 +13,6 @@ task default: :spec
 task :preview do
   require 'rucaptcha'
 
-  res = RuCaptcha.create()
+  res = RuCaptcha.create(1)
   puts res[1]
 end

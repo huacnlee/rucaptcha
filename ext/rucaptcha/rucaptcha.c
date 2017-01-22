@@ -1,7 +1,7 @@
 // http://github.com/ITikhonov/captcha
 const int gifsize;
 void captcha(unsigned char im[70*200], unsigned char l[6]);
-void makegif(unsigned char im[70*200], unsigned char gif[gifsize]);
+void makegif(unsigned char im[70*200], unsigned char gif[gifsize], int style);
 
 #include <unistd.h>
 #include <stdint.h>
@@ -16,13 +16,16 @@ void makegif(unsigned char im[70*200], unsigned char gif[gifsize]);
 static int8_t *lt[];
 const int gifsize=17646;
 
-void makegif(unsigned char im[70*200], unsigned char gif[gifsize]) {
+void makegif(unsigned char im[70*200], unsigned char gif[gifsize], int style) {
   // tag ; widthxheight ; GCT:0:0:7 ; bgcolor + aspect // GCT
   // Image Separator // left x top // widthxheight // Flags
   // LZW code size
   srand(time(NULL));
   int color_len = (int) sizeof(colors) / sizeof(colors[0]);
   int color_idx = rand() % color_len;
+  if (style == 0) {
+    color_idx = 0;
+  }
   memcpy(gif,colors[color_idx],13+48+10+1);
 
   int x,y;
@@ -185,20 +188,21 @@ VALUE RuCaptcha = Qnil;
 
 void Init_rucaptcha();
 
-VALUE create(VALUE self);
+VALUE create(VALUE self, VALUE style);
 
 void Init_rucaptcha() {
   RuCaptcha = rb_define_module("RuCaptcha");
-  rb_define_singleton_method(RuCaptcha, "create", create, 0);
+  rb_define_singleton_method(RuCaptcha, "create", create, 1);
 }
 
-VALUE create(VALUE self) {
+VALUE create(VALUE self, VALUE style) {
   char l[6];
   unsigned char im[80*200];
   unsigned char gif[gifsize];
+  int i_style = FIX2INT(style);
 
-  captcha(im,l);
-  makegif(im,gif);
+  captcha(im, l);
+  makegif(im, gif, i_style);
 
   VALUE result = rb_ary_new2(2);
   rb_ary_push(result, rb_str_new2(l));

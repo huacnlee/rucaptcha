@@ -31,6 +31,8 @@ Create `config/initializers/rucaptcha.rb`
 
 ```rb
 RuCaptcha.configure do
+  # Color style, default: :colorful, allows: [:colorful, :black_white]
+  # self.style = :colorful
   # Custom captcha code expire time if you need, default: 2 minutes
   # self.expires_in = 120
   # [Requirement]
