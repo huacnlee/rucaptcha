@@ -32,14 +32,16 @@ Create `config/initializers/rucaptcha.rb`
 ```rb
 RuCaptcha.configure do
   # Color style, default: :colorful, allows: [:colorful, :black_white]
-  # self.style = :colorful
+  # self.style = :colorful
   # Custom captcha code expire time if you need, default: 2 minutes
   # self.expires_in = 120
-  # [Requirement]
+  # [Requirement/重要]
   # Store Captcha code where, this config more like Rails config.cache_store
-  # default: Rails application config.cache_store
+  # default: Read config info from `Rails.application.config.cache_store`
   # But RuCaptcha requirements cache_store not in [:null_store, :memory_store, :file_store]
-  self.cache_store = :mem_cache_store
+  # 默认：将会从 Rails 配置的 cache_store 里面读取相同的配置信息
+  # 但如果是 [:null_store, :memory_store, :file_store] 之类的，不行
+  self.cache_store = :mem_cache_store
 end
 ```
 
