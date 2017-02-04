@@ -1,3 +1,8 @@
+2.0.1
+-----
+
+- Fix `/rucaptcha` path issue when `config.action_controller.asset_host` has setup with CDN url.
+
 2.0.0
 -----
 
