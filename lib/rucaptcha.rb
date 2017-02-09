@@ -1,13 +1,13 @@
 require 'rails'
 require 'action_controller'
 require 'active_support/all'
-require_relative 'rucaptcha/rucaptcha'
-require_relative 'rucaptcha/version'
-require_relative 'rucaptcha/configuration'
-require_relative 'rucaptcha/controller_helpers'
-require_relative 'rucaptcha/view_helpers'
-require_relative 'rucaptcha/cache'
-require_relative 'rucaptcha/engine'
+require 'rucaptcha/rucaptcha'
+require 'rucaptcha/version'
+require 'rucaptcha/configuration'
+require 'rucaptcha/controller_helpers'
+require 'rucaptcha/view_helpers'
+require 'rucaptcha/cache'
+require 'rucaptcha/engine'
 
 module RuCaptcha
   class << self
