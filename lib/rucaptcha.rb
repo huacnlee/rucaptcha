@@ -35,5 +35,10 @@ module RuCaptcha
   end
 end
 
-ActionController::Base.send(:include, RuCaptcha::ControllerHelpers)
-ActionView::Base.send(:include, RuCaptcha::ViewHelpers)
+ActiveSupport.on_load(:action_controller) do
+  ActionController::Base.send :include, RuCaptcha::ControllerHelpers
+end
+
+ActiveSupport.on_load(:active_view) do
+  include RuCaptcha::ViewHelpers
+end
