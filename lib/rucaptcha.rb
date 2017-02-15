@@ -39,6 +39,6 @@ ActiveSupport.on_load(:action_controller) do
   ActionController::Base.send :include, RuCaptcha::ControllerHelpers
 end
 
-ActiveSupport.on_load(:active_view) do
+ActiveSupport.on_load(:action_view) do
   include RuCaptcha::ViewHelpers
 end
