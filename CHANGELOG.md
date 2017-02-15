@@ -1,3 +1,8 @@
+2.0.2
+-----
+
+- Use `ActiveSupport.on_load` to extend ActionController and ActionView.
+
 2.0.1
 -----
 
