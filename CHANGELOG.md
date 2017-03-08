@@ -1,3 +1,11 @@
+2.1.0
+-----
+
+- Mount Router by default, not need config now.
+- Default use [:file_store, 'tmp/cache/rucaptcha/session'] as RuCaptcha.config.cache_store, now it can work without any configurations.
+
+> NOTE: But you still need care about `config.cache_store` to setup on a right way.
+
 2.0.3
 -----
 
