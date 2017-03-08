@@ -35,27 +35,19 @@ RuCaptcha.configure do
   # self.style = :colorful
   # Custom captcha code expire time if you need, default: 2 minutes
   # self.expires_in = 120
-  # [Requirement/重要]
+  # [Requirement / 重要]
   # Store Captcha code where, this config more like Rails config.cache_store
   # default: Read config info from `Rails.application.config.cache_store`
   # But RuCaptcha requirements cache_store not in [:null_store, :memory_store, :file_store]
-  # 默认：会从 Rails 配置的 cache_store 里面读取相同的配置信息，用于存储验证码字符
+  # 默认：会从 Rails 配置的 cache_store 里面读取相同的配置信息，并尝试用可以运行的方式，用于存储验证码字符
   # 但如果是 [:null_store, :memory_store, :file_store] 之类的，你可以通过下面的配置项单独给 RuCaptcha 配置 cache_store
   self.cache_store = :mem_cache_store
 end
 ```
 
-Edit `config/routes.rb`, add the following code:
-
-```rb
-Rails.application.routes.draw do
-  ...
-  mount RuCaptcha::Engine => "/rucaptcha"
-  ...
-end
-```
-
 Controller `app/controller/account_controller.rb`
+
+When you called `verify_rucaptcha?`, it will uses value from `params[:_rucaptcha]` to validation.
 
 ```rb
 class AccountController < ApplicationController
@@ -68,6 +60,17 @@ class AccountController < ApplicationController
     end
   end
 end
+
+class ForgotPasswordController < ApplicationController
+  def create
+    # without any args
+    if verify_rucaptcha?
+      to_send_email
+    else
+      redirect_to '/forgot-password', alert: 'Invalid captcha code.'
+    end
+  end
+end
 ```
 
 > TIP: Sometime you may need keep last verified captcha code in session on `verify_rucaptcha?` method call, you can use `keep_session: true`. For example: `verify_rucaptcha? @user, keep_session: true`.
@@ -75,13 +78,17 @@ end
 View `app/views/account/new.html.erb`
 
 ```erb
-<form>
+<form method="POST">
   ...
   <div class="form-group">
     <%= rucaptcha_input_tag(class: 'form-control', placeholder: 'Input Captcha') %>
     <%= rucaptcha_image_tag(alt: 'Captcha') %>
   </div>
   ...
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
 </form>
 ```
 
