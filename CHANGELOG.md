@@ -1,3 +1,8 @@
+2.1.2
+-----
+
+- Do not change captcha when `HEAD /rucaptcha`.
+
 2.1.1
 -----
 
