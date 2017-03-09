@@ -1,3 +1,8 @@
+2.1.1
+-----
+
+- Mount engine use `prepend` method to get high priority in config/routes.rb.
+
 2.1.0
 -----
 
