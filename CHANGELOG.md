@@ -12,9 +12,13 @@
 -----
 
 - Mount Router by default, not need config now.
+
+  > IMPORTANT: Wen you upgrade this version, you need remove `mount RuCaptcha::Engine` line from your `config/routes.rb`
 - Default use [:file_store, 'tmp/cache/rucaptcha/session'] as RuCaptcha.config.cache_store, now it can work without any configurations.
 
 > NOTE: But you still need care about `config.cache_store` to setup on a right way.
+
+
 
 2.0.3
 -----
