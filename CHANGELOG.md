@@ -1,3 +1,8 @@
+2.1.3
+-----
+
+- Windows support fixed with `send_data` method. (#45)
+
 2.1.2
 -----
 
