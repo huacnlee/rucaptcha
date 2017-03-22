@@ -6,12 +6,7 @@ module RuCaptcha
       headers['Pragma'] = 'no-cache'
       data = generate_rucaptcha
       opts = { disposition: 'inline', type: 'image/gif' }
-
-      if Gem.win_platform?
-        send_file data, opts
-      else
-        send_data data, opts
-      end
+      send_data data, opts
     end
   end
 end
