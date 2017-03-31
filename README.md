@@ -120,3 +120,19 @@ class ActionDispatch::IntegrationTest
   end
 end
 ```
+
+### Invalid message without Devise
+
+When you are using this gem without Devise, you may find out that the invalid message is missing.
+For this case, use the trick below to manually add your i18n invalid message.
+
+```rb
+if verify_rucaptcha?(@user) && @user.save
+  do_whatever_you_want
+  redirect_to someplace_you_want
+else
+  # this is the trick
+  @user.errors.add(:base, t('rucaptcha.invalid'))
+  render :new
+end
+```
