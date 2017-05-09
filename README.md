@@ -29,6 +29,14 @@ gem 'rucaptcha'
 
 Create `config/initializers/rucaptcha.rb`
 
+RuCaptcha 没有使用 Rails Session 来存储验证码信息，因为 Rails 的默认 Session 是存储在 Cookie 里面，如果验证码存在里面会存在 [Replay attack](https://en.wikipedia.org/wiki/Replay_attack) 漏洞，导致验证码关卡被攻破。
+
+所以我在设计上要求 RuCaptcha 得配置一个可以支持分布式的后端存储方案例如：Memcached 或 Redis 以及其他可以支持分布式的 cache_store 方案。
+
+同时，为了保障易用性，默认会尝试使用 `:file_store` 的方式，将验证码存在应用程序的 `tmp/cache/rucaptcha/session` 目录（但请注意，多机器部署这样是无法正常运作的）。
+
+所以，我建议大家使用的时候，配置上 `cache_store` （详见 [Rails Guides 缓存配置部分](http://guides.ruby-china.org/caching_with_rails.html#%E9%85%8D%E7%BD%AE)的文档）到一个 Memcached 或 Redis，这才是最佳实践。
+
 ```rb
 RuCaptcha.configure do
   # Color style, default: :colorful, allows: [:colorful, :black_white]
