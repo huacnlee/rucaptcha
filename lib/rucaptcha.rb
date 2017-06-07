@@ -47,7 +47,7 @@ module RuCaptcha
   But your current set is #{cache_store}, it has changed to :file_store for working.
   NOTE: :file_store is still not a good way, it only works with single server case.
 
-  Please make config file `config/initializes/rucaptcha.rb` to setup `cache_store`.
+  Please make config file `config/initializers/rucaptcha.rb` to setup `cache_store`.
   More infomation please read GitHub RuCaptcha README file.
   https://github.com/huacnlee/rucaptcha
 
