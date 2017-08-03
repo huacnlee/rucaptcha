@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/huacnlee/rucaptcha.svg)](https://travis-ci.org/huacnlee/rucaptcha)
 [![Code Climate](https://codeclimate.com/github/huacnlee/rucaptcha/badges/gpa.svg)](https://codeclimate.com/github/huacnlee/rucaptcha)
 
-This is a Captcha gem for Rails Applications. It drawing captcha image with C code.
+This is a Captcha gem for Rails Applications which generates captcha image by C code.
 
 ## Example
 
@@ -14,7 +14,7 @@ This is a Captcha gem for Rails Applications. It drawing captcha image with C co
 
 ## Feature
 
-- No dependencies. No ImageMagick, No RMagick.
+- No dependencies. No ImageMagick. No RMagick;
 - For Rails Application;
 - Simple, Easy to use;
 - High performance.
@@ -28,14 +28,6 @@ gem 'rucaptcha'
 ```
 
 Create `config/initializers/rucaptcha.rb`
-
-RuCaptcha 没有使用 Rails Session 来存储验证码信息，因为 Rails 的默认 Session 是存储在 Cookie 里面，如果验证码存在里面会存在 [Replay attack](https://en.wikipedia.org/wiki/Replay_attack) 漏洞，导致验证码关卡被攻破。
-
-所以我在设计上要求 RuCaptcha 得配置一个可以支持分布式的后端存储方案例如：Memcached 或 Redis 以及其他可以支持分布式的 cache_store 方案。
-
-同时，为了保障易用性，默认会尝试使用 `:file_store` 的方式，将验证码存在应用程序的 `tmp/cache/rucaptcha/session` 目录（但请注意，多机器部署这样是无法正常运作的）。
-
-所以，我建议大家使用的时候，配置上 `cache_store` （详见 [Rails Guides 缓存配置部分](http://guides.ruby-china.org/caching_with_rails.html#%E9%85%8D%E7%BD%AE)的文档）到一个 Memcached 或 Redis，这才是最佳实践。
 
 ```rb
 RuCaptcha.configure do
@@ -53,9 +45,27 @@ RuCaptcha.configure do
 end
 ```
 
+RuCaptcha 没有使用 Rails Session 来存储验证码信息，因为 Rails 的默认 Session 是存储在 Cookie 里面，如果验证码存在里面会存在 [Replay attack](https://en.wikipedia.org/wiki/Replay_attack) 漏洞，导致验证码关卡被攻破。
+
+所以我在设计上要求 RuCaptcha 得配置一个可以支持分布式的后端存储方案例如：Memcached 或 Redis 以及其他可以支持分布式的 cache_store 方案。
+
+同时，为了保障易用性，默认会尝试使用 `:file_store` 的方式，将验证码存在应用程序的 `tmp/cache/rucaptcha/session` 目录（但请注意，多机器部署这样是无法正常运作的）。
+
+所以，我建议大家使用的时候，配置上 `cache_store` （详见 [Rails Guides 缓存配置部分](https://ruby-china.github.io/rails-guides/caching_with_rails.html#%E9%85%8D%E7%BD%AE)的文档）到一个 Memcached 或 Redis，这才是最佳实践。
+
+#  
+(RuCaptha do not use Rails Session to store captcha information. As the default session is stored in Cookie in Rails, there's a [Replay attack](https://en.wikipedia.org/wiki/Replay_attack) bug which may causes capthcha being destroyed if we store captcha in Rails Session.
+
+So in my design I require RuCaptcha to configure a distributed backend storage scheme, such as Memcached, Redis or other cache_store schemes which support distribution.
+
+Meanwhile, for the ease of use, RuCapthca would try to use `:file_store` by default and store the capthca in `tmp/cache/rucaptcha/session` directory (kindly note that it's not working if deploy on multiple machine).
+
+For recommendation, configure the `cache_store`（more details on [Rails Guides Configuration of Cache Stores](http://guides.rubyonrails.org/caching_with_rails.html#configuration)） to Memcached or Redis, that would be the best practice.)
+# 
+
 Controller `app/controller/account_controller.rb`
 
-When you called `verify_rucaptcha?`, it will uses value from `params[:_rucaptcha]` to validation.
+When you called `verify_rucaptcha?`, it uses value from `params[:_rucaptcha]` to validate.
 
 ```rb
 class AccountController < ApplicationController
@@ -81,7 +91,7 @@ class ForgotPasswordController < ApplicationController
 end
 ```
 
-> TIP: Sometime you may need keep last verified captcha code in session on `verify_rucaptcha?` method call, you can use `keep_session: true`. For example: `verify_rucaptcha? @user, keep_session: true`.
+> TIP: Sometimes you may need to keep last verified captcha code in session on `verify_rucaptcha?` method call, you can use `keep_session: true`. For example: `verify_rucaptcha? @user, keep_session: true`.
 
 View `app/views/account/new.html.erb`
 
@@ -100,7 +110,7 @@ View `app/views/account/new.html.erb`
 </form>
 ```
 
-And if you are use Devise, you can read this to add validation: [RuCaptcha with Devise](https://github.com/huacnlee/rucaptcha/wiki/Working-with-Devise).
+And if you are using [Devise](https://github.com/plataformatec/devise), you can read this reference to add validation: [RuCaptcha with Devise](https://github.com/huacnlee/rucaptcha/wiki/Working-with-Devise).
 
 ### Write your test skip captcha validation
 
@@ -132,7 +142,7 @@ end
 ### Invalid message without Devise
 
 When you are using this gem without Devise, you may find out that the invalid message is missing.
-For this case, use the trick below to manually add your i18n invalid message.
+For this case, use the trick below to add your i18n invalid message manually.
 
 ```rb
 if verify_rucaptcha?(@user) && @user.save
