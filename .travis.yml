@@ -3,7 +3,5 @@ rvm:
   - 2.2.3
 services:
   - memcached
-addons:
-  srcclr: true
 script:
   - bundle exec rake compile && bundle exec rake
