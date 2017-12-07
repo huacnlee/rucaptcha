@@ -161,28 +161,28 @@ void captcha(unsigned char im[70*200], unsigned char l[8], int length, int i_lin
   close(f);
   memset(im,0xff,200*70); s1=s1&0x7f; s2=s2&0x3f;
 
-	int x;
+  int x;
   for(x=0;x<length;x++){
     l[x]%=25;
   }
   for(x=length;x<8;x++){
     l[length]=0;
   }
-	//l[0]%=25; l[1]%=25; l[2]%=25; l[3]%=25; l[4]=0; // l[4]%=25; l[5]=0;
+  //l[0]%=25; l[1]%=25; l[2]%=25; l[3]%=25; l[4]=0; // l[4]%=25; l[5]=0;
   int p=30;
-	for(x=0;x<length;x++){
-		p=letter(l[x],p,im,swr,s1,s2);
-	}
-	//p=letter(l[0],p,im,swr,s1,s2); p=letter(l[1],p,im,swr,s1,s2); p=letter(l[2],p,im,swr,s1,s2); p=letter(l[3],p,im,swr,s1,s2); //letter(l[4],p,im,swr,s1,s2);
-  if (i_line == 1) {
-  	line(im,swr,s1);
+  for(x=0;x<length;x++){
+    p=letter(l[x],p,im,swr,s1,s2);
   }
-	dots(im); // blur(im); // filter(im);
+  //p=letter(l[0],p,im,swr,s1,s2); p=letter(l[1],p,im,swr,s1,s2); p=letter(l[2],p,im,swr,s1,s2); p=letter(l[3],p,im,swr,s1,s2); //letter(l[4],p,im,swr,s1,s2);
+  if (i_line == 1) {
+    line(im,swr,s1);
+  }
+  dots(im); // blur(im); // filter(im);
 
-	for(x=0;x<length;x++){
-		l[x]=letters[l[x]];
-	}
-	//l[1]=letters[l[1]]; l[2]=letters[l[2]]; l[3]=letters[l[3]]; //l[4]=letters[l[4]];
+  for(x=0;x<length;x++){
+    l[x]=letters[l[x]];
+  }
+  //l[1]=letters[l[1]]; l[2]=letters[l[2]]; l[3]=letters[l[3]]; //l[4]=letters[l[4]];
 }
 
 // #ifdef CAPTCHA
@@ -219,8 +219,8 @@ VALUE create(VALUE self, VALUE style, VALUE length, VALUE line) {
   unsigned char im[80*200];
   unsigned char gif[gifsize];
   int i_style = FIX2INT(style);
-	int i_length = FIX2INT(length);
-	int i_line = FIX2INT(line);
+  int i_length = FIX2INT(length);
+  int i_line = FIX2INT(line);
 
   captcha(im, l, i_length, i_line);
   makegif(im, gif, i_style);

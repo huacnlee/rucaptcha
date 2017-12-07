@@ -25,6 +25,28 @@ describe RuCaptcha do
       expect(res[1]).not_to eq(nil)
     end
 
+    it 'should raise when length not in 3..7 ' do
+      RuCaptcha.configure do
+        self.length = 2
+      end
+      #expect(RuCaptcha.generate()).to raise_error('length config error, value must in 3..7')
+      expect { RuCaptcha.generate() }.
+        to raise_error('length config error, value must in 3..7')
+      RuCaptcha.configure do
+        self.length = 5
+      end
+    end
+
+    it 'should work when length in 3..7 ' do
+      RuCaptcha.configure do
+        self.length = 5
+      end
+      res = RuCaptcha.generate()
+      expect(res.length).to eq(2)
+      expect(res[0].length).to eq(5)
+      expect(res[1]).not_to eq(nil)
+    end
+
     it 'should len equal 3' do
       res = RuCaptcha.create(1, 3, 1)
       expect(res.length).to eq(2)

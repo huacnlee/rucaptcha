@@ -11,5 +11,6 @@ module RuCaptcha
     attr_accessor :length
     # rucaptcha line, default: true, allows: [true, false]
     attr_accessor :line
+
   end
 end
