@@ -8,7 +8,7 @@ require 'rucaptcha/controller_helpers'
 require 'rucaptcha/view_helpers'
 require 'rucaptcha/cache'
 require 'rucaptcha/engine'
-require 'errors/configuration'
+require 'rucaptcha/errors/configuration'
 
 module RuCaptcha
   class << self
@@ -35,7 +35,7 @@ module RuCaptcha
     def generate()
       style = config.style == :colorful ? 1 : 0
       length = config.length
-      raise Errors::Configuration, 'length config error, value must in 3..7' unless length.in?(3..7)
+      raise Rucaptcha::Errors::Configuration, 'length config error, value must in 3..7' unless length.in?(3..7)
       line = config.line ? 1 : 0
       self.create(style, length, line)
     end
