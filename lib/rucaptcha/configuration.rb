@@ -7,10 +7,9 @@ module RuCaptcha
     attr_accessor :expires_in
     # Color style, default: :colorful, allows: [:colorful, :black_white]
     attr_accessor :style
-    # Captcha Digits: default 5, allows: [3,4,5,6,7]
+    # Chars length: default 5, allows: [3..7]
     attr_accessor :length
-    # rucaptcha line, default: true, allows: [true, false]
-    attr_accessor :line
-
+    # strikethrough, default: true
+    attr_accessor :strikethrough
   end
 end

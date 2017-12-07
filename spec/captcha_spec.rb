@@ -82,14 +82,14 @@ describe RuCaptcha do
       expect(res[1]).not_to eq(nil)
     end
 
-    it 'should work with line true' do
+    it 'should work with strikethrough enable' do
       res = RuCaptcha.create(1, 7, 1)
       expect(res.length).to eq(2)
       expect(res[0].length).to eq(7)
       expect(res[1]).not_to eq(nil)
     end
 
-    it 'should work with line false' do
+    it 'should work with strikethrough disable' do
       res = RuCaptcha.create(1, 7, 0)
       expect(res.length).to eq(2)
       expect(res[0].length).to eq(7)

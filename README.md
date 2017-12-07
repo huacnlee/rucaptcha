@@ -20,6 +20,7 @@ This is a Captcha gem for Rails Applications which generates captcha image by C 
 - High performance.
 
 ## Usage
+
 Put rucaptcha in your `Gemfile`:
 
 ```
@@ -41,10 +42,10 @@ RuCaptcha.configure do
   # 默认：会从 Rails 配置的 cache_store 里面读取相同的配置信息，并尝试用可以运行的方式，用于存储验证码字符
   # 但如果是 [:null_store, :memory_store, :file_store] 之类的，你可以通过下面的配置项单独给 RuCaptcha 配置 cache_store
   self.cache_store = :mem_cache_store
-  # 验证码长度 length, 默认是 5, allows: [3,4,5,6,7]
+  # Chars length, default: 5, allows: [3 - 7]
   # self.length = 5
-  # 验证码横线 line, 默认显示横线, default: true, allows: [true, false], 设置为false时, 横线不是显示, 验证码识别度高.
-  # self.line = true
+  # enable/disable Strikethrough.
+  # self.strikethrough = true
 end
 ```
 

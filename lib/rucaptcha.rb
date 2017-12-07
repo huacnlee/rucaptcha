@@ -15,10 +15,11 @@ module RuCaptcha
     def config
       return @config if defined?(@config)
       @config = Configuration.new
-      @config.style       = :colorful
-      @config.length    = 5
-      @config.line    = true
-      @config.expires_in  = 2.minutes
+      @config.style         = :colorful
+      @config.length        = 5
+      @config.strikethrough = true
+      @config.expires_in    = 2.minutes
+
       if Rails.application
         @config.cache_store = Rails.application.config.cache_store
       else
@@ -35,9 +36,13 @@ module RuCaptcha
     def generate()
       style = config.style == :colorful ? 1 : 0
       length = config.length
-      raise Rucaptcha::Errors::Configuration, 'length config error, value must in 3..7' unless length.in?(3..7)
-      line = config.line ? 1 : 0
-      self.create(style, length, line)
+
+      unless length.in?(3..7)
+        raise Rucaptcha::Errors::Configuration, 'length config error, value must in 3..7'
+      end
+
+      strikethrough = config.strikethrough ? 1 : 0
+      self.create(style, length, strikethrough)
     end
 
     def check_cache_store!

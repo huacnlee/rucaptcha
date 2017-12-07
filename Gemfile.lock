@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rucaptcha (2.1.4)
+    rucaptcha (2.2.0)
       railties (>= 3.2)
 
 GEM
@@ -142,4 +142,4 @@ DEPENDENCIES
   rucaptcha!
 
 BUNDLED WITH
-   1.14.5
+   1.15.4
