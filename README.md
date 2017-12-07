@@ -20,7 +20,6 @@ This is a Captcha gem for Rails Applications which generates captcha image by C 
 - High performance.
 
 ## Usage
-
 Put rucaptcha in your `Gemfile`:
 
 ```
@@ -42,6 +41,10 @@ RuCaptcha.configure do
   # 默认：会从 Rails 配置的 cache_store 里面读取相同的配置信息，并尝试用可以运行的方式，用于存储验证码字符
   # 但如果是 [:null_store, :memory_store, :file_store] 之类的，你可以通过下面的配置项单独给 RuCaptcha 配置 cache_store
   self.cache_store = :mem_cache_store
+  # 验证码长度 length, 默认是 5, allows: [3,4,5,6,7]
+  # self.length = 5
+  # 验证码横线 line, 默认显示横线, default: true, allows: [true, false], 设置为false时, 横线不是显示, 验证码识别度高.
+  # self.line = true
 end
 ```
 
@@ -53,7 +56,7 @@ RuCaptcha 没有使用 Rails Session 来存储验证码信息，因为 Rails 的
 
 所以，我建议大家使用的时候，配置上 `cache_store` （详见 [Rails Guides 缓存配置部分](https://ruby-china.github.io/rails-guides/caching_with_rails.html#%E9%85%8D%E7%BD%AE)的文档）到一个 Memcached 或 Redis，这才是最佳实践。
 
-#  
+#
 (RuCaptha do not use Rails Session to store captcha information. As the default session is stored in Cookie in Rails, there's a [Replay attack](https://en.wikipedia.org/wiki/Replay_attack) bug which may causes capthcha being destroyed if we store captcha in Rails Session.
 
 So in my design I require RuCaptcha to configure a distributed backend storage scheme, such as Memcached, Redis or other cache_store schemes which support distribution.
@@ -61,7 +64,8 @@ So in my design I require RuCaptcha to configure a distributed backend storage s
 Meanwhile, for the ease of use, RuCapthca would try to use `:file_store` by default and store the capthca in `tmp/cache/rucaptcha/session` directory (kindly note that it's not working if deploy on multiple machine).
 
 For recommendation, configure the `cache_store`（more details on [Rails Guides Configuration of Cache Stores](http://guides.rubyonrails.org/caching_with_rails.html#configuration)） to Memcached or Redis, that would be the best practice.)
-# 
+
+#
 
 Controller `app/controller/account_controller.rb`
 
