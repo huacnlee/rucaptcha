@@ -1,8 +1,8 @@
 2.2.0
 -----
 
-- Add option `config.length` for support change number chars.
-- Add option `config.strikethrough` for enable or disable strikethrough.
+- Add option `config.length` for support change number chars. (#57)
+- Add option `config.strikethrough` for enable or disable strikethrough. (#57)
 
 2.1.3
 -----
