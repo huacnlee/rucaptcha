@@ -15,6 +15,8 @@ module RuCaptcha
       return @config if defined?(@config)
       @config = Configuration.new
       @config.style       = :colorful
+      @config.length    = 5
+      @config.line    = true
       @config.expires_in  = 2.minutes
       if Rails.application
         @config.cache_store = Rails.application.config.cache_store
@@ -31,7 +33,9 @@ module RuCaptcha
 
     def generate()
       style = config.style == :colorful ? 1 : 0
-      self.create(style)
+      length = config.length.in?([3,4,5,6,7]) ? config.length : 5
+      line = config.line ? 1 : 0
+      self.create(style, length, line)
     end
 
     def check_cache_store!

@@ -1,6 +1,6 @@
 // http://github.com/ITikhonov/captcha
 const int gifsize;
-void captcha(unsigned char im[70*200], unsigned char l[6]);
+void captcha(unsigned char im[70*200], unsigned char l[8], int length, int i_line);
 void makegif(unsigned char im[70*200], unsigned char gif[gifsize], int style);
 
 #include <unistd.h>
@@ -152,18 +152,37 @@ static void filter(unsigned char im[70*200]) {
 
 static const char *letters="abcdafahijklmnopqrstuvwxyz";
 
-void captcha(unsigned char im[70*200], unsigned char l[6]) {
+void captcha(unsigned char im[70*200], unsigned char l[8], int length, int i_line) {
   unsigned char swr[200];
   uint8_t s1,s2;
 
   int f=open("/dev/urandom",O_RDONLY);
   read(f,l,5); read(f,swr,200); read(f,dr,sizeof(dr)); read(f,&s1,1); read(f,&s2,1);
   close(f);
+  memset(im,0xff,200*70); s1=s1&0x7f; s2=s2&0x3f;
 
-  memset(im,0xff,200*70); s1=s1&0x7f; s2=s2&0x3f; l[0]%=25; l[1]%=25; l[2]%=25; l[3]%=25; l[4]%=25; l[5]=0;
-  int p=30; p=letter(l[0],p,im,swr,s1,s2); p=letter(l[1],p,im,swr,s1,s2); p=letter(l[2],p,im,swr,s1,s2); p=letter(l[3],p,im,swr,s1,s2); letter(l[4],p,im,swr,s1,s2);
-  line(im,swr,s1); dots(im); // blur(im); // filter(im);
-  l[0]=letters[l[0]]; l[1]=letters[l[1]]; l[2]=letters[l[2]]; l[3]=letters[l[3]]; l[4]=letters[l[4]];
+	int x;
+  for(x=0;x<length;x++){
+    l[x]%=25;
+  }
+  for(x=length;x<8;x++){
+    l[length]=0;
+  }
+	//l[0]%=25; l[1]%=25; l[2]%=25; l[3]%=25; l[4]=0; // l[4]%=25; l[5]=0;
+  int p=30;
+	for(x=0;x<length;x++){
+		p=letter(l[x],p,im,swr,s1,s2);
+	}
+	//p=letter(l[0],p,im,swr,s1,s2); p=letter(l[1],p,im,swr,s1,s2); p=letter(l[2],p,im,swr,s1,s2); p=letter(l[3],p,im,swr,s1,s2); //letter(l[4],p,im,swr,s1,s2);
+  if (i_line == 1) {
+  	line(im,swr,s1);
+  }
+	dots(im); // blur(im); // filter(im);
+
+	for(x=0;x<length;x++){
+		l[x]=letters[l[x]];
+	}
+	//l[1]=letters[l[1]]; l[2]=letters[l[2]]; l[3]=letters[l[3]]; //l[4]=letters[l[4]];
 }
 
 // #ifdef CAPTCHA
@@ -188,20 +207,22 @@ VALUE RuCaptcha = Qnil;
 
 void Init_rucaptcha();
 
-VALUE create(VALUE self, VALUE style);
+VALUE create(VALUE self, VALUE style, VALUE length, VALUE line);
 
 void Init_rucaptcha() {
   RuCaptcha = rb_define_module("RuCaptcha");
-  rb_define_singleton_method(RuCaptcha, "create", create, 1);
+  rb_define_singleton_method(RuCaptcha, "create", create, 3);
 }
 
-VALUE create(VALUE self, VALUE style) {
-  char l[6];
+VALUE create(VALUE self, VALUE style, VALUE length, VALUE line) {
+  char l[8];
   unsigned char im[80*200];
   unsigned char gif[gifsize];
   int i_style = FIX2INT(style);
+	int i_length = FIX2INT(length);
+	int i_line = FIX2INT(line);
 
-  captcha(im, l);
+  captcha(im, l, i_length, i_line);
   makegif(im, gif, i_style);
 
   VALUE result = rb_ary_new2(2);
@@ -210,5 +231,4 @@ VALUE create(VALUE self, VALUE style) {
 
   return result;
 }
-
 
