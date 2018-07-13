@@ -9,6 +9,7 @@ module RuCaptcha
     # session key of rucaptcha
     def rucaptcha_sesion_key_key
       session_id = session.respond_to?(:id) ? session.id : session[:session_id]
+      warning_when_session_invalid if session_id.blank?
       ['rucaptcha-session', session_id].join(':')
     end
 
@@ -72,6 +73,13 @@ module RuCaptcha
         resource.errors.add(:base, t('rucaptcha.invalid'))
       end
       false
+    end
+
+    def warning_when_session_invalid
+      Rails.logger.warn "
+        WARNING! The session.id is blank, RuCaptcha can't work properly, please keep session available.
+        More details about this: https://github.com/huacnlee/rucaptcha/pull/66
+      "
     end
   end
 end
