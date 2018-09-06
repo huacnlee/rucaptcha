@@ -9,13 +9,7 @@ This is a Captcha gem for Rails Applications which generates captcha image by C 
 
 ## Example
 
-**default style**
-
-![rucaptcha-0](https://user-images.githubusercontent.com/5518/45154624-c471a780-b20a-11e8-8bec-6c133838d53a.gif) ![rucaptcha-1](https://user-images.githubusercontent.com/5518/45154625-c471a780-b20a-11e8-8d09-dfb6ace6e9ba.gif) ![rucaptcha-2](https://user-images.githubusercontent.com/5518/45154628-c50a3e00-b20a-11e8-9afd-7c200b663dbc.gif) ![rucaptcha-3](https://user-images.githubusercontent.com/5518/45154629-c50a3e00-b20a-11e8-88d1-536717664e88.gif) ![rucaptcha-4](https://user-images.githubusercontent.com/5518/45154630-c50a3e00-b20a-11e8-9aa8-9b896a177e84.gif)
-
-**outline enable**
-
-![rucaptcha-b0](https://user-images.githubusercontent.com/5518/45154631-c5a2d480-b20a-11e8-9b63-febdaa5e5c9c.gif) ![rucaptcha-b1](https://user-images.githubusercontent.com/5518/45154632-c5a2d480-b20a-11e8-896b-0fe17bc0b5c5.gif) ![rucaptcha-b2](https://user-images.githubusercontent.com/5518/45154633-c63b6b00-b20a-11e8-8226-7d516764634c.gif) ![rucaptcha-b3](https://user-images.githubusercontent.com/5518/45154634-c63b6b00-b20a-11e8-9781-c22a3109616b.gif) ![rucaptcha-b4](https://user-images.githubusercontent.com/5518/45154635-c63b6b00-b20a-11e8-8e12-52a30e686339.gif)
+<img src="https://user-images.githubusercontent.com/5518/45155117-78276700-b20c-11e8-81ea-d18d9d30f90b.png" width="800px" />
 
 ## Feature
 
