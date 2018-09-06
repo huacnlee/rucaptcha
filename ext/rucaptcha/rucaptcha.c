@@ -1,6 +1,6 @@
 // http://github.com/ITikhonov/captcha
 const int gifsize;
-void captcha(unsigned char im[70*200], unsigned char l[8], int length, int i_line);
+void captcha(unsigned char im[70*200], unsigned char l[8], int length, int i_line, int i_filter);
 void makegif(unsigned char im[70*200], unsigned char gif[gifsize], int style);
 
 #include <unistd.h>
@@ -85,10 +85,10 @@ static int letter(int n, int pos, unsigned char im[70*200], unsigned char swr[20
     if((x-im)<70*200) *x=(*p)<<4;
     i++;
   }
-  return mpos;
+  return mpos + 3;
 }
 
-#define NDOTS 100
+#define NDOTS 10
 
 uint32_t dr[NDOTS];
 
@@ -97,7 +97,7 @@ static void line(unsigned char im[70*200], unsigned char swr[200], uint8_t s1) {
   int sk1=s1;
   for(x=0;x<199;x++) {
     if(sk1>=200) sk1=sk1%200;
-    int skew=sw[sk1]/16;
+    int skew=sw[sk1]/20;
     sk1+=swr[x]&0x3+1;
     unsigned char *i= im+(200*(45+skew)+x);
     i[0]=0; i[1]=0; i[200]=0; i[201]=0;
@@ -118,6 +118,7 @@ static void dots(unsigned char im[70*200]) {
     i[202]=0xff;
   }
 }
+
 static void blur(unsigned char im[70*200]) {
   unsigned char *i=im;
   int x,y;
@@ -150,9 +151,9 @@ static void filter(unsigned char im[70*200]) {
   memmove(im,om,sizeof(om));
 }
 
-static const char *letters="abcdafahijklmnopqrstuvwxyz";
+static const char *letters="abcdyfhhijklmnopqrstuvwxyz";
 
-void captcha(unsigned char im[70*200], unsigned char l[8], int length, int i_line) {
+void captcha(unsigned char im[70*200], unsigned char l[8], int length, int i_line, int i_filter) {
   unsigned char swr[200];
   uint8_t s1,s2;
 
@@ -173,11 +174,15 @@ void captcha(unsigned char im[70*200], unsigned char l[8], int length, int i_lin
   for(x=0;x<length;x++){
     p=letter(l[x],p,im,swr,s1,s2);
   }
-  //p=letter(l[0],p,im,swr,s1,s2); p=letter(l[1],p,im,swr,s1,s2); p=letter(l[2],p,im,swr,s1,s2); p=letter(l[3],p,im,swr,s1,s2); //letter(l[4],p,im,swr,s1,s2);
+
   if (i_line == 1) {
     line(im,swr,s1);
   }
-  dots(im); // blur(im); // filter(im);
+  // dots(im);
+  if (i_filter == 1) {
+    blur(im);
+    filter(im);
+  }
 
   for(x=0;x<length;x++){
     l[x]=letters[l[x]];
@@ -207,22 +212,23 @@ VALUE RuCaptcha = Qnil;
 
 void Init_rucaptcha();
 
-VALUE create(VALUE self, VALUE style, VALUE length, VALUE line);
+VALUE create(VALUE self, VALUE style, VALUE length, VALUE line, VALUE filter);
 
 void Init_rucaptcha() {
   RuCaptcha = rb_define_module("RuCaptcha");
-  rb_define_singleton_method(RuCaptcha, "create", create, 3);
+  rb_define_singleton_method(RuCaptcha, "create", create, 4);
 }
 
-VALUE create(VALUE self, VALUE style, VALUE length, VALUE line) {
+VALUE create(VALUE self, VALUE style, VALUE length, VALUE line, VALUE filter) {
   char l[8];
   unsigned char im[80*200];
   unsigned char gif[gifsize];
   int i_style = FIX2INT(style);
   int i_length = FIX2INT(length);
   int i_line = FIX2INT(line);
+  int i_filter = FIX2INT(filter);
 
-  captcha(im, l, i_length, i_line);
+  captcha(im, l, i_length, i_line, i_filter);
   makegif(im, gif, i_style);
 
   VALUE result = rb_ary_new2(2);

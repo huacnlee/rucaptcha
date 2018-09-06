@@ -2,15 +2,20 @@
 
 [![Gem Version](https://badge.fury.io/rb/rucaptcha.svg)](https://badge.fury.io/rb/rucaptcha)
 [![Build Status](https://travis-ci.org/huacnlee/rucaptcha.svg)](https://travis-ci.org/huacnlee/rucaptcha)
-[![Code Climate](https://codeclimate.com/github/huacnlee/rucaptcha/badges/gpa.svg)](https://codeclimate.com/github/huacnlee/rucaptcha)
 
 This is a Captcha gem for Rails Applications which generates captcha image by C code.
 
+[中文介绍和使用说明](https://ruby-china.org/topics/27832)
+
 ## Example
 
-<img src="https://cloud.githubusercontent.com/assets/5518/22151425/e02390c8-df58-11e6-974d-5eb9b1a4e577.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151427/e4939d92-df58-11e6-9754-4a46a86acea8.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151431/e494576e-df58-11e6-9845-a5590904c175.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151432/e495066e-df58-11e6-92b8-38b40b73aba0.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151428/e49404ee-df58-11e6-8e2d-8b17b33a3710.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151430/e4942406-df58-11e6-9ff8-6e2325304b41.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151429/e4941ae2-df58-11e6-8107-757296573b2f.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151433/e4c7c89c-df58-11e6-9853-1ffbb4986962.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151435/e4c97ea8-df58-11e6-8959-b4c78716271d.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151436/e4cc09f2-df58-11e6-965c-673333b33c0d.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151434/e4c87788-df58-11e6-9490-c255aaafce71.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151445/ee35ff66-df58-11e6-8660-a3673ef3f5ee.gif" width="150px" /> <img src="https://cloud.githubusercontent.com/assets/5518/22151446/ee67b074-df58-11e6-9b95-7d53eec21c33.gif" width="150px" />
+**default style**
 
-[中文介绍和使用说明](https://ruby-china.org/topics/27832)
+![rucaptcha-0](https://user-images.githubusercontent.com/5518/45154624-c471a780-b20a-11e8-8bec-6c133838d53a.gif) ![rucaptcha-1](https://user-images.githubusercontent.com/5518/45154625-c471a780-b20a-11e8-8d09-dfb6ace6e9ba.gif) ![rucaptcha-2](https://user-images.githubusercontent.com/5518/45154628-c50a3e00-b20a-11e8-9afd-7c200b663dbc.gif) ![rucaptcha-3](https://user-images.githubusercontent.com/5518/45154629-c50a3e00-b20a-11e8-88d1-536717664e88.gif) ![rucaptcha-4](https://user-images.githubusercontent.com/5518/45154630-c50a3e00-b20a-11e8-9aa8-9b896a177e84.gif)
+
+**outline enable**
+
+![rucaptcha-b0](https://user-images.githubusercontent.com/5518/45154631-c5a2d480-b20a-11e8-9b63-febdaa5e5c9c.gif) ![rucaptcha-b1](https://user-images.githubusercontent.com/5518/45154632-c5a2d480-b20a-11e8-896b-0fe17bc0b5c5.gif) ![rucaptcha-b2](https://user-images.githubusercontent.com/5518/45154633-c63b6b00-b20a-11e8-8226-7d516764634c.gif) ![rucaptcha-b3](https://user-images.githubusercontent.com/5518/45154634-c63b6b00-b20a-11e8-9781-c22a3109616b.gif) ![rucaptcha-b4](https://user-images.githubusercontent.com/5518/45154635-c63b6b00-b20a-11e8-8e12-52a30e686339.gif)
 
 ## Feature
 
@@ -46,6 +51,8 @@ RuCaptcha.configure do
   # self.length = 5
   # enable/disable Strikethrough.
   # self.strikethrough = true
+  # enable/disable Outline style, for hard mode
+  # self.outline = false
 end
 ```
 

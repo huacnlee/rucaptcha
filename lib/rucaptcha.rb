@@ -18,6 +18,7 @@ module RuCaptcha
       @config.style         = :colorful
       @config.length        = 5
       @config.strikethrough = true
+      @config.outline       = false
       @config.expires_in    = 2.minutes
 
       if Rails.application
@@ -42,7 +43,8 @@ module RuCaptcha
       end
 
       strikethrough = config.strikethrough ? 1 : 0
-      self.create(style, length, strikethrough)
+      outline = config.outline ? 1 : 0
+      self.create(style, length, strikethrough, outline)
     end
 
     def check_cache_store!

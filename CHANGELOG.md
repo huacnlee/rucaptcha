@@ -1,3 +1,9 @@
+2.3.0
+-------
+
+- Add `config.outline` for use outline style.
+- Reduce colors down to 5 (red, blue, green, yellow and black).
+
 2.2.0
 -----
 

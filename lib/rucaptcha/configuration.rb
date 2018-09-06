@@ -11,5 +11,7 @@ module RuCaptcha
     attr_accessor :length
     # strikethrough, default: true
     attr_accessor :strikethrough
+    # outline style for hard mode, default: false
+    attr_accessor :outline
   end
 end

@@ -1,2 +1,0 @@
-rake clean && rake compile > /dev/null 2& > /dev/null
-rake preview > /tmp/rucaptcha-test.gif && open /tmp/rucaptcha-test.gif
