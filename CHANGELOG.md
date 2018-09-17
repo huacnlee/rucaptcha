@@ -1,3 +1,8 @@
+2.3.1
+-------
+
+- Fix #67 a y chars will invalid error (only in 2.3.0).
+
 2.3.0
 -------
 
