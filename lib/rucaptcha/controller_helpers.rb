@@ -35,6 +35,7 @@ module RuCaptcha
     #   verify_rucaptcha?
     #   verify_rucaptcha?(user, keep_session: true)
     #   verify_rucaptcha?(nil, keep_session: true)
+    #   verify_rucaptcha?(nil, captcha: params[:user][:captcha])
     #
     def verify_rucaptcha?(resource = nil, opts = {})
       opts ||= {}
@@ -54,7 +55,7 @@ module RuCaptcha
       end
 
       # Make sure parama have captcha
-      captcha = (params[:_rucaptcha] || '').downcase.strip
+      captcha = (opts[:captcha] || params[:_rucaptcha] || '').downcase.strip
       if captcha.blank?
         return add_rucaptcha_validation_error
       end

@@ -6,8 +6,8 @@ module RuCaptcha
       opts[:autocorrect]    = 'off'
       opts[:autocapitalize] = 'off'
       opts[:pattern]        = '[a-zA-Z]*'
-      opts[:maxlength]      = 5
       opts[:autocomplete]   = 'off'
+      opts[:maxlength] ||= 5
       tag(:input, opts)
     end
 
