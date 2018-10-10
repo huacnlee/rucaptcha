@@ -29,6 +29,8 @@ module RuCaptcha
     # params:
     # resource - [optional] a ActiveModel object, if given will add validation error message to object.
     # :keep_session - if true, RuCaptcha will not delete the captcha code session.
+    # :captcha - if given, the value of it will be used to verify the captcha,
+    #            if do not give or blank, the value of params[:_rucaptcha] will be used to verify the captcha
     #
     # exmaples:
     #
