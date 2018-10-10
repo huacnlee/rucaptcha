@@ -29,12 +29,15 @@ module RuCaptcha
     # params:
     # resource - [optional] a ActiveModel object, if given will add validation error message to object.
     # :keep_session - if true, RuCaptcha will not delete the captcha code session.
+    # :captcha - if given, the value of it will be used to verify the captcha,
+    #            if do not give or blank, the value of params[:_rucaptcha] will be used to verify the captcha
     #
     # exmaples:
     #
     #   verify_rucaptcha?
     #   verify_rucaptcha?(user, keep_session: true)
     #   verify_rucaptcha?(nil, keep_session: true)
+    #   verify_rucaptcha?(nil, captcha: params[:user][:captcha])
     #
     def verify_rucaptcha?(resource = nil, opts = {})
       opts ||= {}
@@ -54,7 +57,7 @@ module RuCaptcha
       end
 
       # Make sure parama have captcha
-      captcha = (params[:_rucaptcha] || '').downcase.strip
+      captcha = (opts[:captcha] || params[:_rucaptcha] || '').downcase.strip
       if captcha.blank?
         return add_rucaptcha_validation_error
       end
