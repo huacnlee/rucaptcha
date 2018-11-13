@@ -5,4 +5,3 @@ gemspec
 gem 'rake'
 gem 'rails'
 gem 'rspec'
-gem 'dalli'

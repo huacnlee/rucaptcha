@@ -21,5 +21,5 @@ module Rails
 end
 
 RuCaptcha.configure do
-  self.cache_store = :mem_cache_store
+  self.cache_store = :memory_store
 end
