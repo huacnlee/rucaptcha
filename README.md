@@ -9,7 +9,7 @@ This is a Captcha gem for Rails Applications which generates captcha image by C 
 
 ## Example
 
-<img src="https://user-images.githubusercontent.com/5518/45155117-78276700-b20c-11e8-81ea-d18d9d30f90b.png" width="800px" />
+<img src="https://user-images.githubusercontent.com/5518/49985459-f8492f80-ffa6-11e8-9ef5-8f8f522e4707.png" width="579px" />
 
 ## Feature
 
