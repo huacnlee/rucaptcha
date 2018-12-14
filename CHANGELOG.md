@@ -1,3 +1,8 @@
+2.3.2
+-------
+
+- Change Yellow and Green colors to Pink and Deep Purple to pass WCAG 2.0's contrast test
+
 2.3.1
 -------
 
