@@ -13,5 +13,7 @@ module RuCaptcha
     attr_accessor :strikethrough
     # outline style for hard mode, default: false
     attr_accessor :outline
+    # skip_cache_store_check, default: false
+    attr_accessor :skip_cache_store_check
   end
 end

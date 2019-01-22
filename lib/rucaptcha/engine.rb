@@ -9,7 +9,7 @@ module RuCaptcha
         mount RuCaptcha::Engine => '/rucaptcha'
       end
 
-      RuCaptcha.check_cache_store!
+      RuCaptcha.check_cache_store! unless RuCaptcha.config.skip_cache_store_check
     end
   end
 end
