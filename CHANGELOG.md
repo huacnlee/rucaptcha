@@ -1,7 +1,13 @@
+2.4.0
+-------
+
+- Add skip_cache_store_check configuration. (#63)
+- Fix for generate captcha with relative path, not url. (#58)
+
 2.3.2
 -------
 
-- Change Yellow and Green colors to Pink and Deep Purple to pass WCAG 2.0's contrast test
+- Change Yellow and Green colors to Pink and Deep Purple to pass WCAG 2.0's contrast test. (#70)
 
 2.3.1
 -------
