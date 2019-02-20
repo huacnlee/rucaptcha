@@ -4,6 +4,7 @@ module RuCaptcha
 
     included do
       helper_method :verify_rucaptcha?
+      helper_method :is_expired_rucaptcha?
     end
 
     # session key of rucaptcha
@@ -67,6 +68,13 @@ module RuCaptcha
       end
 
       true
+    end
+
+    # check capature is expired or not
+    def is_expired_rucaptcha?
+      store_info = RuCaptcha.cache.read(rucaptcha_sesion_key_key)
+      return true if store_info.blank?
+      (Time.now.to_i - store_info[:time]) > RuCaptcha.config.expires_in
     end
 
     private
