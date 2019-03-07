@@ -13,7 +13,9 @@ module RuCaptcha
 
     def rucaptcha_image_tag(opts = {})
       opts[:class] = opts[:class] || 'rucaptcha-image'
-      image_tag(ru_captcha.root_path, opts)
+      opts[:src] = ru_captcha.root_path
+      opts[:onclick] = "this.src = '#{ru_captcha.root_path}?t=' + Date.now();"
+      tag(:img, opts)
     end
   end
 end
