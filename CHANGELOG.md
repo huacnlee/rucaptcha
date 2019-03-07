@@ -1,3 +1,9 @@
+2.5.0
+-------
+
+- Support click captcha image to refresh new one by default.
+- Use simple tag helper generate captcha img html, for avoid asset_host (#73).
+
 2.4.0
 -------
 
