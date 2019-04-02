@@ -1,3 +1,3 @@
 'zh-CN':
   rucaptcha:
-    invalid: "验证码不正确"
+    invalid: "验证码不正确（如无法识别，可以点击刷新验证码）"
