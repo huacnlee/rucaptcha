@@ -70,7 +70,7 @@ module RuCaptcha
       true
     end
 
-    # check capature is expired or not
+    # Check capature is expired or not
     def is_expired_rucaptcha?
       store_info = RuCaptcha.cache.read(rucaptcha_sesion_key_key)
       return true if store_info.blank?

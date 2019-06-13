@@ -110,5 +110,16 @@ describe RuCaptcha do
         expect(simple.verify_rucaptcha?).to eq(false)
       end
     end
+
+    describe 'is expired rucaptcha' do
+      it 'should work' do
+        RuCaptcha.cache.write(simple.rucaptcha_sesion_key_key, {
+          time: Time.now.to_i - 121,
+          code: 'abcd'
+        })
+        simple.params[:_rucaptcha] = 'abcd'
+        expect(simple.is_expired_rucaptcha?).to eq(true)
+      end
+    end
   end
 end
