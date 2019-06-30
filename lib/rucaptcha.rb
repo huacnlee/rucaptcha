@@ -40,7 +40,7 @@ module RuCaptcha
       length = config.length
 
       unless length.in?(3..7)
-        raise Rucaptcha::Errors::Configuration, 'length config error, value must in 3..7'
+        raise RuCaptcha::Errors::Configuration, 'length config error, value must in 3..7'
       end
 
       strikethrough = config.strikethrough ? 1 : 0

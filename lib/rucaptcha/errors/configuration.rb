@@ -1,4 +1,4 @@
-module Rucaptcha
+module RuCaptcha
   module Errors
     class Configuration < StandardError; end
   end
