@@ -1,3 +1,8 @@
+2.5.1
+-------
+
+- Fix invalid module name error. (#78)
+
 2.5.0
 -------
 
