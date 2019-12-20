@@ -1,3 +1,8 @@
+2.5.2
+-------
+
+- Fix session.id error with upgrade Rails 6.0.2.1 or Rack 2.0.8 (#84)
+
 2.5.1
 -------
 
