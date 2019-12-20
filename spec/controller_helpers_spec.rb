@@ -31,7 +31,8 @@ describe RuCaptcha do
 
   describe '.rucaptcha_sesion_key_key' do
     it 'should work' do
-      expect(simple.rucaptcha_sesion_key_key).to eq ['rucaptcha-session', simple.session.id].join(':')
+      session_id_digest = Digest::SHA256.hexdigest(simple.session.id.inspect)
+      expect(simple.rucaptcha_sesion_key_key).to eq ['rucaptcha-session', session_id_digest].join(':')
     end
   end
 
