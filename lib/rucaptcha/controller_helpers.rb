@@ -8,9 +8,14 @@ module RuCaptcha
 
     # session key of rucaptcha
     def rucaptcha_sesion_key_key
+
       session_id = session.respond_to?(:id) ? session.id : session[:session_id]
       warning_when_session_invalid if session_id.blank?
-      ['rucaptcha-session', session_id].join(':')
+
+      # With https://github.com/rack/rack/commit/7fecaee81f59926b6e1913511c90650e76673b38
+      # to protected session_id into secret
+      session_id_digest = Digest::SHA256.hexdigest(session_id.inspect)
+      ['rucaptcha-session', session_id_digest].join(':')
     end
 
     # Generate a new Captcha
