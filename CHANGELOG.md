@@ -1,3 +1,8 @@
+2.5.34
+-------
+
+- Fix session invalid warning, only for development env;
+
 2.5.2
 -------
 
