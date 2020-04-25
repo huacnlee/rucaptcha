@@ -15,5 +15,8 @@ module RuCaptcha
     attr_accessor :outline
     # skip_cache_store_check, default: false
     attr_accessor :skip_cache_store_check
+
+    # test mode
+    attr_accessor :test_mode
   end
 end

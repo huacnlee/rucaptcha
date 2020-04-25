@@ -1,7 +1,7 @@
 require 'rails'
 require 'action_controller'
 require 'active_support/all'
-require 'rucaptcha/rucaptcha'
+
 require 'rucaptcha/version'
 require 'rucaptcha/configuration'
 require 'rucaptcha/controller_helpers'
@@ -21,6 +21,8 @@ module RuCaptcha
       @config.outline       = false
       @config.expires_in    = 2.minutes
       @config.skip_cache_store_check = false
+
+      @config.test_mode     = false
 
       if Rails.application
         @config.cache_store = Rails.application.config.cache_store

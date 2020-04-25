@@ -45,6 +45,8 @@ module RuCaptcha
     #   verify_rucaptcha?(nil, captcha: params[:user][:captcha])
     #
     def verify_rucaptcha?(resource = nil, opts = {})
+      return true if RuCaptcha.config.test_mode
+      
       opts ||= {}
 
       store_info = RuCaptcha.cache.read(rucaptcha_sesion_key_key)
