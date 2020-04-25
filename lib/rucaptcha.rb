@@ -1,7 +1,7 @@
 require 'rails'
 require 'action_controller'
 require 'active_support/all'
-
+require 'rucaptcha/rucaptcha'
 require 'rucaptcha/version'
 require 'rucaptcha/configuration'
 require 'rucaptcha/controller_helpers'
