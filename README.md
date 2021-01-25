@@ -1,7 +1,7 @@
 # RuCaptcha
 
 [![Gem Version](https://badge.fury.io/rb/rucaptcha.svg)](https://badge.fury.io/rb/rucaptcha)
-[![Build Status](https://travis-ci.org/huacnlee/rucaptcha.svg)](https://travis-ci.org/huacnlee/rucaptcha)
+[![build](https://github.com/huacnlee/rucaptcha/workflows/build/badge.svg)](https://github.com/huacnlee/rucaptcha/actions?query=workflow%3Abuild)
 
 This is a Captcha gem for Rails Applications which generates captcha image by C code.
 
@@ -64,6 +64,7 @@ RuCaptcha 没有使用 Rails Session 来存储验证码信息，因为 Rails 的
 所以，我建议大家使用的时候，配置上 `cache_store` （详见 [Rails Guides 缓存配置部分](https://ruby-china.github.io/rails-guides/caching_with_rails.html#%E9%85%8D%E7%BD%AE)的文档）到一个 Memcached 或 Redis，这才是最佳实践。
 
 #
+
 (RuCaptha do not use Rails Session to store captcha information. As the default session is stored in Cookie in Rails, there's a [Replay attack](https://en.wikipedia.org/wiki/Replay_attack) bug which may causes capthcha being destroyed if we store captcha in Rails Session.
 
 So in my design I require RuCaptcha to configure a distributed backend storage scheme, such as Memcached, Redis or other cache_store schemes which support distribution.

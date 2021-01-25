@@ -1,7 +1,7 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
 gemspec
 
-gem 'rake'
-gem 'rails'
-gem 'rspec'
+gem "rails"
+gem "rake"
+gem "rspec"
