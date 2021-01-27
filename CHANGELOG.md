@@ -1,3 +1,8 @@
+## 2.5.5
+
+- Improved image for thicker interference lines.
+- Add more colors.
+
 ## 2.5.4
 
 - Fix: rucaptcha input maxlength attribute with config value.
