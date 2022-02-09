@@ -7,7 +7,7 @@ module RuCaptcha
     end
 
     def rucaptcha_session_id
-      cookies[:rucaptcha_session_id]
+      cookies[:_rucaptcha_session_id]
     end
 
     # session key of rucaptcha
@@ -75,7 +75,7 @@ module RuCaptcha
     def generate_rucaptcha_session_id
       return if rucaptcha_session_id.present?
 
-      cookies[:rucaptcha_session_id] = {
+      cookies[:_rucaptcha_session_id] = {
         value: SecureRandom.hex(16),
         expires: 1.day
       }

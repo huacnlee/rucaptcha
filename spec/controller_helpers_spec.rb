@@ -22,15 +22,15 @@ describe RuCaptcha do
   before(:each) do
     allow(simple).to receive(:cookies).and_return(cookies)
     simple.send(:generate_rucaptcha_session_id)
-    if cookies[:rucaptcha_session_id].is_a?(Hash)
-      cookies[:rucaptcha_session_id] = cookies[:rucaptcha_session_id][:value]
+    if cookies[:_rucaptcha_session_id].is_a?(Hash)
+      cookies[:_rucaptcha_session_id] = cookies[:_rucaptcha_session_id][:value]
     end
   end
 
   describe ".generate_rucaptcha_session_id" do
     it "should work" do
-      expect(cookies[:rucaptcha_session_id]).to be_present
-      expect(simple.rucaptcha_session_id).to eq(cookies[:rucaptcha_session_id])
+      expect(cookies[:_rucaptcha_session_id]).to be_present
+      expect(simple.rucaptcha_session_id).to eq(cookies[:_rucaptcha_session_id])
 
       old_session_id = simple.rucaptcha_session_id
       simple.send(:generate_rucaptcha_session_id)
