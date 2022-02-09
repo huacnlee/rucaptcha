@@ -8,7 +8,11 @@ Gem::Specification.new do |s|
   s.version = RuCaptcha::VERSION
   s.authors = "Jason Lee"
   s.email = "huacnlee@gmail.com"
-  s.files = Dir.glob("{lib,ext,app,config}/**/*.{rb}") + %w[README.md CHANGELOG.md]
+  s.files = Dir.glob("lib/**/*.{rb}") +
+    Dir.glob("ext/**/*.{h,c,rb}") +
+    Dir.glob("app/**/*") +
+    Dir.glob("config/**/*") +
+    %w[README.md CHANGELOG.md]
   s.homepage = "https://github.com/huacnlee/rucaptcha"
   s.require_paths = ["lib"]
   s.extensions = %w[ext/rucaptcha/extconf.rb]
