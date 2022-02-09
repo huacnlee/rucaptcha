@@ -16,18 +16,18 @@ module RuCaptcha
       return @config if defined?(@config)
 
       @config = Configuration.new
-      @config.style         = :colorful
-      @config.length        = 5
+      @config.style = :colorful
+      @config.length = 5
       @config.strikethrough = true
-      @config.outline       = false
-      @config.expires_in    = 2.minutes
+      @config.outline = false
+      @config.expires_in = 2.minutes
       @config.skip_cache_store_check = false
 
       @config.cache_store = if Rails.application
-                              Rails.application.config.cache_store
-                            else
-                              :mem_cache_store
-                            end
+        Rails.application.config.cache_store
+      else
+        :mem_cache_store
+      end
       @config.cache_store
       @config
     end
