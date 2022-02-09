@@ -6,19 +6,24 @@ module RuCaptcha
       helper_method :verify_rucaptcha?
     end
 
+    def rucaptcha_session_id
+      cookies[:_rucaptcha_session_id]
+    end
+
     # session key of rucaptcha
     def rucaptcha_sesion_key_key
-      session_id = session.respond_to?(:id) ? session.id : session[:session_id]
-      warning_when_session_invalid if session_id.blank?
+      warning_when_session_invalid if rucaptcha_session_id.blank?
 
       # With https://github.com/rack/rack/commit/7fecaee81f59926b6e1913511c90650e76673b38
       # to protected session_id into secret
-      session_id_digest = Digest::SHA256.hexdigest(session_id.inspect)
+      session_id_digest = Digest::SHA256.hexdigest(rucaptcha_session_id.inspect)
       ["rucaptcha-session", session_id_digest].join(":")
     end
 
     # Generate a new Captcha
     def generate_rucaptcha
+      generate_rucaptcha_session_id
+
       res = RuCaptcha.generate
       session_val = {
         code: res[0],
@@ -66,6 +71,15 @@ module RuCaptcha
     end
 
     private
+
+    def generate_rucaptcha_session_id
+      return if rucaptcha_session_id.present?
+
+      cookies[:_rucaptcha_session_id] = {
+        value: SecureRandom.hex(16),
+        expires: 1.day
+      }
+    end
 
     def add_rucaptcha_validation_error
       if defined?(resource) && resource && resource.respond_to?(:errors)

@@ -5,8 +5,10 @@
 
 This is a Captcha gem for Rails Applications which generates captcha image by C code.
 
-> NOTE: According to the use of Ruby China, the verification code looks like has a lower than 5% probability of being parsed by OCR and the verification code is cracked. It is recommended that you use the IP rate limit to enhance the protection.
-> NOTE: 以 Ruby China 的使用来看，验证码似乎有低于 5% 的概率被 OCR 读取解析导致验证码被破解（我们从日志分析绝大多数是成功的，但偶尔一个成功，配合大量机器攻击，导致注册了很多的垃圾账号），建议你额外配合 IP 频率限制的功能来加强保护。
+> NOTE: According to the use of Ruby China, the verification code looks like has a lower than 5% probability of being parsed by OCR and the verification code is cracked (All Image Captcha libs are has same problem). It is recommended that you use the IP rate limit to enhance the protection.
+> NOTE: 以 Ruby China 的使用来看，验证码似乎有低于 5% 的概率被 OCR 读取解析 (图片验证码都有这个问题) 导致验证码被破解（我们从日志分析绝大多数是成功的，但偶尔一个成功，配合大量机器攻击，导致注册了很多的垃圾账号），建议你额外配合 IP 频率限制的功能来加强保护。
+
+> 如果你需要更高强度的验证，建议选择商用服务。
 
 [中文介绍和使用说明](https://ruby-china.org/topics/27832)
 

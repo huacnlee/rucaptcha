@@ -2,19 +2,7 @@ require "spec_helper"
 require "securerandom"
 
 describe RuCaptcha do
-  class CustomSession
-    attr_accessor :id
-
-    def initialize
-      self.id = SecureRandom.hex
-    end
-  end
-
-  class Simple < ActionController::Base
-    def session
-      @session ||= CustomSession.new
-    end
-
+  class SimpleController < ActionController::Base
     def params
       @params ||= {}
     end
@@ -28,11 +16,31 @@ describe RuCaptcha do
     end
   end
 
-  let(:simple) { Simple.new }
+  let(:simple) { SimpleController.new }
+  let(:cookies) { {} }
+
+  before(:each) do
+    allow(simple).to receive(:cookies).and_return(cookies)
+    simple.send(:generate_rucaptcha_session_id)
+    if cookies[:_rucaptcha_session_id].is_a?(Hash)
+      cookies[:_rucaptcha_session_id] = cookies[:_rucaptcha_session_id][:value]
+    end
+  end
+
+  describe ".generate_rucaptcha_session_id" do
+    it "should work" do
+      expect(cookies[:_rucaptcha_session_id]).to be_present
+      expect(simple.rucaptcha_session_id).to eq(cookies[:_rucaptcha_session_id])
+
+      old_session_id = simple.rucaptcha_session_id
+      simple.send(:generate_rucaptcha_session_id)
+      expect(simple.rucaptcha_session_id).to eq(old_session_id)
+    end
+  end
 
   describe ".rucaptcha_sesion_key_key" do
     it "should work" do
-      session_id_digest = Digest::SHA256.hexdigest(simple.session.id.inspect)
+      session_id_digest = Digest::SHA256.hexdigest(simple.rucaptcha_session_id.inspect)
       expect(simple.rucaptcha_sesion_key_key).to eq ["rucaptcha-session", session_id_digest].join(":")
     end
   end
@@ -62,26 +70,26 @@ describe RuCaptcha do
     context "Correct chars in params" do
       it "should work" do
         RuCaptcha.cache.write(simple.rucaptcha_sesion_key_key, {
-                                time: Time.now.to_i,
-                                code: "abcd"
-                              })
+          time: Time.now.to_i,
+          code: "abcd"
+        })
         simple.params[:_rucaptcha] = "Abcd"
         expect(simple.verify_rucaptcha?).to eq(true)
         expect(simple.custom_session).to eq nil
 
         RuCaptcha.cache.write(simple.rucaptcha_sesion_key_key, {
-                                time: Time.now.to_i,
-                                code: "abcd"
-                              })
+          time: Time.now.to_i,
+          code: "abcd"
+        })
         simple.params[:_rucaptcha] = "AbcD"
         expect(simple.verify_rucaptcha?).to eq(true)
       end
 
       it "should keep session when given :keep_session" do
         RuCaptcha.cache.write(simple.rucaptcha_sesion_key_key, {
-                                time: Time.now.to_i,
-                                code: "abcd"
-                              })
+          time: Time.now.to_i,
+          code: "abcd"
+        })
         simple.params[:_rucaptcha] = "abcd"
         expect(simple.verify_rucaptcha?(nil, keep_session: true)).to eq(true)
         expect(simple.custom_session).not_to eq nil
@@ -93,9 +101,9 @@ describe RuCaptcha do
     describe "Incorrect chars" do
       it "should work" do
         RuCaptcha.cache.write(simple.rucaptcha_sesion_key_key, {
-                                time: Time.now.to_i - 60,
-                                code: "abcd"
-                              })
+          time: Time.now.to_i - 60,
+          code: "abcd"
+        })
         simple.params[:_rucaptcha] = "d123"
         expect(simple.verify_rucaptcha?).to eq(false)
         expect(simple.custom_session).to eq nil
@@ -105,9 +113,9 @@ describe RuCaptcha do
     describe "Expires Session key" do
       it "should work" do
         RuCaptcha.cache.write(simple.rucaptcha_sesion_key_key, {
-                                time: Time.now.to_i - 121,
-                                code: "abcd"
-                              })
+          time: Time.now.to_i - 121,
+          code: "abcd"
+        })
         simple.params[:_rucaptcha] = "abcd"
         expect(simple.verify_rucaptcha?).to eq(false)
       end

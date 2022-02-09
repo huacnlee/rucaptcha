@@ -1,13 +1,13 @@
 module RuCaptcha
   module ViewHelpers
     def rucaptcha_input_tag(opts = {})
-      opts[:name]           = "_rucaptcha"
-      opts[:type]           = "text"
-      opts[:autocorrect]    = "off"
+      opts[:name] = "_rucaptcha"
+      opts[:type] = "text"
+      opts[:autocorrect] = "off"
       opts[:autocapitalize] = "off"
-      opts[:pattern]        = "[a-zA-Z]*"
-      opts[:autocomplete]   = "off"
-      opts[:maxlength]      = RuCaptcha.config.length
+      opts[:pattern] = "[a-zA-Z]*"
+      opts[:autocomplete] = "off"
+      opts[:maxlength] = RuCaptcha.config.length
       tag(:input, opts)
     end
 
