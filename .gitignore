@@ -13,6 +13,7 @@
 *.o
 ext/rucaptcha/Makefile
 ext/rucaptcha/*.gif
+Gemfile.lock
 
 ## RubyMine Ide files
 .idea/
