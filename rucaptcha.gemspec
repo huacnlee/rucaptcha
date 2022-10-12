@@ -9,10 +9,10 @@ Gem::Specification.new do |s|
   s.authors = "Jason Lee"
   s.email = "huacnlee@gmail.com"
   s.files = Dir.glob("lib/**/*.{rb}") +
-    Dir.glob("ext/**/*.{h,c,rb}") +
-    Dir.glob("app/**/*") +
-    Dir.glob("config/**/*") +
-    %w[README.md CHANGELOG.md]
+            Dir.glob("ext/**/*.{h,c,rb}") +
+            Dir.glob("app/**/*") +
+            Dir.glob("config/**/*") +
+            %w[README.md CHANGELOG.md]
   s.homepage = "https://github.com/huacnlee/rucaptcha"
   s.require_paths = ["lib"]
   s.extensions = %w[ext/rucaptcha/extconf.rb]
@@ -21,5 +21,6 @@ Gem::Specification.new do |s|
   s.required_ruby_version = ">= 2.0.0"
 
   s.add_dependency "railties", ">= 3.2"
+  s.add_dependency "rb_sys", ">= 0.9.18"
   s.add_development_dependency "rake-compiler", "~> 1"
 end

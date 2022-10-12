@@ -1,2 +1,4 @@
 require "mkmf"
-create_makefile("rucaptcha/rucaptcha")
+require "rb_sys/mkmf"
+
+create_rust_makefile("rucaptcha/rucaptcha")

@@ -24,10 +24,10 @@ module RuCaptcha
       @config.skip_cache_store_check = false
 
       @config.cache_store = if Rails.application
-        Rails.application.config.cache_store
-      else
-        :mem_cache_store
-      end
+                              Rails.application.config.cache_store
+                            else
+                              :mem_cache_store
+                            end
       @config.cache_store
       @config
     end
@@ -44,7 +44,8 @@ module RuCaptcha
 
       strikethrough = config.strikethrough ? 1 : 0
       outline = config.outline ? 1 : 0
-      create(style, length, strikethrough, outline)
+      result = RuCaptchaCore.create(style, length, strikethrough, outline)
+      [result[0], result[1].pack("c*")]
     end
 
     def check_cache_store!

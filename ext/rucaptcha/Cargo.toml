@@ -1,0 +1,11 @@
+[package]
+edition = "2021"
+name = "rucaptcha"
+version = "3.0.0"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+captcha = "*"
+magnus = "0.3"

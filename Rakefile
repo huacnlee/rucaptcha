@@ -12,9 +12,9 @@ task default: :spec
 task :preview do
   require "rucaptcha"
 
-  res = RuCaptcha.create(1, 5, 1, 0)
+  res = RuCaptchaCore.create(1, 5, 1, 1)
   warn res[0]
-  puts res[1]
+  puts res[1].pack("c*")
 end
 
 task :memory do
