@@ -9,3 +9,4 @@ crate-type = ["cdylib"]
 [dependencies]
 captcha = "*"
 magnus = "0.3"
+rand = "0.8.5"

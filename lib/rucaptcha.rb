@@ -1,7 +1,15 @@
 require "rails"
 require "action_controller"
 require "active_support/all"
-require "rucaptcha/rucaptcha"
+
+begin
+  # load the precompiled extension file
+  ruby_version = /(\d+\.\d+)/.match(::RUBY_VERSION)
+  require_relative "rucaptcha/#{ruby_version}/rucaptcha"
+rescue LoadError
+  require "rucaptcha/rucaptcha"
+end
+
 require "rucaptcha/version"
 require "rucaptcha/configuration"
 require "rucaptcha/controller_helpers"

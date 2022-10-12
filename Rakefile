@@ -16,26 +16,3 @@ task :preview do
   warn res[0]
   puts res[1].pack("c*")
 end
-
-task :memory do
-  require "rucaptcha"
-  puts "Starting to profile memory..."
-  b = {}
-  puts "Before => #{GC.stat(b)[:heap_live_slots]}"
-  count = 10_000_000
-  step = (count / 100).to_i
-  count.times do |i|
-    res = RuCaptcha.generate
-    print_memory if i % step == 0
-  end
-
-  print_memory
-  puts GC.start
-  puts "After GC"
-  print_memory
-end
-
-def print_memory
-  rss = `ps -eo pid,rss | grep #{Process.pid} | awk '{print $2}'`.to_i
-  puts "rss: #{rss} live objects #{GC.stat[:heap_live_slots]}, total allocated: #{GC.stat[:total_allocated_objects]}"
-end

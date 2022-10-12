@@ -566,6 +566,7 @@ version = "3.0.0"
 dependencies = [
  "captcha",
  "magnus",
+ "rand",
 ]
 
 [[package]]
