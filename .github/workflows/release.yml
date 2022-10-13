@@ -57,4 +57,3 @@ jobs:
       - name: Install RubyGem & Test Run
         run: |
           gem install rucaptcha --verbose
-          ruby -e "require 'rucaptcha'; puts RuCaptchaCore.create(5, 5);"
