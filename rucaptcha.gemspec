@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.homepage = "https://github.com/huacnlee/rucaptcha"
   s.require_paths = ["lib"]
   s.extensions = %w[ext/rucaptcha/extconf.rb]
-  s.summary = "This is a Captcha gem for Rails Applications. It drawing captcha image with C code so it no dependencies."
+  s.summary = "Captcha Gem for Rails, which generates captcha image by Rust."
   s.license = "MIT"
   s.required_ruby_version = ">= 2.7.0"
 
