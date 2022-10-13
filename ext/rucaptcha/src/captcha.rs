@@ -105,8 +105,8 @@ fn cyclic_write_character(res: &[String], image: &mut ImageBuffer<Rgb<u8>, Vec<u
         let font = get_font();
         let line_color = colors[rand_num(colors.len() - 1)];
 
-        for j in 0..(rand_num(2) + 1) as i32 {
-            let offset = j * (rand_num(3) as i32 + 1);
+        for j in 0..(rand_num(3) + 1) as i32 {
+            let offset = j * (rand_num(2) as i32 + 1);
             draw_text_mut(
                 image,
                 color,
@@ -182,8 +182,8 @@ impl CaptchaBuilder {
     pub fn new() -> Self {
         CaptchaBuilder {
             length: 4,
-            width: 240,
-            height: 64,
+            width: 300,
+            height: 100,
             complexity: 5,
         }
     }
