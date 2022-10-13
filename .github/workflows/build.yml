@@ -15,4 +15,4 @@ jobs:
           bundler-cache: true
           cargo-cache: true
           cargo-vendor: true
-      - run: bundle exec rake compile && bundle exec rake test
+      - run: bundle exec rake compile && bundle exec rspec spec

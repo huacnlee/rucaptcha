@@ -45,6 +45,7 @@ fn get_captcha(len: usize) -> Vec<String> {
     res
 }
 
+#[allow(unused)]
 fn get_color() -> Rgb<u8> {
     let rnd = rand_num(COLORS.len());
     let c = COLORS[rnd];
@@ -185,15 +186,15 @@ impl CaptchaBuilder {
         self
     }
 
-    pub fn width(mut self, width: usize) -> Self {
-        self.width = width;
-        self
-    }
+    // pub fn width(mut self, width: usize) -> Self {
+    //     self.width = width;
+    //     self
+    // }
 
-    pub fn height(mut self, height: usize) -> Self {
-        self.height = height;
-        self
-    }
+    // pub fn height(mut self, height: usize) -> Self {
+    //     self.height = height;
+    //     self
+    // }
 
     pub fn complexity(mut self, complexity: usize) -> Self {
         let mut complexity = complexity;
