@@ -1,9 +1,26 @@
 require "bundler/gem_tasks"
 require "rspec/core/rake_task"
 require "rake/extensiontask"
+require "rubygems/package_task"
+require "bundler"
 
-Rake::ExtensionTask.new "rucaptcha" do |ext|
+CROSS_PLATFORMS = %w[
+  aarch64-linux
+  arm64-darwin
+  x64-mingw32
+  x86_64-darwin
+  x86_64-linux
+]
+
+spec = Bundler.load_gemspec("rucaptcha.gemspec")
+
+Gem::PackageTask.new(spec).define
+
+Rake::ExtensionTask.new("rucaptcha", spec) do |ext|
   ext.lib_dir = "lib/rucaptcha"
+  ext.source_pattern = "*.{rs,toml}"
+  ext.cross_compile = true
+  ext.cross_platform = CROSS_PLATFORMS
 end
 
 RSpec::Core::RakeTask.new(:spec)
@@ -11,31 +28,7 @@ task default: :spec
 
 task :preview do
   require "rucaptcha"
-
-  res = RuCaptcha.create(1, 5, 1, 0)
+  res = RuCaptchaCore.create(5, 5)
   warn res[0]
-  puts res[1]
-end
-
-task :memory do
-  require "rucaptcha"
-  puts "Starting to profile memory..."
-  b = {}
-  puts "Before => #{GC.stat(b)[:heap_live_slots]}"
-  count = 10_000_000
-  step = (count / 100).to_i
-  count.times do |i|
-    res = RuCaptcha.generate
-    print_memory if i % step == 0
-  end
-
-  print_memory
-  puts GC.start
-  puts "After GC"
-  print_memory
-end
-
-def print_memory
-  rss = `ps -eo pid,rss | grep #{Process.pid} | awk '{print $2}'`.to_i
-  puts "rss: #{rss} live objects #{GC.stat[:heap_live_slots]}, total allocated: #{GC.stat[:total_allocated_objects]}"
+  puts res[1].pack("c*")
 end

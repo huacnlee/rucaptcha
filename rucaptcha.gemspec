@@ -8,18 +8,14 @@ Gem::Specification.new do |s|
   s.version = RuCaptcha::VERSION
   s.authors = "Jason Lee"
   s.email = "huacnlee@gmail.com"
-  s.files = Dir.glob("lib/**/*.{rb}") +
-    Dir.glob("ext/**/*.{h,c,rb}") +
-    Dir.glob("app/**/*") +
-    Dir.glob("config/**/*") +
-    %w[README.md CHANGELOG.md]
+  s.files = Dir["lib/**/*.rb", "ext/**/*.{rs,toml,lock,rb}"] + %w[README.md Rakefile]
   s.homepage = "https://github.com/huacnlee/rucaptcha"
   s.require_paths = ["lib"]
   s.extensions = %w[ext/rucaptcha/extconf.rb]
-  s.summary = "This is a Captcha gem for Rails Applications. It drawing captcha image with C code so it no dependencies."
+  s.summary = "Captcha Gem for Rails, which generates captcha image by Rust."
   s.license = "MIT"
-  s.required_ruby_version = ">= 2.0.0"
+  s.required_ruby_version = ">= 2.7.0"
 
   s.add_dependency "railties", ">= 3.2"
-  s.add_development_dependency "rake-compiler", "~> 1"
+  s.add_dependency "rb_sys", ">= 0.9.18"
 end

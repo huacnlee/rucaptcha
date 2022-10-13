@@ -44,3 +44,4 @@ build/
 .rvmrc
 
 .ruby-version
+target/

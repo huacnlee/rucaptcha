@@ -1,7 +1,15 @@
 require "rails"
 require "action_controller"
 require "active_support/all"
-require "rucaptcha/rucaptcha"
+
+begin
+  # load the precompiled extension file
+  ruby_version = /(\d+\.\d+)/.match(::RUBY_VERSION)
+  require_relative "rucaptcha/#{ruby_version}/rucaptcha"
+rescue LoadError
+  require "rucaptcha/rucaptcha"
+end
+
 require "rucaptcha/version"
 require "rucaptcha/configuration"
 require "rucaptcha/controller_helpers"
@@ -16,18 +24,16 @@ module RuCaptcha
       return @config if defined?(@config)
 
       @config = Configuration.new
-      @config.style = :colorful
       @config.length = 5
-      @config.strikethrough = true
-      @config.outline = false
+      @config.difficulty = 3
       @config.expires_in = 2.minutes
       @config.skip_cache_store_check = false
 
       @config.cache_store = if Rails.application
-        Rails.application.config.cache_store
-      else
-        :mem_cache_store
-      end
+                              Rails.application.config.cache_store
+                            else
+                              :mem_cache_store
+                            end
       @config.cache_store
       @config
     end
@@ -37,14 +43,12 @@ module RuCaptcha
     end
 
     def generate
-      style = config.style == :colorful ? 1 : 0
       length = config.length
 
       raise RuCaptcha::Errors::Configuration, "length config error, value must in 3..7" unless length.in?(3..7)
 
-      strikethrough = config.strikethrough ? 1 : 0
-      outline = config.outline ? 1 : 0
-      create(style, length, strikethrough, outline)
+      result = RuCaptchaCore.create(length, config.difficulty || 5)
+      [result[0], result[1].pack("c*")]
     end
 
     def check_cache_store!

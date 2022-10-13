@@ -1,5 +1,6 @@
 compile:
 	rake clean
 	rake compile
-test:
-	rake preview > ~/Desktop/rucaptcha-test.gif && open ~/Desktop/rucaptcha-test.gif
+preview:
+	rake compile
+	bundle exec rake preview > ~/Desktop/rucaptcha-test.png && open ~/Desktop/rucaptcha-test.png
