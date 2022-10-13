@@ -24,10 +24,8 @@ module RuCaptcha
       return @config if defined?(@config)
 
       @config = Configuration.new
-      @config.style = :colorful
       @config.length = 5
-      @config.strikethrough = true
-      @config.outline = false
+      @config.difficulty = 3
       @config.expires_in = 2.minutes
       @config.skip_cache_store_check = false
 
@@ -45,14 +43,11 @@ module RuCaptcha
     end
 
     def generate
-      style = config.style == :colorful ? 1 : 0
       length = config.length
 
       raise RuCaptcha::Errors::Configuration, "length config error, value must in 3..7" unless length.in?(3..7)
 
-      strikethrough = config.strikethrough ? 1 : 0
-      outline = config.outline ? 1 : 0
-      result = RuCaptchaCore.create(style, length, strikethrough, outline)
+      result = RuCaptchaCore.create(length, config.difficulty || 5)
       [result[0], result[1].pack("c*")]
     end
 
