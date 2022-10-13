@@ -14,7 +14,7 @@ Captcha Gem for Rails, which generates captcha image by Rust.
 
 ## Example
 
-![1](https://user-images.githubusercontent.com/5518/195582588-7d23dae4-63dd-4f06-ac1e-f69041d3b14c.png) ![2](https://user-images.githubusercontent.com/5518/195582596-1efac877-7804-4641-b5c6-e22c80c0149c.png) ![3](https://user-images.githubusercontent.com/5518/195582604-180b2cc0-a5a0-4c6b-a7f1-1f4a09079657.png) ![4](https://user-images.githubusercontent.com/5518/195582606-044c11b5-68c1-4732-951b-7abcfff38e0b.png)
+![1](https://user-images.githubusercontent.com/5518/195587367-6b579046-1d75-4a64-8e8f-4475da8932fa.png) ![2](https://user-images.githubusercontent.com/5518/195587377-08065df4-80ad-4c3f-baf4-2da7f9919b19.png) ![3](https://user-images.githubusercontent.com/5518/195587383-de8f73ea-e934-4c9d-b278-c78fb69cad58.png) ![4](https://user-images.githubusercontent.com/5518/195587381-a67e586d-0b54-4d6f-89c8-a431b085e16c.png)
 
 ## Feature
 

@@ -83,7 +83,9 @@ fn get_image(width: usize, height: usize) -> ImageBuffer<Rgb<u8>, Vec<u8>> {
 
 fn cyclic_write_character(res: &[String], image: &mut ImageBuffer<Rgb<u8>, Vec<u8>>) {
     let c = (image.width() - 20) / res.len() as u32;
-    let y = image.height() / 2 - 15;
+    let y = image.height() / 3 - 15;
+
+    let h = image.height() as f32;
 
     let scale = match res.len() {
         1..=3 => SCALE_LG,
@@ -94,26 +96,31 @@ fn cyclic_write_character(res: &[String], image: &mut ImageBuffer<Rgb<u8>, Vec<u
     let colors = get_colors(res.len());
 
     let xscale = scale - rand_num((scale * 0.2) as usize) as f32;
-    let yscale = scale - rand_num((scale * 0.2) as usize) as f32;
+    let yscale = h as f32 - rand_num((h * 0.2) as usize) as f32;
 
     for (i, _) in res.iter().enumerate() {
         let text = &res[i];
 
         let color = colors[i];
+        let font = get_font();
         let line_color = colors[rand_num(colors.len() - 1)];
 
-        draw_text_mut(
-            image,
-            color,
-            5 + (i as u32 * c) as i32,
-            y as i32,
-            Scale {
-                x: xscale,
-                y: yscale,
-            },
-            &get_font(),
-            text,
-        );
+        for j in 0..(rand_num(2) + 1) as i32 {
+            let offset = j * (rand_num(3) as i32 + 1);
+            draw_text_mut(
+                image,
+                color,
+                10 + offset + (i as u32 * c) as i32,
+                y as i32 as i32,
+                Scale {
+                    x: xscale + offset as f32,
+                    y: yscale as f32,
+                },
+                &font,
+                text,
+            );
+        }
+
         draw_interference_line(1, image, line_color);
         draw_interference_ellipse(1, image, line_color);
     }
@@ -175,8 +182,8 @@ impl CaptchaBuilder {
     pub fn new() -> Self {
         CaptchaBuilder {
             length: 4,
-            width: 180,
-            height: 48,
+            width: 240,
+            height: 64,
             complexity: 5,
         }
     }
