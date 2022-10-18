@@ -1,8 +1,8 @@
 title: RuCaptcha
-description: This is a Captcha gem for Rails Application. It run ImageMagick command to draw Captcha image.
+description: Captcha Gem for Rails, which generates captcha image by Rust.
 google_analytics: 
 show_downloads: true
-theme: jekyll-theme-cayman
+theme: jekyll-theme-primer
 
 gems:
   - jekyll-mentions
