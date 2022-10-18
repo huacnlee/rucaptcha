@@ -14,7 +14,12 @@ static BASIC_CHAR: [char; 54] = [
 static FONT_BYTES1: &[u8; 145008] = include_bytes!("../fonts/FuzzyBubbles-Regular.ttf");
 static FONT_BYTES2: &[u8; 37792] = include_bytes!("../fonts/Handlee-Regular.ttf");
 
-static COLORS: [(u8, u8, u8); 10] = [
+// https://coolors.co/cc0b8f-7c0abe-5700c8-3c2ea4-3d56a8-3fa67e-45bb30-69d003-a0d003-d8db02
+static COLORS: [(u8, u8, u8); 14] = [
+    (197, 166, 3),
+    (187, 87, 5),
+    (176, 7, 7),
+    (186, 9, 56),
     (204, 11, 143),
     (124, 10, 190),
     (87, 0, 200),
@@ -145,7 +150,7 @@ fn draw_interference_line(num: usize, image: &mut ImageBuffer<Rgb<u8>, Vec<u8>>,
         let ctrl_x = get_next((width / 6) as f32, width / 4 * 3);
         let ctrl_y = get_next(x1, height - 5);
 
-        let ctrl_x2 = get_next((width / 4) as f32, width / 4 * 3);
+        let ctrl_x2 = get_next((width / 12) as f32, width / 12 * 3);
         let ctrl_y2 = get_next(x1, height - 5);
         // Randomly draw bezier curves
         draw_cubic_bezier_curve_mut(
