@@ -29,6 +29,6 @@ task default: :spec
 task :preview do
   require "rucaptcha"
   res = RuCaptchaCore.create(5, 5)
-  warn res[0]
+  warn "-------------------------\n#{res[0]}"
   puts res[1].pack("c*")
 end

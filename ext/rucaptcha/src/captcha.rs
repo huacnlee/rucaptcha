@@ -1,5 +1,5 @@
 use image::{ImageBuffer, Rgb};
-use imageproc::drawing::{draw_cubic_bezier_curve_mut, draw_hollow_ellipse_mut, draw_text_mut};
+use imageproc::drawing::{draw_cubic_bezier_curve_mut, draw_text_mut};
 use imageproc::noise::{gaussian_noise_mut, salt_and_pepper_noise_mut};
 use rand::{thread_rng, Rng};
 use rusttype::{Font, Scale};
@@ -47,7 +47,7 @@ fn get_captcha(len: usize) -> Vec<String> {
 
 #[allow(unused)]
 fn get_color() -> Rgb<u8> {
-    let rnd = rand_num(COLORS.len());
+    let rnd = rand_num(COLORS.len() - 1);
     let c = COLORS[rnd];
     Rgb([c.0, c.1, c.2])
 }
@@ -94,19 +94,28 @@ fn cyclic_write_character(res: &[String], image: &mut ImageBuffer<Rgb<u8>, Vec<u
     } as f32;
 
     let colors = get_colors(res.len());
+    let line_colors = get_colors(res.len());
 
     let xscale = scale - rand_num((scale * 0.2) as usize) as f32;
     let yscale = h as f32 - rand_num((h * 0.2) as usize) as f32;
 
+    // Draw line, ellipse first as background
+    for (i, _) in res.iter().enumerate() {
+        let line_color = line_colors[i];
+        draw_interference_line(1, image, line_color);
+        draw_interference_ellipse(1, image, line_color);
+    }
+
+    // Draw text
     for (i, _) in res.iter().enumerate() {
         let text = &res[i];
 
         let color = colors[i];
         let font = get_font();
-        let line_color = colors[rand_num(colors.len() - 1)];
 
         for j in 0..(rand_num(3) + 1) as i32 {
-            let offset = j * (rand_num(2) as i32 + 1);
+            // Draw text again with offset
+            let offset = j * (rand_num(2) as i32);
             draw_text_mut(
                 image,
                 color,
@@ -120,9 +129,6 @@ fn cyclic_write_character(res: &[String], image: &mut ImageBuffer<Rgb<u8>, Vec<u
                 text,
             );
         }
-
-        draw_interference_line(1, image, line_color);
-        draw_interference_ellipse(1, image, line_color);
     }
 }
 
@@ -159,10 +165,12 @@ fn draw_interference_ellipse(
     color: Rgb<u8>,
 ) {
     for _ in 0..num {
+        // max cycle width 20px
         let w = (10 + rand_num(10)) as i32;
         let x = rand_num((image.width() - 25) as usize) as i32;
         let y = rand_num((image.height() - 15) as usize) as i32;
-        draw_hollow_ellipse_mut(image, (x, y), w, w, color);
+
+        imageproc::drawing::draw_filled_ellipse_mut(image, (x, y), w, w, color);
     }
 }
 
