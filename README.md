@@ -171,5 +171,6 @@ end
 Warming up --------------------------------------
       Generate image    18.000  i/100ms
 Calculating -------------------------------------
-      Generate image    165.047  (±15.8%) i/s -    792.000  in   5.003023s
+      Generate image (2.6.x  C Version)   181.238  (± 2.8%) i/s -    918.000  in   5.069689s
+      Generate image (3.x Rust version)   165.047  (±15.8%) i/s -    792.000  in   5.003023s
 ```
