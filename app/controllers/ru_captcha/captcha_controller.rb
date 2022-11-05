@@ -7,7 +7,7 @@ module RuCaptcha
       headers["Pragma"] = "no-cache"
       data = generate_rucaptcha
 
-      opts = { disposition: "inline", type: "image/png" }
+      opts = { disposition: "inline", type: "image/jpeg" }
       send_data data, opts
     end
   end

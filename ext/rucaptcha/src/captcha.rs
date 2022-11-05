@@ -1,6 +1,6 @@
 use image::{ImageBuffer, Rgb};
 use imageproc::drawing::{draw_cubic_bezier_curve_mut, draw_text_mut};
-use imageproc::noise::{gaussian_noise_mut, salt_and_pepper_noise_mut};
+use imageproc::noise::gaussian_noise_mut;
 use rand::{thread_rng, Rng};
 use rusttype::{Font, Scale};
 use std::io::Cursor;
@@ -195,8 +195,8 @@ impl CaptchaBuilder {
     pub fn new() -> Self {
         CaptchaBuilder {
             length: 4,
-            width: 300,
-            height: 100,
+            width: 220,
+            height: 70,
             complexity: 5,
         }
     }
@@ -247,15 +247,9 @@ impl CaptchaBuilder {
             ((5 * self.complexity) - 5) as u64,
         );
 
-        salt_and_pepper_noise_mut(
-            &mut image,
-            ((0.001 * self.complexity as f64) - 0.001) as f64,
-            (0.8 * self.complexity as f64) as u64,
-        );
-
         let mut bytes: Vec<u8> = Vec::new();
         image
-            .write_to(&mut Cursor::new(&mut bytes), image::ImageFormat::Png)
+            .write_to(&mut Cursor::new(&mut bytes), image::ImageFormat::Jpeg)
             .unwrap();
 
         Captcha { text, image: bytes }
