@@ -37,6 +37,8 @@ task :memory do
   require "rucaptcha"
   require "memory_profiler"
 
+  RuCaptchaCore.create(5, 5)
+
   report = MemoryProfiler.report do
     1000.times do
       RuCaptchaCore.create(5, 5)
@@ -53,6 +55,9 @@ end
 task :benchmark do
   require "rucaptcha"
   require "benchmark/ips"
+
+  RuCaptchaCore.create(5, 5)
+
   Benchmark.ips do |x|
     x.report("Generate image") { RuCaptchaCore.create(5, 5) }
     x.compare!
