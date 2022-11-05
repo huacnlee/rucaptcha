@@ -33,6 +33,23 @@ task :preview do
   puts res[1].pack("c*")
 end
 
+task :memory do
+  require "rucaptcha"
+  require "memory_profiler"
+
+  report = MemoryProfiler.report do
+    1000.times do
+      RuCaptchaCore.create(5, 5)
+    end
+  end
+
+  GC.start
+  report.pretty_print
+
+  puts "------------------------- Result Guide -------------------------"
+  puts "If [Total retained] have any bytes, there will have memory leak."
+end
+
 task :benchmark do
   require "rucaptcha"
   require "benchmark/ips"
