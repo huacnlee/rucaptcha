@@ -32,3 +32,12 @@ task :preview do
   warn "-------------------------\n#{res[0]}"
   puts res[1].pack("c*")
 end
+
+task :benchmark do
+  require "rucaptcha"
+  require "benchmark/ips"
+  Benchmark.ips do |x|
+    x.report("Generate image") { RuCaptchaCore.create(5, 5) }
+    x.compare!
+  end
+end

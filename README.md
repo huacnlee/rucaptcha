@@ -162,3 +162,14 @@ else
   render :new
 end
 ```
+
+## Performance
+
+`rake benchmark` to run benchmark test.
+
+```
+Warming up --------------------------------------
+      Generate image    18.000  i/100ms
+Calculating -------------------------------------
+      Generate image    165.047  (±15.8%) i/s -    792.000  in   5.003023s
+```

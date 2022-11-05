@@ -8,3 +8,5 @@ gem "rspec"
 
 gem "rake-compiler", "~> 1.2"
 gem "rb_sys"
+
+gem "benchmark-ips", "~> 2.10"
