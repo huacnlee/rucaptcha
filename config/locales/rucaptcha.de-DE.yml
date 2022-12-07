@@ -1,0 +1,3 @@
+'de-DE':
+  rucaptcha:
+    invalid: "Falsches Captcha (Wenn es nicht erkannt wird, klicken Sie darauf , um das Captcha zu aktualisieren)"
