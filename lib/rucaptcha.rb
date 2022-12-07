@@ -54,8 +54,16 @@ module RuCaptcha
     def check_cache_store!
       cache_store = RuCaptcha.config.cache_store
       store_name = cache_store.is_a?(Array) ? cache_store.first : cache_store
-      if %i[memory_store null_store file_store].include?(store_name)
-        RuCaptcha.config.cache_store = [:file_store, Rails.root.join("tmp/cache/rucaptcha/session")]
+      default_path = Rails.root.join('tmp/cache/rucaptcha/session')
+      if store_name == :file_store
+        cache_path = if cache_store.is_a?(Array)
+                       File.directory?(cache_store.second) ? Pathname.new(cache_store.second).join('rucaptcha/session') : default_path
+                     else
+                       default_path
+                     end
+        RuCaptcha.config.cache_store = [:file_store, cache_path]
+      elsif %i[memory_store null_store].include?(store_name)
+        RuCaptcha.config.cache_store = [:file_store, default_path]
 
         puts "
 
