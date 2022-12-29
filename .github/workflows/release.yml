@@ -4,10 +4,10 @@ on:
     tags:
       - "v*"
     branches:
-      - "feat/rust"
+      - "release-gem"
 jobs:
   build:
-    name: Build compile gems
+    name: Release cross gems
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -31,7 +31,7 @@ jobs:
           platform: ${{ matrix.ruby-platform }}
           setup: bundle install || gem install rb_sys
           env: |
-            RUBY_CC_VERSION=3.1.0:3.0.0:2.7.0
+            RUBY_CC_VERSION=3.2.0,3.1.0:3.0.0:2.7.0
 
       - uses: actions/download-artifact@v3
         with:
@@ -57,3 +57,30 @@ jobs:
       - name: Install RubyGem & Test Run
         run: |
           gem install rucaptcha --verbose
+
+  release_source:
+    name: Release source gem
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: oxidize-rb/actions/setup-ruby-and-rust@main
+        with:
+          ruby-version: "3.1"
+          bundler-cache: false
+          cargo-cache: true
+          cargo-vendor: true
+
+      - name: Build gem
+        run: |
+          gem build rucaptcha.gemspec
+
+      - name: Publish to RubyGem
+        env:
+          RUBYGEM_TOKEN: "${{secrets.RUBYGEM_TOKEN}}"
+        run: |
+          mkdir -p $HOME/.gem
+          touch $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          printf -- "---\n:rubygems_api_key: ${RUBYGEM_TOKEN}\n" > $HOME/.gem/credentials
+          gem push rucaptcha-*.gem
