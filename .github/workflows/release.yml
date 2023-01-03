@@ -21,42 +21,16 @@ jobs:
 
       - uses: oxidize-rb/actions/setup-ruby-and-rust@main
         with:
-          ruby-version: "3.1"
+          ruby-version: "3.2"
           bundler-cache: false
           cargo-cache: true
           cargo-vendor: true
 
-      - uses: oxidize-rb/cross-gem-action@v6
+      - uses: oxidize-rb/cross-gem-action@main
         with:
           platform: ${{ matrix.ruby-platform }}
-          setup: bundle install || gem install rb_sys
-          env: |
-            RUBY_CC_VERSION=3.2.0,3.1.0:3.0.0:2.7.0
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: cross-gem
-          path: pkg/
-
-      - name: Display structure of built gems
-        run: ls -R
-        working-directory: pkg/
-
-      - name: Publish to RubyGem
-        env:
-          RUBYGEM_TOKEN: "${{secrets.RUBYGEM_TOKEN}}"
-        run: |
-          mkdir -p $HOME/.gem
-          touch $HOME/.gem/credentials
-          chmod 0600 $HOME/.gem/credentials
-          printf -- "---\n:rubygems_api_key: ${RUBYGEM_TOKEN}\n" > $HOME/.gem/credentials
-          for filename in pkg/*.gem; do
-            gem push $filename
-          done
-
-      - name: Install RubyGem & Test Run
-        run: |
-          gem install rucaptcha --verbose
+          setup: bundle install
+          ruby-versions: "3.2,3.1,3.0,2.7"
 
   release_source:
     name: Release source gem
@@ -66,7 +40,7 @@ jobs:
 
       - uses: oxidize-rb/actions/setup-ruby-and-rust@main
         with:
-          ruby-version: "3.1"
+          ruby-version: "3.2"
           bundler-cache: false
           cargo-cache: true
           cargo-vendor: true
@@ -74,6 +48,33 @@ jobs:
       - name: Build gem
         run: |
           gem build rucaptcha.gemspec
+          mkdir -p pkg/
+          mv *.gem pkg/
+
+      - name: Upload Gem
+        uses: actions/upload-artifact@v3
+        with:
+          name: cross-gem
+          path: pkg/
+
+  publish:
+    name: Publish cross gems
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - release_source
+    steps:
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+      - uses: actions/download-artifact@v3
+        with:
+          name: cross-gem
+          path: pkg/
+
+      - name: Display structure of built gems
+        run: ls -R pkg/
 
       - name: Publish to RubyGem
         env:
@@ -83,4 +84,10 @@ jobs:
           touch $HOME/.gem/credentials
           chmod 0600 $HOME/.gem/credentials
           printf -- "---\n:rubygems_api_key: ${RUBYGEM_TOKEN}\n" > $HOME/.gem/credentials
-          gem push rucaptcha-*.gem
+          for filename in pkg/**/*.gem; do
+            gem push $filename
+          done
+
+      - name: Install RubyGem & Test Run
+        run: |
+          gem install rucaptcha --verbose
