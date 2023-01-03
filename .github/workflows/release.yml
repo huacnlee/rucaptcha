@@ -84,7 +84,7 @@ jobs:
           touch $HOME/.gem/credentials
           chmod 0600 $HOME/.gem/credentials
           printf -- "---\n:rubygems_api_key: ${RUBYGEM_TOKEN}\n" > $HOME/.gem/credentials
-          gem pkg/*.gem
+          gem push pkg/*.gem
           for filename in pkg/**/*.gem; do
             echo $filename
             gem push $filename
