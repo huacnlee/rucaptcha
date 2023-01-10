@@ -30,7 +30,7 @@ jobs:
         with:
           platform: ${{ matrix.ruby-platform }}
           setup: bundle install
-          ruby-versions: "3.2,3.1,3.0,2.7"
+          ruby-versions: "3.2,3.1"
 
   release_source:
     name: Release source gem
