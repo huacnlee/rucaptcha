@@ -9,6 +9,12 @@ module RuCaptcha
     attr_accessor :length
     # Hard mode, default: 5, allows: [1..10]
     attr_accessor :difficulty
+    # Enable or disable strikethrough lines on captcha image, default: true
+    attr_accessor :line
+    # Enable or disable noise on captcha image, default: false
+    attr_accessor :noise
+    # Image format allow: ['jpeg', 'png', 'webp'], default: 'png'
+    attr_accessor :format
     # skip_cache_store_check, default: false
     attr_accessor :skip_cache_store_check
   end

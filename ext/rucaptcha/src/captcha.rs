@@ -1,6 +1,4 @@
-use image::{ImageBuffer, Rgb};
-use imageproc::drawing::{draw_cubic_bezier_curve_mut, draw_text_mut};
-use imageproc::noise::gaussian_noise_mut;
+use image::{ImageBuffer, Rgba};
 use rand::{thread_rng, Rng};
 use rusttype::{Font, Scale};
 use std::io::Cursor;
@@ -15,21 +13,21 @@ static FONT_BYTES1: &[u8; 145008] = include_bytes!("../fonts/FuzzyBubbles-Regula
 static FONT_BYTES2: &[u8; 37792] = include_bytes!("../fonts/Handlee-Regular.ttf");
 
 // https://coolors.co/cc0b8f-7c0abe-5700c8-3c2ea4-3d56a8-3fa67e-45bb30-69d003-a0d003-d8db02
-static COLORS: [(u8, u8, u8); 14] = [
-    (197, 166, 3),
-    (187, 87, 5),
-    (176, 7, 7),
-    (186, 9, 56),
-    (204, 11, 143),
-    (124, 10, 190),
-    (87, 0, 200),
-    (61, 86, 168),
-    (63, 166, 126),
-    (69, 187, 48),
-    (105, 208, 3),
-    (160, 208, 3),
-    (216, 219, 2),
-    (50, 50, 50),
+static COLORS: [(u8, u8, u8, u8); 14] = [
+    (197, 166, 3, 255),
+    (187, 87, 5, 255),
+    (176, 7, 7, 255),
+    (186, 9, 56, 255),
+    (204, 11, 143, 255),
+    (124, 10, 190, 255),
+    (87, 0, 200, 255),
+    (61, 86, 168, 255),
+    (63, 166, 126, 255),
+    (69, 187, 48, 255),
+    (105, 208, 3, 255),
+    (160, 208, 3, 255),
+    (216, 219, 2, 255),
+    (50, 50, 50, 255),
 ];
 
 static SCALE_SM: u32 = 32;
@@ -51,18 +49,18 @@ fn get_captcha(len: usize) -> Vec<String> {
 }
 
 #[allow(unused)]
-fn get_color() -> Rgb<u8> {
+fn get_color() -> Rgba<u8> {
     let rnd = rand_num(COLORS.len() - 1);
     let c = COLORS[rnd];
-    Rgb([c.0, c.1, c.2])
+    Rgba([c.0, c.1, c.2, c.3])
 }
 
-fn get_colors(num: usize) -> Vec<Rgb<u8>> {
+fn get_colors(num: usize) -> Vec<Rgba<u8>> {
     let rnd = rand_num(COLORS.len());
     let mut out = vec![];
     for i in 0..num {
         let c = COLORS[(rnd + i) % COLORS.len()];
-        out.push(Rgb([c.0, c.1, c.2]))
+        out.push(Rgba([c.0, c.1, c.2, c.3]))
     }
 
     out
@@ -80,13 +78,13 @@ fn get_font() -> Font<'static> {
     }
 }
 
-fn get_image(width: usize, height: usize) -> ImageBuffer<Rgb<u8>, Vec<u8>> {
+fn get_image(width: usize, height: usize) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
     ImageBuffer::from_fn(width as u32, height as u32, |_, _| {
-        image::Rgb([255, 255, 255])
+        image::Rgba([255, 255, 255, 255])
     })
 }
 
-fn cyclic_write_character(res: &[String], image: &mut ImageBuffer<Rgb<u8>, Vec<u8>>) {
+fn cyclic_write_character(res: &[String], image: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, lines: bool) {
     let c = (image.width() - 20) / res.len() as u32;
     let y = image.height() / 3 - 15;
 
@@ -107,7 +105,10 @@ fn cyclic_write_character(res: &[String], image: &mut ImageBuffer<Rgb<u8>, Vec<u
     // Draw line, ellipse first as background
     for (i, _) in res.iter().enumerate() {
         let line_color = line_colors[i];
-        draw_interference_line(1, image, line_color);
+
+        if lines {
+            draw_interference_line(1, image, line_color);
+        }
         draw_interference_ellipse(1, image, line_color);
     }
 
@@ -121,7 +122,7 @@ fn cyclic_write_character(res: &[String], image: &mut ImageBuffer<Rgb<u8>, Vec<u
         for j in 0..(rand_num(3) + 1) as i32 {
             // Draw text again with offset
             let offset = j * (rand_num(2) as i32);
-            draw_text_mut(
+            imageproc::drawing::draw_text_mut(
                 image,
                 color,
                 10 + offset + (i as u32 * c) as i32,
@@ -137,7 +138,7 @@ fn cyclic_write_character(res: &[String], image: &mut ImageBuffer<Rgb<u8>, Vec<u
     }
 }
 
-fn draw_interference_line(num: usize, image: &mut ImageBuffer<Rgb<u8>, Vec<u8>>, color: Rgb<u8>) {
+fn draw_interference_line(num: usize, image: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, color: Rgba<u8>) {
     for _ in 0..num {
         let width = image.width();
         let height = image.height();
@@ -153,7 +154,7 @@ fn draw_interference_line(num: usize, image: &mut ImageBuffer<Rgb<u8>, Vec<u8>>,
         let ctrl_x2 = get_next((width / 12) as f32, width / 12 * 3);
         let ctrl_y2 = get_next(x1, height - 5);
         // Randomly draw bezier curves
-        draw_cubic_bezier_curve_mut(
+        imageproc::drawing::draw_cubic_bezier_curve_mut(
             image,
             (x1, y1),
             (x2, y2),
@@ -166,8 +167,8 @@ fn draw_interference_line(num: usize, image: &mut ImageBuffer<Rgb<u8>, Vec<u8>>,
 
 fn draw_interference_ellipse(
     num: usize,
-    image: &mut ImageBuffer<Rgb<u8>, Vec<u8>>,
-    color: Rgb<u8>,
+    image: &mut ImageBuffer<Rgba<u8>, Vec<u8>>,
+    color: Rgba<u8>,
 ) {
     for _ in 0..num {
         // max cycle width 20px
@@ -189,6 +190,9 @@ pub struct CaptchaBuilder {
     width: usize,
     height: usize,
     complexity: usize,
+    line: bool,
+    noise: bool,
+    format: image::ImageFormat,
 }
 
 impl CaptchaBuilder {
@@ -198,6 +202,9 @@ impl CaptchaBuilder {
             width: 220,
             height: 70,
             complexity: 5,
+            line: true,
+            noise: false,
+            format: image::ImageFormat::Png,
         }
     }
 
@@ -206,15 +213,26 @@ impl CaptchaBuilder {
         self
     }
 
-    // pub fn width(mut self, width: usize) -> Self {
-    //     self.width = width;
-    //     self
-    // }
+    pub fn line(mut self, line: bool) -> Self {
+        self.line = line;
+        self
+    }
 
-    // pub fn height(mut self, height: usize) -> Self {
-    //     self.height = height;
-    //     self
-    // }
+    pub fn noise(mut self, noise: bool) -> Self {
+        self.noise = noise;
+        self
+    }
+
+    pub fn format(mut self, format: &str) -> Self {
+        self.format = match format {
+            "png" => image::ImageFormat::Png,
+            "jpg" | "jpeg" => image::ImageFormat::Jpeg,
+            "webp" => image::ImageFormat::WebP,
+            _ => image::ImageFormat::Png,
+        };
+
+        self
+    }
 
     pub fn complexity(mut self, complexity: usize) -> Self {
         let mut complexity = complexity;
@@ -238,20 +256,86 @@ impl CaptchaBuilder {
         let mut image = get_image(self.width, self.height);
 
         // Loop to write the verification code string into the background image
-        cyclic_write_character(&res, &mut image);
+        cyclic_write_character(&res, &mut image, self.line);
 
-        gaussian_noise_mut(
-            &mut image,
-            (self.complexity - 1) as f64,
-            ((10 * self.complexity) - 10) as f64,
-            ((5 * self.complexity) - 5) as u64,
-        );
+        if self.noise {
+            imageproc::noise::gaussian_noise_mut(
+                &mut image,
+                (self.complexity - 1) as f64,
+                ((10 * self.complexity) - 10) as f64,
+                ((5 * self.complexity) - 5) as u64,
+            );
+        }
 
         let mut bytes: Vec<u8> = Vec::new();
         image
-            .write_to(&mut Cursor::new(&mut bytes), image::ImageFormat::Jpeg)
+            .write_to(&mut Cursor::new(&mut bytes), image::ImageFormat::Png)
             .unwrap();
 
         Captcha { text, image: bytes }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_format() {
+        let mut builder = CaptchaBuilder::new();
+        assert_eq!(builder.format, image::ImageFormat::Png);
+
+        builder = builder.format("jpg");
+        assert_eq!(builder.format, image::ImageFormat::Jpeg);
+        builder = builder.format("jpeg");
+        assert_eq!(builder.format, image::ImageFormat::Jpeg);
+        builder = builder.format("webp");
+        assert_eq!(builder.format, image::ImageFormat::WebP);
+        builder = builder.format("png");
+        assert_eq!(builder.format, image::ImageFormat::Png);
+        builder = builder.format("gif");
+        assert_eq!(builder.format, image::ImageFormat::Png);
+    }
+
+    #[test]
+    fn test_line() {
+        let mut builder = CaptchaBuilder::new();
+        assert!(builder.line);
+
+        builder = builder.line(false);
+        assert!(!builder.line);
+    }
+
+    #[test]
+    fn test_noise() {
+        let mut builder = CaptchaBuilder::new();
+        assert!(!builder.noise);
+
+        builder = builder.noise(true);
+        assert!(builder.noise);
+    }
+
+    #[test]
+    fn test_difficulty() {
+        let mut builder = CaptchaBuilder::new();
+        assert_eq!(builder.complexity, 5);
+
+        builder = builder.complexity(10);
+        assert_eq!(builder.complexity, 10);
+
+        builder = builder.complexity(11);
+        assert_eq!(builder.complexity, 10);
+
+        builder = builder.complexity(0);
+        assert_eq!(builder.complexity, 1);
+    }
+
+    #[test]
+    fn test_length() {
+        let mut builder = CaptchaBuilder::new();
+        assert_eq!(builder.length, 4);
+
+        builder = builder.length(10);
+        assert_eq!(builder.length, 10);
     }
 }

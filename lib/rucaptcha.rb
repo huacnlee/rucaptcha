@@ -28,6 +28,9 @@ module RuCaptcha
       @config.difficulty = 3
       @config.expires_in = 2.minutes
       @config.skip_cache_store_check = false
+      @config.line = true
+      @config.noise = true
+      @config.format = "png"
 
       @config.cache_store = if Rails.application
                               Rails.application.config.cache_store
@@ -47,7 +50,7 @@ module RuCaptcha
 
       raise RuCaptcha::Errors::Configuration, "length config error, value must in 3..7" unless length.in?(3..7)
 
-      result = RuCaptchaCore.create(length, config.difficulty || 5)
+      result = RuCaptchaCore.create(length, config.difficulty || 5, config.line, config.noise, config.format)
       [result[0].downcase, result[1].pack("c*")]
     end
 

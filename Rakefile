@@ -27,9 +27,14 @@ end
 RSpec::Core::RakeTask.new(:spec)
 task default: :spec
 
+def create_captcha(length = 5, difficulty = 5)
+  require "rucaptcha"
+  RuCaptchaCore.create(length, difficulty, false, false, "png")
+end
+
 task :preview do
   require "rucaptcha"
-  res = RuCaptchaCore.create(5, 5)
+  res = create_captcha()
   warn "-------------------------\n#{res[0]}"
   puts res[1].pack("c*")
 end
@@ -38,11 +43,11 @@ task :memory do
   require "rucaptcha"
   require "memory_profiler"
 
-  RuCaptchaCore.create(5, 5)
+  create_captcha()
 
   report = MemoryProfiler.report do
     1000.times do
-      RuCaptchaCore.create(5, 5)
+      create_captcha()
     end
   end
 
@@ -57,10 +62,10 @@ task :benchmark do
   require "rucaptcha"
   require "benchmark/ips"
 
-  RuCaptchaCore.create(5, 5)
+  RuCaptchaCore.create(5, 5, true, true, "png")
 
   Benchmark.ips do |x|
-    x.report("Generate image") { RuCaptchaCore.create(5, 5) }
+    x.report("Generate image") { RuCaptchaCore.create(5, 5, true, true, "png") }
     x.compare!
   end
 end
