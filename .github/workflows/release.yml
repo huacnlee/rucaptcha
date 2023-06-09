@@ -68,7 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build
-      # - release_source
+      - release_source
     steps:
       - uses: ruby/setup-ruby@v1
         with:
