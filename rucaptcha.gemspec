@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.extensions = %w[ext/rucaptcha/extconf.rb]
   s.summary = "Captcha Gem for Rails, which generates captcha image by Rust."
   s.license = "MIT"
-  s.required_ruby_version = ">= 2.7.0"
+  s.required_ruby_version = ">= 3.1.0"
 
   s.add_dependency "railties", ">= 3.2"
   s.add_dependency "rb_sys", ">= 0.9.18"
