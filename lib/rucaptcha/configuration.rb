@@ -17,5 +17,7 @@ module RuCaptcha
     attr_accessor :format
     # skip_cache_store_check, default: false
     attr_accessor :skip_cache_store_check
+    # custom rucaptcha mount path， default： '/rucaptcha'
+    attr_accessor :mount_path
   end
 end
