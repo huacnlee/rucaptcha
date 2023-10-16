@@ -61,6 +61,9 @@ RuCaptcha.configure do
 
   # Set the image format, default: png, allows: [jpeg, png, webp]
   # self.format = 'png'
+
+  # Custom mount path, default: '/rucaptcha'
+  # self.mount_path = '/rucaptcha'
 end
 ```
 

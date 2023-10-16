@@ -31,6 +31,7 @@ module RuCaptcha
       @config.line = true
       @config.noise = true
       @config.format = "png"
+      @config.mount_path = "/rucaptcha"
 
       @config.cache_store = if Rails.application
                               Rails.application.config.cache_store
