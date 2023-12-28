@@ -7,8 +7,8 @@ version = "3.0.0"
 crate-type = ["cdylib"]
 
 [dependencies]
-image = "0.24.4"
-imageproc = "0.23.0"
-magnus = "0.4"
+image = "0.24"
+imageproc = "0.23"
+magnus = "0.6"
 rand = "0.8.5"
 rusttype = "0.9.2"

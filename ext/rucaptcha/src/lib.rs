@@ -23,7 +23,7 @@ pub fn create(
 
 #[magnus::init]
 fn init() -> Result<(), Error> {
-    let class = define_class("RuCaptchaCore", Default::default())?;
+    let class = define_class("RuCaptchaCore", magnus::class::object())?;
     class.define_singleton_method("create", function!(create, 5))?;
 
     Ok(())
