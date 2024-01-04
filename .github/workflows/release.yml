@@ -1,10 +1,10 @@
-name: "Release RubyGem"
+name: 'Release RubyGem'
 on:
   push:
     tags:
-      - "v*"
+      - 'v*'
     branches:
-      - "release-gem"
+      - 'release-gem'
 jobs:
   build:
     name: Release cross gems
@@ -20,18 +20,17 @@ jobs:
           - x86_64-linux-musl
     steps:
       - uses: actions/checkout@v3
-      - uses: oxidize-rb/actions/setup-ruby-and-rust@v1.1.7
+      - uses: oxidize-rb/actions/setup-ruby-and-rust@v1.1.9
         with:
-          ruby-version: "3.2"
+          ruby-version: '3.3'
           bundler-cache: false
           cargo-cache: true
           cargo-vendor: true
 
-      - uses: oxidize-rb/actions/cross-gem@v1.1.7
+      - uses: oxidize-rb/actions/cross-gem@v1.1.9
         with:
           platform: ${{ matrix.ruby-platform }}
-          setup: bundle install
-          ruby-versions: "3.2,3.1"
+          ruby-versions: '3.3,3.2,3.1'
 
       - uses: actions/upload-artifact@v2
         with:
@@ -46,7 +45,7 @@ jobs:
 
       - uses: oxidize-rb/actions/setup-ruby-and-rust@main
         with:
-          ruby-version: "3.2"
+          ruby-version: '3.3'
           bundler-cache: false
           cargo-cache: true
           cargo-vendor: true
@@ -72,7 +71,7 @@ jobs:
     steps:
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.2"
+          ruby-version: '3.3'
           bundler-cache: true
       - uses: actions/download-artifact@v3
         with:
@@ -84,7 +83,7 @@ jobs:
 
       - name: Publish to RubyGem
         env:
-          RUBYGEM_TOKEN: "${{secrets.RUBYGEM_TOKEN}}"
+          RUBYGEM_TOKEN: '${{secrets.RUBYGEM_TOKEN}}'
         run: |
           mkdir -p $HOME/.gem
           touch $HOME/.gem/credentials
