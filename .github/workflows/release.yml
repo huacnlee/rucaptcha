@@ -1,10 +1,10 @@
-name: 'Release RubyGem'
+name: "Release RubyGem"
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
     branches:
-      - 'release-gem'
+      - "release-gem"
 jobs:
   build:
     name: Release cross gems
@@ -18,34 +18,35 @@ jobs:
           - x86_64-linux
           - aarch64-linux
           - x86_64-linux-musl
+          - aarch64-linux-musl
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: oxidize-rb/actions/setup-ruby-and-rust@v1.1.9
         with:
-          ruby-version: '3.3'
+          ruby-version: "3.3"
           bundler-cache: false
           cargo-cache: true
           cargo-vendor: true
 
-      - uses: oxidize-rb/actions/cross-gem@v1.1.9
+      - uses: oxidize-rb/actions/cross-gem@v1.2.8
         with:
           platform: ${{ matrix.ruby-platform }}
-          ruby-versions: '3.3,3.2,3.1'
+          ruby-versions: "3.3,3.2,3.1"
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
-          name: cross-gem
+          name: bundle-artifact-${{ matrix.ruby-platform }}
           path: pkg/
 
-  release_source:
-    name: Release source gem
+  build_source:
+    name: Build source gem
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: oxidize-rb/actions/setup-ruby-and-rust@main
         with:
-          ruby-version: '3.3'
+          ruby-version: "3.3"
           bundler-cache: false
           cargo-cache: true
           cargo-vendor: true
@@ -57,9 +58,9 @@ jobs:
           mv *.gem pkg/
 
       - name: Upload Gem
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: cross-gem
+          name: bundle-artifact-source
           path: pkg/
 
   publish:
@@ -67,15 +68,16 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build
-      - release_source
+      - build_source
     steps:
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.3'
+          ruby-version: "3.3"
           bundler-cache: true
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
-          name: cross-gem
+          pattern: bundle-artifact-*
+          merge-multiple: true
           path: pkg/
 
       - name: Display structure of built gems
@@ -83,7 +85,7 @@ jobs:
 
       - name: Publish to RubyGem
         env:
-          RUBYGEM_TOKEN: '${{secrets.RUBYGEM_TOKEN}}'
+          RUBYGEM_TOKEN: "${{secrets.RUBYGEM_TOKEN}}"
         run: |
           mkdir -p $HOME/.gem
           touch $HOME/.gem/credentials

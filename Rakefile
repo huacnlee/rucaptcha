@@ -11,6 +11,7 @@ CROSS_PLATFORMS = %w[
   x86_64-darwin
   x86_64-linux
   x86_64-linux-musl
+  aarch64-linux-musl
 ]
 
 spec = Bundler.load_gemspec("rucaptcha.gemspec")
