@@ -7,7 +7,7 @@ on:
       - "release-gem"
 jobs:
   build:
-    name: Release cross gems
+    name: Build Native
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -39,7 +39,7 @@ jobs:
           path: pkg/
 
   build_source:
-    name: Build source gem
+    name: Build Source
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -64,7 +64,7 @@ jobs:
           path: pkg/
 
   publish:
-    name: Publish cross gems
+    name: Publish Gems
     runs-on: ubuntu-latest
     needs:
       - build
