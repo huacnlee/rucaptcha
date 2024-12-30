@@ -21,9 +21,9 @@ jobs:
           - aarch64-linux-musl
     steps:
       - uses: actions/checkout@v4
-      - uses: oxidize-rb/actions/setup-ruby-and-rust@v1.1.9
+      - uses: oxidize-rb/actions/setup-ruby-and-rust@v1.3.0
         with:
-          ruby-version: "3.3"
+          ruby-version: "3.4"
           bundler-cache: false
           cargo-cache: true
           cargo-vendor: true
@@ -31,7 +31,7 @@ jobs:
       - uses: oxidize-rb/actions/cross-gem@v1.2.8
         with:
           platform: ${{ matrix.ruby-platform }}
-          ruby-versions: "3.3,3.2,3.1"
+          ruby-versions: "3.4,3.3,3.2"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -46,7 +46,7 @@ jobs:
 
       - uses: oxidize-rb/actions/setup-ruby-and-rust@main
         with:
-          ruby-version: "3.3"
+          ruby-version: "3.4"
           bundler-cache: false
           cargo-cache: true
           cargo-vendor: true
@@ -72,7 +72,7 @@ jobs:
     steps:
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.3"
+          ruby-version: "3.4"
           bundler-cache: true
       - uses: actions/download-artifact@v4
         with:
