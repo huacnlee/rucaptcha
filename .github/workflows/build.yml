@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: oxidize-rb/actions/setup-ruby-and-rust@v1.3.0
         with:
-          ruby-version: "3.4"
+          ruby-version: "3.3"
           bundler-cache: true
           cargo-cache: true
           cargo-vendor: true
