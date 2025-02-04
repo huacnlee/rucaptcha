@@ -68,7 +68,6 @@ RuCaptcha.configure do
 
   # Custom mount path, default: '/rucaptcha'
   # self.mount_path = '/rucaptcha'
-
 end
 ```
 
