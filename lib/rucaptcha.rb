@@ -29,7 +29,8 @@ module RuCaptcha
       @config.expires_in = 2.minutes
       @config.skip_cache_store_check = false
       @config.line = true
-      @config.noise = true
+      @config.noise = false
+      @config.circle = true
       @config.format = "png"
       @config.mount_path = "/rucaptcha"
       @config.case_sensitive = false
@@ -52,7 +53,7 @@ module RuCaptcha
 
       raise RuCaptcha::Errors::Configuration, "length config error, value must in 3..7" unless length.in?(3..7)
 
-      result = RuCaptchaCore.create(length, config.difficulty || 5, config.line, config.noise, config.format)
+      result = RuCaptchaCore.create(length, config.difficulty || 5, config.line, config.noise, config.circle, config.format)
       unless config.case_sensitive
         result[0].downcase!
       end

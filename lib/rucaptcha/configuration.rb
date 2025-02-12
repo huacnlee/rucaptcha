@@ -13,6 +13,8 @@ module RuCaptcha
     attr_accessor :line
     # Enable or disable noise on captcha image, default: false
     attr_accessor :noise
+    # Enable or disable circle background on captcha image, default: true
+    attr_accessor :circle
     # Image format allow: ['jpeg', 'png', 'webp'], default: 'png'
     attr_accessor :format
     # skip_cache_store_check, default: false

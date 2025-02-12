@@ -74,63 +74,6 @@ fn get_next(min: f32, max: u32) -> f32 {
     min + rand_num(max as usize - min as usize) as f32
 }
 
-fn cyclic_write_character(captcha: &str, image: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, lines: bool) {
-    let c = (image.width() - 20) / captcha.len() as u32;
-    let y = image.height() / 3 - 15;
-
-    let h = image.height() as f32;
-
-    let scale = match captcha.len() {
-        1..=3 => SCALE_LG,
-        4..=5 => SCALE_MD,
-        _ => SCALE_SM,
-    } as f32;
-
-    let colors = get_colors(captcha.len());
-    let line_colors = get_colors(captcha.len());
-
-    let xscale = scale - rand_num((scale * 0.2) as usize) as f32;
-    let yscale = h - rand_num((h * 0.2) as usize) as f32;
-
-    // Draw line, ellipse first as background
-    (0..captcha.len()).for_each(|i| {
-        let line_color = line_colors[i];
-
-        if lines {
-            draw_interference_line(1, image, line_color);
-        }
-        draw_interference_ellipse(1, image, line_color);
-    });
-
-    let font = match rand_num(2) {
-        0 => &FONT_0,
-        1 => &FONT_1,
-        _ => &FONT_1,
-    };
-
-    // Draw text
-    for (i, ch) in captcha.chars().enumerate() {
-        let color = colors[i];
-
-        for j in 0..(rand_num(3) + 1) as i32 {
-            // Draw text again with offset
-            let offset = j * (rand_num(2) as i32);
-            imageproc::drawing::draw_text_mut(
-                image,
-                color,
-                10 + offset + (i as u32 * c) as i32,
-                y as i32,
-                Scale {
-                    x: xscale + offset as f32,
-                    y: yscale as f32,
-                },
-                font,
-                &ch.to_string(),
-            );
-        }
-    }
-}
-
 fn draw_interference_line(num: usize, image: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, color: Rgba<u8>) {
     for _ in 0..num {
         let width = image.width();
@@ -185,6 +128,7 @@ pub struct CaptchaBuilder {
     complexity: usize,
     line: bool,
     noise: bool,
+    circle: bool,
     format: image::ImageFormat,
 }
 
@@ -197,6 +141,7 @@ impl Default for CaptchaBuilder {
             complexity: 5,
             line: true,
             noise: false,
+            circle: true,
             format: image::ImageFormat::Png,
         }
     }
@@ -222,6 +167,11 @@ impl CaptchaBuilder {
         self
     }
 
+    pub fn circle(mut self, circle: bool) -> Self {
+        self.circle = circle;
+        self
+    }
+
     pub fn format(mut self, format: &str) -> Self {
         self.format = match format {
             "png" => image::ImageFormat::Png,
@@ -238,6 +188,70 @@ impl CaptchaBuilder {
         self
     }
 
+    fn cyclic_write_character(
+        &self,
+        captcha: &str,
+        image: &mut ImageBuffer<Rgba<u8>, Vec<u8>>,
+        lines: bool,
+    ) {
+        let c = (image.width() - 20) / captcha.len() as u32;
+        let y = image.height() / 3 - 15;
+
+        let h = image.height() as f32;
+
+        let scale = match captcha.len() {
+            1..=3 => SCALE_LG,
+            4..=5 => SCALE_MD,
+            _ => SCALE_SM,
+        } as f32;
+
+        let colors = get_colors(captcha.len());
+        let line_colors = get_colors(captcha.len());
+
+        let xscale = scale - rand_num((scale * 0.2) as usize) as f32;
+        let yscale = h - rand_num((h * 0.2) as usize) as f32;
+
+        // Draw line, ellipse first as background
+        if self.circle {
+            (0..captcha.len()).for_each(|i| {
+                let line_color = line_colors[i];
+
+                if lines {
+                    draw_interference_line(1, image, line_color);
+                }
+                draw_interference_ellipse(1, image, line_color);
+            });
+        }
+
+        let font = match rand_num(2) {
+            0 => &FONT_0,
+            1 => &FONT_1,
+            _ => &FONT_1,
+        };
+
+        // Draw text
+        for (i, ch) in captcha.chars().enumerate() {
+            let color = colors[i];
+
+            for j in 0..(rand_num(3) + 1) as i32 {
+                // Draw text again with offset
+                let offset = j * (rand_num(2) as i32);
+                imageproc::drawing::draw_text_mut(
+                    image,
+                    color,
+                    10 + offset + (i as u32 * c) as i32,
+                    y as i32,
+                    Scale {
+                        x: xscale + offset as f32,
+                        y: yscale as f32,
+                    },
+                    font,
+                    &ch.to_string(),
+                );
+            }
+        }
+    }
+
     pub fn build(self) -> Captcha {
         // Generate an array of captcha characters
         let text = rand_captcha(self.length);
@@ -248,7 +262,7 @@ impl CaptchaBuilder {
         });
 
         // Loop to write the verification code string into the background image
-        cyclic_write_character(&text, &mut buf, self.line);
+        self.cyclic_write_character(&text, &mut buf, self.line);
 
         if self.noise {
             gaussian_noise_mut(

@@ -7,6 +7,7 @@ pub fn create(
     difficulty: usize,
     line: bool,
     noise: bool,
+    circle: bool,
     format: String,
 ) -> (String, Vec<u8>) {
     let c = captcha::CaptchaBuilder::new();
@@ -15,6 +16,7 @@ pub fn create(
         .length(len)
         .line(line)
         .noise(noise)
+        .circle(circle)
         .format(&format)
         .build();
 
@@ -24,7 +26,7 @@ pub fn create(
 #[magnus::init]
 fn init() -> Result<(), Error> {
     let class = define_class("RuCaptchaCore", magnus::class::object())?;
-    class.define_singleton_method("create", function!(create, 5))?;
+    class.define_singleton_method("create", function!(create, 6))?;
 
     Ok(())
 }

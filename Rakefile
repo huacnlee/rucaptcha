@@ -30,7 +30,7 @@ task default: :spec
 
 def create_captcha(length = 5, difficulty = 5)
   require "rucaptcha"
-  RuCaptchaCore.create(length, difficulty, false, false, "png")
+  RuCaptchaCore.create(length, difficulty, false, false, false, "png")
 end
 
 task :preview do
