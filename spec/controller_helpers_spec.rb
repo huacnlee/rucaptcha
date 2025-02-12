@@ -112,5 +112,35 @@ describe RuCaptcha do
         expect(simple.verify_rucaptcha?).to eq(false)
       end
     end
+
+    describe "Case sensitive" do
+      it "insensitive" do
+        RuCaptcha.cache.write(simple.rucaptcha_sesion_key_key, {
+                                time: Time.now.to_i,
+                                code: "xYzN"
+                              })
+
+        simple.params[:_rucaptcha] = " xyzn "
+        expect(simple.verify_rucaptcha?).to eq(true)
+      end
+
+      it "sensitive" do
+        RuCaptcha.cache.write(simple.rucaptcha_sesion_key_key, {
+                                time: Time.now.to_i,
+                                code: "xYzN"
+                              })
+
+        allow(RuCaptcha.config).to receive(:case_sensitive).and_return(true)
+        simple.params[:_rucaptcha] = " xyzn "
+        expect(simple.verify_rucaptcha?).to eq(false)
+
+        RuCaptcha.cache.write(simple.rucaptcha_sesion_key_key, {
+                                time: Time.now.to_i,
+                                code: "xYzN"
+                              })
+        simple.params[:_rucaptcha] = " xYzN "
+        expect(simple.verify_rucaptcha?).to eq(true)
+      end
+    end
   end
 end

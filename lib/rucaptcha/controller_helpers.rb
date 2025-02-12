@@ -63,14 +63,16 @@ module RuCaptcha
 
       # Make sure parama have captcha
       captcha = (opts[:captcha] || params[:_rucaptcha] || "").strip
-
-      unless RuCaptcha.config.case_sensitive
-        captcha.downcase!
-      end
+      saved_code = store_info[:code]
 
       return add_rucaptcha_validation_error if captcha.blank?
 
-      return add_rucaptcha_validation_error if captcha != store_info[:code]
+      unless RuCaptcha.config.case_sensitive
+        captcha.downcase!
+        saved_code.downcase!
+      end
+
+      return add_rucaptcha_validation_error if captcha != saved_code
 
       true
     end
