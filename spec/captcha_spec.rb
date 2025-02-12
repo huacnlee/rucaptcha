@@ -48,7 +48,7 @@ describe RuCaptcha do
     end
 
     it "should len equal 3" do
-      res = RuCaptchaCore.create(3, 3, true, true, "png")
+      res = RuCaptchaCore.create(3, 3, true, true, true, "png")
       expect(res.length).to eq(2)
       expect(res[0].length).to eq(3)
       expect(res[1]).not_to eq(nil)

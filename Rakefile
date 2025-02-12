@@ -63,10 +63,10 @@ task :benchmark do
   require "rucaptcha"
   require "benchmark/ips"
 
-  RuCaptchaCore.create(5, 5, true, true, "png")
+  RuCaptchaCore.create(5, 5, true, true, true, "png")
 
   Benchmark.ips do |x|
-    x.report("Generate image") { RuCaptchaCore.create(5, 5, true, true, "png") }
+    x.report("Generate image") { RuCaptchaCore.create(5, 5, true, true, true, "png") }
     x.compare!
   end
 end

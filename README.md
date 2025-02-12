@@ -191,11 +191,13 @@ end
 
 ## Performance
 
+> Based on MacBook Pro (Apple M3)
+
 `rake benchmark` to run benchmark test.
 
 ```
 Warming up --------------------------------------
-      Generate image    51.000  i/100ms
+      Generate image    84.000 i/100ms
 Calculating -------------------------------------
-      Generate image    526.350  (± 2.5%) i/s -      2.652k in   5.041681s
+      Generate image    859.075 (± 1.5%) i/s    (1.16 ms/i) -      4.368k in   5.085775s
 ```
