@@ -1,16 +1,14 @@
 use image::{ImageBuffer, Rgba};
+use imageproc::drawing::{draw_cubic_bezier_curve_mut, draw_filled_ellipse_mut};
 use rand::{thread_rng, Rng};
 use rusttype::{Font, Scale};
-use std::io::Cursor;
+use std::{io::Cursor, sync::LazyLock};
 
 static BASIC_CHAR: [char; 54] = [
     '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'M',
     'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g',
     'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 ];
-
-static FONT_BYTES1: &[u8; 145008] = include_bytes!("../fonts/FuzzyBubbles-Regular.ttf");
-static FONT_BYTES2: &[u8; 37792] = include_bytes!("../fonts/Handlee-Regular.ttf");
 
 // https://coolors.co/cc0b8f-7c0abe-5700c8-3c2ea4-3d56a8-3fa67e-45bb30-69d003-a0d003-d8db02
 static COLORS: [(u8, u8, u8, u8); 14] = [
@@ -33,13 +31,20 @@ static COLORS: [(u8, u8, u8, u8); 14] = [
 static SCALE_SM: u32 = 32;
 static SCALE_MD: u32 = 45;
 static SCALE_LG: u32 = 55;
+static FONT_0: LazyLock<Font> = LazyLock::new(|| {
+    Font::try_from_bytes(include_bytes!("../fonts/FuzzyBubbles-Regular.ttf")).unwrap()
+});
+static FONT_1: LazyLock<Font> =
+    LazyLock::new(|| Font::try_from_bytes(include_bytes!("../fonts/Handlee-Regular.ttf")).unwrap());
 
+#[inline(always)]
 fn rand_num(len: usize) -> usize {
     let mut rng = thread_rng();
     rng.gen_range(0..=len)
 }
 
 /// Generate a random captcha string with a given length
+#[inline]
 fn rand_captcha(len: usize) -> String {
     let mut result = String::with_capacity(len);
     let seed = BASIC_CHAR.len() - 1;
@@ -61,15 +66,17 @@ fn get_colors(len: usize) -> Vec<Rgba<u8>> {
     out
 }
 
+#[inline(always)]
 fn get_next(min: f32, max: u32) -> f32 {
     min + rand_num(max as usize - min as usize) as f32
 }
 
-fn get_font() -> Font<'static> {
+#[inline]
+fn get_font() -> &'static Font<'static> {
     match rand_num(2) {
-        0 => Font::try_from_bytes(FONT_BYTES1).unwrap(),
-        1 => Font::try_from_bytes(FONT_BYTES2).unwrap(),
-        _ => Font::try_from_bytes(FONT_BYTES1).unwrap(),
+        0 => &FONT_0,
+        1 => &FONT_1,
+        _ => &FONT_1,
     }
 }
 
@@ -107,10 +114,11 @@ fn cyclic_write_character(captcha: &str, image: &mut ImageBuffer<Rgba<u8>, Vec<u
         draw_interference_ellipse(1, image, line_color);
     });
 
+    let font = get_font();
+
     // Draw text
     for (i, ch) in captcha.chars().enumerate() {
         let color = colors[i];
-        let font = get_font();
 
         for j in 0..(rand_num(3) + 1) as i32 {
             // Draw text again with offset
@@ -124,7 +132,7 @@ fn cyclic_write_character(captcha: &str, image: &mut ImageBuffer<Rgba<u8>, Vec<u
                     x: xscale + offset as f32,
                     y: yscale as f32,
                 },
-                &font,
+                font,
                 &ch.to_string(),
             );
         }
@@ -147,7 +155,7 @@ fn draw_interference_line(num: usize, image: &mut ImageBuffer<Rgba<u8>, Vec<u8>>
         let ctrl_x2 = get_next((width / 12) as f32, width / 12 * 3);
         let ctrl_y2 = get_next(x1, height - 5);
         // Randomly draw bezier curves
-        imageproc::drawing::draw_cubic_bezier_curve_mut(
+        draw_cubic_bezier_curve_mut(
             image,
             (x1, y1),
             (x2, y2),
@@ -169,7 +177,7 @@ fn draw_interference_ellipse(
         let x = rand_num((image.width() - 25) as usize) as i32;
         let y = rand_num((image.height() - 15) as usize) as i32;
 
-        imageproc::drawing::draw_filled_ellipse_mut(image, (x, y), w, w, color);
+        draw_filled_ellipse_mut(image, (x, y), w, w, color);
     }
 }
 
@@ -254,7 +262,7 @@ impl CaptchaBuilder {
         let mut bytes: Vec<u8> = Vec::new();
         image
             .write_to(&mut Cursor::new(&mut bytes), image::ImageFormat::Png)
-            .unwrap();
+            .expect("failed to write rucaptcha image into png");
 
         Captcha { text, image: bytes }
     }
