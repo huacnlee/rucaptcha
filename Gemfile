@@ -8,6 +8,9 @@ gem "rspec"
 
 gem "rake-compiler", "~> 1.2"
 gem "rb_sys"
+gem "mutex_m"
+gem "base64"
+gem "bigdecimal"
 
 gem "benchmark-ips", "~> 2.10"
 
