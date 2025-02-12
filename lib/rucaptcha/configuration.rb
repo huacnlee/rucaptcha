@@ -19,5 +19,7 @@ module RuCaptcha
     attr_accessor :skip_cache_store_check
     # custom rucaptcha mount path， default： '/rucaptcha'
     attr_accessor :mount_path
+    # Enable or disable case sensitive, default: false
+    attr_accessor :case_sensitive
   end
 end

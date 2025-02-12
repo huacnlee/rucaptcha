@@ -32,6 +32,7 @@ module RuCaptcha
       @config.noise = true
       @config.format = "png"
       @config.mount_path = "/rucaptcha"
+      @config.case_sensitive = false
 
       @config.cache_store = if Rails.application
                               Rails.application.config.cache_store
@@ -52,7 +53,11 @@ module RuCaptcha
       raise RuCaptcha::Errors::Configuration, "length config error, value must in 3..7" unless length.in?(3..7)
 
       result = RuCaptchaCore.create(length, config.difficulty || 5, config.line, config.noise, config.format)
-      [result[0].downcase, result[1].pack("c*")]
+      unless config.case_sensitive
+        result[0].downcase!
+      end
+
+      [result[0], result[1].pack("c*")]
     end
 
     def check_cache_store!

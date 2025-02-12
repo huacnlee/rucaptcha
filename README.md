@@ -61,7 +61,10 @@ RuCaptcha.configure do
 
   # Set the difficulty level, default: 5, allows: [1..10].
   # Only valid when noise is enabled
-  # self.difficulty = 5 
+  # self.difficulty = 5
+
+  # Set the case sensitive, default: false
+  # self.case_sensitive = false
 
   # Set the image format, default: png, allows: [jpeg, png, webp]
   # self.format = 'png'

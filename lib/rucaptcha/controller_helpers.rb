@@ -62,7 +62,12 @@ module RuCaptcha
       return add_rucaptcha_validation_error if (Time.now.to_i - store_info[:time]) > RuCaptcha.config.expires_in
 
       # Make sure parama have captcha
-      captcha = (opts[:captcha] || params[:_rucaptcha] || "").downcase.strip
+      captcha = (opts[:captcha] || params[:_rucaptcha] || "").strip
+
+      unless RuCaptcha.config.case_sensitive
+        captcha.downcase!
+      end
+
       return add_rucaptcha_validation_error if captcha.blank?
 
       return add_rucaptcha_validation_error if captcha != store_info[:code]
