@@ -39,26 +39,21 @@ fn rand_num(len: usize) -> usize {
     rng.gen_range(0..=len)
 }
 
-fn get_captcha(len: usize) -> Vec<String> {
-    let mut res = vec![];
+/// Generate a random captcha string with a given length
+fn rand_captcha(len: usize) -> String {
+    let mut result = String::with_capacity(len);
+    let seed = BASIC_CHAR.len() - 1;
     for _ in 0..len {
-        let rnd = rand_num(53);
-        res.push(BASIC_CHAR[rnd].to_string())
+        let rnd = rand_num(seed);
+        result.push(BASIC_CHAR[rnd])
     }
-    res
+    result
 }
 
-#[allow(unused)]
-fn get_color() -> Rgba<u8> {
-    let rnd = rand_num(COLORS.len() - 1);
-    let c = COLORS[rnd];
-    Rgba([c.0, c.1, c.2, c.3])
-}
-
-fn get_colors(num: usize) -> Vec<Rgba<u8>> {
+fn get_colors(len: usize) -> Vec<Rgba<u8>> {
     let rnd = rand_num(COLORS.len());
-    let mut out = vec![];
-    for i in 0..num {
+    let mut out = Vec::with_capacity(len);
+    for i in 0..len {
         let c = COLORS[(rnd + i) % COLORS.len()];
         out.push(Rgba([c.0, c.1, c.2, c.3]))
     }
@@ -84,38 +79,36 @@ fn get_image(width: usize, height: usize) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
     })
 }
 
-fn cyclic_write_character(res: &[String], image: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, lines: bool) {
-    let c = (image.width() - 20) / res.len() as u32;
+fn cyclic_write_character(captcha: &str, image: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, lines: bool) {
+    let c = (image.width() - 20) / captcha.len() as u32;
     let y = image.height() / 3 - 15;
 
     let h = image.height() as f32;
 
-    let scale = match res.len() {
+    let scale = match captcha.len() {
         1..=3 => SCALE_LG,
         4..=5 => SCALE_MD,
         _ => SCALE_SM,
     } as f32;
 
-    let colors = get_colors(res.len());
-    let line_colors = get_colors(res.len());
+    let colors = get_colors(captcha.len());
+    let line_colors = get_colors(captcha.len());
 
     let xscale = scale - rand_num((scale * 0.2) as usize) as f32;
-    let yscale = h as f32 - rand_num((h * 0.2) as usize) as f32;
+    let yscale = h - rand_num((h * 0.2) as usize) as f32;
 
     // Draw line, ellipse first as background
-    for (i, _) in res.iter().enumerate() {
+    (0..captcha.len()).for_each(|i| {
         let line_color = line_colors[i];
 
         if lines {
             draw_interference_line(1, image, line_color);
         }
         draw_interference_ellipse(1, image, line_color);
-    }
+    });
 
     // Draw text
-    for (i, _) in res.iter().enumerate() {
-        let text = &res[i];
-
+    for (i, ch) in captcha.chars().enumerate() {
         let color = colors[i];
         let font = get_font();
 
@@ -126,13 +119,13 @@ fn cyclic_write_character(res: &[String], image: &mut ImageBuffer<Rgba<u8>, Vec<
                 image,
                 color,
                 10 + offset + (i as u32 * c) as i32,
-                y as i32 as i32,
+                y as i32,
                 Scale {
                     x: xscale + offset as f32,
                     y: yscale as f32,
                 },
                 &font,
-                text,
+                &ch.to_string(),
             );
         }
     }
@@ -235,28 +228,19 @@ impl CaptchaBuilder {
     }
 
     pub fn complexity(mut self, complexity: usize) -> Self {
-        let mut complexity = complexity;
-        if complexity > 10 {
-            complexity = 10;
-        }
-        if complexity < 1 {
-            complexity = 1;
-        }
-        self.complexity = complexity;
+        self.complexity = complexity.clamp(1, 10);
         self
     }
 
     pub fn build(self) -> Captcha {
         // Generate an array of captcha characters
-        let res = get_captcha(self.length);
-
-        let text = res.join("");
+        let text = rand_captcha(self.length);
 
         // Create a white background image
         let mut image = get_image(self.width, self.height);
 
         // Loop to write the verification code string into the background image
-        cyclic_write_character(&res, &mut image, self.line);
+        cyclic_write_character(&text, &mut image, self.line);
 
         if self.noise {
             imageproc::noise::gaussian_noise_mut(
