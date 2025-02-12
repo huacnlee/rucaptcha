@@ -59,6 +59,9 @@ RuCaptcha.configure do
   # Enable or disable noise, default: false
   # self.noise = false
 
+  # Enable or disable circle background, default: true
+  # self.circle = true
+
   # Set the difficulty level, default: 5, allows: [1..10].
   # Only valid when noise is enabled
   # self.difficulty = 5
