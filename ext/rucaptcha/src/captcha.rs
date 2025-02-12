@@ -1,5 +1,8 @@
 use image::{ImageBuffer, Rgba};
-use imageproc::drawing::{draw_cubic_bezier_curve_mut, draw_filled_ellipse_mut};
+use imageproc::{
+    drawing::{draw_cubic_bezier_curve_mut, draw_filled_ellipse_mut},
+    noise::gaussian_noise_mut,
+};
 use rand::{thread_rng, Rng};
 use rusttype::{Font, Scale};
 use std::{io::Cursor, sync::LazyLock};
@@ -71,21 +74,6 @@ fn get_next(min: f32, max: u32) -> f32 {
     min + rand_num(max as usize - min as usize) as f32
 }
 
-#[inline]
-fn get_font() -> &'static Font<'static> {
-    match rand_num(2) {
-        0 => &FONT_0,
-        1 => &FONT_1,
-        _ => &FONT_1,
-    }
-}
-
-fn get_image(width: usize, height: usize) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
-    ImageBuffer::from_fn(width as u32, height as u32, |_, _| {
-        image::Rgba([255, 255, 255, 255])
-    })
-}
-
 fn cyclic_write_character(captcha: &str, image: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, lines: bool) {
     let c = (image.width() - 20) / captcha.len() as u32;
     let y = image.height() / 3 - 15;
@@ -114,7 +102,11 @@ fn cyclic_write_character(captcha: &str, image: &mut ImageBuffer<Rgba<u8>, Vec<u
         draw_interference_ellipse(1, image, line_color);
     });
 
-    let font = get_font();
+    let font = match rand_num(2) {
+        0 => &FONT_0,
+        1 => &FONT_1,
+        _ => &FONT_1,
+    };
 
     // Draw text
     for (i, ch) in captcha.chars().enumerate() {
@@ -188,16 +180,16 @@ pub struct Captcha {
 
 pub struct CaptchaBuilder {
     length: usize,
-    width: usize,
-    height: usize,
+    width: u32,
+    height: u32,
     complexity: usize,
     line: bool,
     noise: bool,
     format: image::ImageFormat,
 }
 
-impl CaptchaBuilder {
-    pub fn new() -> Self {
+impl Default for CaptchaBuilder {
+    fn default() -> Self {
         CaptchaBuilder {
             length: 4,
             width: 220,
@@ -207,6 +199,12 @@ impl CaptchaBuilder {
             noise: false,
             format: image::ImageFormat::Png,
         }
+    }
+}
+
+impl CaptchaBuilder {
+    pub fn new() -> Self {
+        Self::default()
     }
 
     pub fn length(mut self, length: usize) -> Self {
@@ -245,14 +243,16 @@ impl CaptchaBuilder {
         let text = rand_captcha(self.length);
 
         // Create a white background image
-        let mut image = get_image(self.width, self.height);
+        let mut buf = ImageBuffer::from_fn(self.width, self.height, |_, _| {
+            image::Rgba([255, 255, 255, 255])
+        });
 
         // Loop to write the verification code string into the background image
-        cyclic_write_character(&text, &mut image, self.line);
+        cyclic_write_character(&text, &mut buf, self.line);
 
         if self.noise {
-            imageproc::noise::gaussian_noise_mut(
-                &mut image,
+            gaussian_noise_mut(
+                &mut buf,
                 (self.complexity - 1) as f64,
                 ((10 * self.complexity) - 10) as f64,
                 ((5 * self.complexity) - 5) as u64,
@@ -260,8 +260,7 @@ impl CaptchaBuilder {
         }
 
         let mut bytes: Vec<u8> = Vec::new();
-        image
-            .write_to(&mut Cursor::new(&mut bytes), image::ImageFormat::Png)
+        buf.write_to(&mut Cursor::new(&mut bytes), image::ImageFormat::Png)
             .expect("failed to write rucaptcha image into png");
 
         Captcha { text, image: bytes }
