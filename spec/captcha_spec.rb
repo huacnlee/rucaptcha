@@ -12,14 +12,14 @@ describe RuCaptcha do
 
   describe ".create" do
     it "should len equal config.len" do
-      res = RuCaptchaCore.create(5, 3, true, true, "png")
+      res = RuCaptchaCore.create(5, 3, true, true, true, "png")
       expect(res.length).to eq(2)
       expect(res[0].length).to eq(5)
       expect(res[1]).not_to eq(nil)
     end
 
     it "should work with color style" do
-      res = RuCaptchaCore.create(5, 3, true, true, "png")
+      res = RuCaptchaCore.create(5, 3, true, true, true, "png")
       expect(res.length).to eq(2)
       expect(res[0].length).to eq(5)
       expect(res[1]).not_to eq(nil)
