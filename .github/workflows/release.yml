@@ -5,6 +5,7 @@ on:
       - "v*"
     branches:
       - "release-gem"
+      - "update-ruby4"
 jobs:
   build:
     name: Build Native
