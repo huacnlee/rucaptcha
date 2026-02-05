@@ -22,14 +22,14 @@ jobs:
           - aarch64-linux-musl
     steps:
       - uses: actions/checkout@v4
-      - uses: oxidize-rb/actions/setup-ruby-and-rust@v1.3.0
+      - uses: oxidize-rb/actions/setup-ruby-and-rust@v1.4.4
         with:
           ruby-version: "4.0"
           bundler-cache: false
           cargo-cache: true
           cargo-vendor: true
 
-      - uses: oxidize-rb/actions/cross-gem@v1.2.8
+      - uses: oxidize-rb/actions/cross-gem@v1.4.4
         with:
           platform: ${{ matrix.ruby-platform }}
           ruby-versions: "4.0,3.4,3.3"
@@ -44,8 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: oxidize-rb/actions/setup-ruby-and-rust@main
+      - uses: oxidize-rb/actions/setup-ruby-and-rust@v1.4.4
         with:
           ruby-version: "4.0"
           bundler-cache: false

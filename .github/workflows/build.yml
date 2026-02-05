@@ -9,7 +9,7 @@ jobs:
       USE_OFFICIAL_GEM_SOURCE: 1
     steps:
       - uses: actions/checkout@v4
-      - uses: oxidize-rb/actions/setup-ruby-and-rust@v1.3.0
+      - uses: oxidize-rb/actions/setup-ruby-and-rust@v1.4.4
         with:
           ruby-version: "4.0"
           bundler-cache: true
