@@ -15,3 +15,4 @@ gem "bigdecimal"
 gem "benchmark-ips", "~> 2.10"
 gem 'concurrent-ruby', '1.3.4'
 gem "memory_profiler", "~> 1.0"
+gem 'benchmark'
