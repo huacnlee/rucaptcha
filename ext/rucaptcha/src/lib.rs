@@ -1,4 +1,4 @@
-use magnus::{define_class, function, Error, Object};
+use magnus::{function, Error, Object, Ruby};
 
 mod captcha;
 
@@ -24,8 +24,8 @@ pub fn create(
 }
 
 #[magnus::init]
-fn init() -> Result<(), Error> {
-    let class = define_class("RuCaptchaCore", magnus::class::object())?;
+fn init(ruby: &Ruby) -> Result<(), Error> {
+    let class = ruby.define_class("RuCaptchaCore", ruby.class_object())?;
     class.define_singleton_method("create", function!(create, 6))?;
 
     Ok(())
